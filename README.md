@@ -20,7 +20,8 @@ As a result, a central component of the project is the development of a __middle
 
 <img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png">
 
-<img width="200" alt="biTTner" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
+<img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
 
 <img width="200" alt="Vogler Engineering" src="https://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png">
 
+<img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
