@@ -9,12 +9,12 @@ As a result, a central component of the project is the development of a __middle
 
 
 ## Consortium
-### Forschungspartner
+### Research partners
 <img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg">  
 
 <img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
 
-### Anwendungspartner
+### Application partners
 
 <img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png"> 
 
@@ -24,7 +24,7 @@ As a result, a central component of the project is the development of a __middle
 
 <img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
 
-### Entwicklungspartner
+### Development partners
 
 <img width="200" alt="VoglerEngineering" src="https://www.xing.com/img/custom/cp/assets/logo/1/6/f/237935/square_128px/Vogler.jpg"> 
 
