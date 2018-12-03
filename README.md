@@ -10,9 +10,7 @@ As a result, a central component of the project is the development of a __middle
 
 ## Consortium
 ### Forschungspartner
-<img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> 
-
-<img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
+<img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg">  <img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
 
 ### Anwendungspartner
 
@@ -20,6 +18,4 @@ As a result, a central component of the project is the development of a __middle
 
 ### Entwicklungspartner
 
-<img width="200" alt="VoglerEngineering" src="https://www.xing.com/img/custom/cp/assets/logo/1/6/f/237935/square_128px/Vogler.jpg">
-
-<img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
+<img width="200" alt="VoglerEngineering" src="https://www.xing.com/img/custom/cp/assets/logo/1/6/f/237935/square_128px/Vogler.jpg"> <img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
