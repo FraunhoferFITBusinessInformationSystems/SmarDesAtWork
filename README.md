@@ -9,19 +9,23 @@ As a result, a central component of the project is the development of a __middle
 
 
 ## Consortium
-
+### Forschungspartner
 <img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> 
 
 <img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
 
-<img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg">
+### Anwendungspartner
 
 <img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png">
 
 <img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png">
 
+<img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg">
+
 <img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
 
-<img width="200" alt="Vogler Engineering" src="https://scontent-frt3-1.xx.fbcdn.net/v/t1.0-1/c62.62.776.776a/s200x200/1006107_634002906627633_671172041_n.png?_nc_cat=106&_nc_ht=scontent-frt3-1.xx&oh=9b70438bb39fe001c19ae9f3603714d7&oe=5CA6A172">
+### Entwicklungspartner
+
+<img width="200" alt="Vogler Engineering" src="">
 
 <img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
