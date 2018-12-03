@@ -7,11 +7,9 @@ As a result, a central component of the project is the development of a middlewa
 
 ## Das Konsortium 
 
-<img height="50" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"> <img height="50" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png">
+<img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"> <img height="50" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png">
 
-<img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg">
-
-<img width="200" alt="Fraunhofer IPA" src="https://www.ipa.fraunhofer.de/content/dam/ipa/ipa.svg">
+<img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> <img width="200" alt="Fraunhofer IPA" src="https://www.ipa.fraunhofer.de/content/dam/ipa/ipa.svg">
 
 <img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
 
