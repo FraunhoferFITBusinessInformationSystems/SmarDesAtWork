@@ -10,7 +10,9 @@ As a result, a central component of the project is the development of a middlewa
 
 ## Consortium
 
-<img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> <img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
+<img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> 
+
+<img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
 
 <img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg">
 
