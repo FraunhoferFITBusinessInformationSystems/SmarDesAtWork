@@ -16,13 +16,7 @@ As a result, a central component of the project is the development of a __middle
 
 ### Anwendungspartner
 
-<img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png">
-
-<img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png">
-
-<img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg">
-
-<img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
+<img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png"> <img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png"> <img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"> <img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
 
 ### Entwicklungspartner
 
