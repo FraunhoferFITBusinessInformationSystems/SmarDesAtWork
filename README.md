@@ -4,6 +4,9 @@ Smart Devices (such as Smartphones and Smart Watches) offer many options to supp
 
 As a result, a central component of the project is the development of a middleware combined with client applications for different smart devices. This solution aims at linking smart devices to the existing production systems. This approach reduces integration hurdles of utilizing smart devices and ensures the transferability to varied use cases. In addition, the use of smart devices offers the option of a time and place independent production control. Production processes are digitally optimized, quality monitoring, control and guarantee based on real time date are implemented, and an Industry 4.0 required process flexibility reached.
 
+## Sponsor
+<img width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg">
+
 
 ## Das Konsortium 
 
@@ -21,4 +24,3 @@ As a result, a central component of the project is the development of a middlewa
 
 <img width="200" alt="Vogler Engineering" src="https://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png">
 
-<img width="200" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg">
