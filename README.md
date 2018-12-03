@@ -17,6 +17,7 @@ As a result, a central component of the project is the development of a middlewa
 
 <img width="200" alt="Fraunhofer IPA" src="https://www.ipa.fraunhofer.de/content/dam/ipa/ipa.svg">
 
-<img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
+
+<img width="200" alt="Vogler Engineering" src="https://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png">
 
 <img width="200" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg">
