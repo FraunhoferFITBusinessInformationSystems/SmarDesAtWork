@@ -20,8 +20,6 @@ As a result, a central component of the project is the development of a __middle
 </table> 
 
 
-
-
 ### Application partners
 
 <table border="0">
@@ -32,14 +30,6 @@ As a result, a central component of the project is the development of a __middle
     <td><img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png"></td>
 </tr>
 </table> 
-
-
-
-
-
-
-MacintoshHD⁩/⁨Benutzer⁩/michaelbitzer⁩/⁨Downloads⁩
-
 
 
 ### Development partners
