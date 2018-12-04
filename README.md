@@ -12,7 +12,7 @@ As a result, a central component of the project is the development of a __middle
 ## Cosortium
 ### Research partners
 
-<table border="none">
+<table>
 <tr>
     <td><img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"></td>
     <td><img vertical-align="middle" width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png"> </td>
@@ -22,13 +22,21 @@ As a result, a central component of the project is the development of a __middle
 
 ### Application partners
 
-<img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png"> 
+<table>
+<tr>
+    <td><img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png"> </td>
+    <td><img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png"> </td>
+    <td><img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"></td>
+    <td><img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png"></td>
+</tr>
+</table> 
 
-<img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png"> 
 
-<img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"> 
 
-<img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png">
+
+
+
+
 
 ### Development partners
 
