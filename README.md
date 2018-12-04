@@ -12,7 +12,14 @@ As a result, a central component of the project is the development of a __middle
 ## Cosortium
 ### Research partners
 
-<table>
+<style>
+.site-main table.no-border td {
+    border: none;
+}
+</style>
+
+
+<table class="no-border">....</table>
 <tr>
     <td><img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"></td>
     <td><img vertical-align="middle" width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png"> </td>
