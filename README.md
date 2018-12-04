@@ -19,7 +19,7 @@ As a result, a central component of the project is the development of a __middle
     <td><img vertical-align="middle" width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png"> </td>
 </tr>
 </table> 
-<p/>
+</p>
 
 ### Application partners
 
@@ -36,7 +36,7 @@ As a result, a central component of the project is the development of a __middle
 
 ### Development partners
 
-<p align ="center"
+<p align ="center">
 <table border="0">
 <tr>
     <td><img width="200" alt="VoglerEngineering" src="https://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png"></td>
