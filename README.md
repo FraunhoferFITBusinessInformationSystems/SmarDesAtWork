@@ -14,6 +14,11 @@ As a result, a central component of the project is the development of a __middle
 <center> <img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> <img vertical-align="middle" width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png"> 
 </center>
 
+<center> <img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> </center>
+  
+<center> <img vertical-align="middle" width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png"> 
+</center>
+
 ### Application partners
 
 <img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png"> 
