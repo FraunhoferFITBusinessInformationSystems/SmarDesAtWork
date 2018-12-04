@@ -5,10 +5,11 @@ Smart Devices (such as Smartphones and Smart Watches) offer many options to supp
 As a result, a central component of the project is the development of a __middleware__ combined with __client applications__ for different smart devices. This solution aims at __linking smart devices to the existing production systems__. This approach reduces integration hurdles of utilizing smart devices and ensures the transferability to varied use cases. In addition, the use of smart devices offers the option of a time and place independent production control. Production processes are digitally optimized, quality monitoring, control and guarantee based on real time date are implemented, and an Industry 4.0 required process flexibility reached.
 
 ## Sponsor
-<img align="center" width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg">
+<p align="center">
+<img width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg"> </p>
 
 
-## Consortium
+## Cosortium
 ### Research partners
 <img vertical-align="middle" width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"> <img vertical-align="middle" width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.regenerative-produktion.fraunhofer.de/content/dam/regenerative-produktion/Logo_IPA.png">
 
