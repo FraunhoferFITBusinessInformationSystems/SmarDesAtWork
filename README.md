@@ -38,12 +38,16 @@ As a result, a central component of the project is the development of a __middle
 
 
 
+MacintoshHD⁩/⁨Benutzer⁩/michaelbitzer⁩/⁨Downloads⁩
+
 
 
 ### Development partners
 
-<img width="200" alt="VoglerEngineering" src="https://www.xing.com/img/custom/cp/assets/logo/1/6/f/237935/square_128px/Vogler.jpg"> 
+<table border="0">
+<tr>
+    <td><img width="200" alt="VoglerEngineering" src="https://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png"></td>
+    <td><img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png"></td>
+</tr>
+</table> 
 
-<img width="200" alt="VoglerEngineering" src="https://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png">
-
-<img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png">
