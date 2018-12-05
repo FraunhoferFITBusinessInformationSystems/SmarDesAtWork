@@ -36,9 +36,9 @@ As a result, a central component of the project is the development of a __middle
 
 <p align ="center">
 <table border="0">
-<tr>
-    <td>
-        <img width="200" style="border: 0px solid black" alt="VoglerEngineering" src="http://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png"></td>
+<tr border="0">
+    <td border="0">
+        <img width="200" alt="VoglerEngineering" src="http://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png"></td>
     <td><img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png"></td>
 </tr>
 </table> </p>
