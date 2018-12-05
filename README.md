@@ -4,7 +4,7 @@ Smart Devices (such as Smartphones and Smart Watches) offer many options to supp
 
 As a result, a central component of the project is the development of a __middleware__ combined with __client applications__ for different smart devices. This solution aims at __linking smart devices to the existing production systems__. This approach reduces integration hurdles of utilizing smart devices and ensures the transferability to varied use cases. In addition, the use of smart devices offers the option of a time and place independent production control. Production processes are digitally optimized, quality monitoring, control and guarantee based on real time date are implemented, and an Industry 4.0 required process flexibility reached.
 
-In this repository the consortium offers the results of the research project as open source software including the middleware, the client application,.... If you have any questions, don't hesitate to contact us: wirtschaftsinformatik@fit.fraunhofer.de
+In this repository the consortium consisting of two research partners, two development partners and four application partners offers the results of their research project as open source software including the middleware, the client application,.... If you have any questions, don't hesitate to contact us: wirtschaftsinformatik@fit.fraunhofer.de
 
 ## Sponsor
 <p align="center">
