@@ -1,6 +1,6 @@
 # SmarDe's@Work
 
-Public research project sponsored by the Bavarian Research Foundation
+Public research project funded by the Bavarian Research Foundation
 
 Smart Devices (such as Smartphones and Smart Watches) offer many options to support production processes, such as optimization or worker assistance. So far, neither implementation recommendations nor standardized APIs exist. The project SmarDe´s@Work aims at usefully utilizing Smart Devices in the production area. In the foreground stands the connection of different production participants, such as workers, machines and information systems. The right combination of software and hardware through interactive and intuitive information processing supports the work preparation as well as the actual production and thereby generates efficiency along with raising optimization potentials. In order to ensure a broad applicability for different companies with different processes and IT-infrastructures, it would be required to integrate data from any information system such as ERP, MES or quality management. 
 
@@ -8,7 +8,7 @@ As a result, a central component of the project is the development of a __middle
 
 In this repository the consortium consisting of two research partners, two development partners and four application partners offers the results of the research project as open source software including the middleware, the client application, the gateway and the PLC-wing. 
 
-## Sponsor
+## Funder
 
 <img width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg"> 
 
