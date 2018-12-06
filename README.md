@@ -45,7 +45,7 @@ This OpenSource project is based on a MIT-license.
 <tr>
     <td>
         <img width="200" style="border: 1px solid black" alt="VoglerEngineering" src="http://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png"></td>
-    <td><img width="200" style="border: 1px solid black" alt="https://github.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/raw/master/Logo_Vogler.png"></td>
+    <td><img width="200" style="border: 1px solid black" alt="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Logo_Vogler.png"></td>
     <td><img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png"></td>
 </tr>
 </table> </p>
