@@ -44,7 +44,7 @@ This OpenSource project is based on a MIT-license.
 <table border="0">
 <tr>
     <td>
-        <img width="200" style="border: 1px solid black" alt="VoglerEngineering" src="http://www.vogler-engineering.de/fileadmin/user_upload/logo/vogler-engineering.png"></td>
+        <img width="200" style="border: 1px solid black" alt="VoglerEngineering" src="Logo_Vogler.png"></td>
     <td><img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png"></td>
 </tr>
 </table> </p>
