@@ -8,6 +8,8 @@ As a result, a central component of the project is the development of a __middle
 
 In this repository the consortium consisting of two research partners, two development partners and four application partners offers the results of the research project as open source software including the middleware, the client application, the gateway and the PLC-wing (machine interface). 
 
+This OpenSource project is based on a MIT-license.
+
 ## Funder
 
 <img width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg"> 
