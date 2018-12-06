@@ -19,7 +19,7 @@ In this repository the consortium consisting of two research partners, two devel
 
 <table>
 <tr>
-    <td><img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer.svg"></td>
+    <td><img width="200" alt="Project Group Business Information Systems Engineering of the Fraunhofer FIT" src="https://fim-rc.de/wp-content/uploads/logo_fraunhofer_en.svg"></td>
     <td><img width="200" alt="Fraunhofer IPA Projektgruppe Regenerative Produktion " src="https://www.ipa.fraunhofer.de/content/dam/ipa/ipa.svg"> </td>
 </tr>
 </table>
