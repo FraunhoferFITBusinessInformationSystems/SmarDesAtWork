@@ -12,7 +12,7 @@ This OpenSource project is based on a MIT-license.
 
 ## Funder
 
-<img width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg"> 
+<img width="400" alt="Bayrische Forschungsstiftung" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Sonstiges/Logos/BFS.jpg"> 
 
 
 ## Consortium
