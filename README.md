@@ -33,7 +33,7 @@ This OpenSource project is based on a MIT-license.
 <tr>
     <td><img width="200" alt="Bayrische Kunststoffwerke" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/BKW.png"> </td>
     <td><img width="200" alt="biTTner" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/biTTner.jpg"> </td>
-    <td><img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"></td>
+    <td><img width="200" alt="Dietz" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/Dietz.svg"></td>
     <td><img width="200" alt="Rehau" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/Rehau.jpg"></td>
 </tr>
 </table> </p>
