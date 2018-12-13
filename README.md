@@ -12,7 +12,7 @@ This OpenSource project is based on a MIT-license.
 
 ## Funder
 
-<img width="400" alt="Bayrische Forschungsstiftung" src="https://www.bayfor.org/mount_media/images/veranstaltungen/news_bildupload1a_081020Logo_BFS_neu_0de9cf2de91fb5193662edeaf8f4318e.jpg"> 
+<img width="400" alt="Bayrische Forschungsstiftung" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/BFS.jpg"> 
 
 
 ## Consortium
@@ -32,7 +32,7 @@ This OpenSource project is based on a MIT-license.
 <table border="0">
 <tr>
     <td><img width="200" alt="Bayrische Kunststoffwerke" src="https://www.bkw-selb.de/bkw_cms/wp-content/uploads/2015/03/bkw-logo-300x33.png"> </td>
-    <td><img width="200" alt="biTTner" src="https://www.bittpro.de/wp-content/themes/bittpro/library/images/bittner-logo.png"> </td>
+    <td><img width="200" alt="biTTner" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/biTTner.jpg"> </td>
     <td><img width="200" alt="Dietz" src="https://www.dietz.eu/wp-content/uploads/2018/05/dietz-logo-75.svg"></td>
     <td><img width="200" alt="Rehau" src="https://upload.wikimedia.org/wikipedia/de/thumb/b/b8/Rehau_Logo.svg/1200px-Rehau_Logo.svg.png"></td>
 </tr>
@@ -43,8 +43,7 @@ This OpenSource project is based on a MIT-license.
 <p align ="center">
 <table border="0">
 <tr>
-    <td>
-        <img width="200" style="border: 1px solid black" alt="VoglerEngineering" src="Logo_Vogler.png"></td>
+    <td><img width="200" style="border: 1px solid black" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/Vogler.png"></td>
     <td><img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png"></td>
 </tr>
 </table> </p>
