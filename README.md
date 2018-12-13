@@ -44,6 +44,6 @@ This OpenSource project is based on a MIT-license.
 <table border="0">
 <tr>
     <td><img width="200" style="border: 1px solid black" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/Vogler.png"></td>
-    <td><img width="200" alt="CamLine" src="https://www.camline.com/fileadmin/templates/img/camline-logo.png"></td>
+    <td><img width="200" alt="CamLine" src="https://raw.githubusercontent.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork/master/Other/Logos/Camline.png"></td>
 </tr>
 </table> </p>
