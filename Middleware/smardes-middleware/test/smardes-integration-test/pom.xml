@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2018-2019 camLine GmbH
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.camline.projects.smardes</groupId>
+		<artifactId>smardes-middleware</artifactId>
+		<version>1.5.0-SNAPSHOT</version>
+		<relativePath>../..</relativePath>
+	</parent>
+
+	<artifactId>smardes-integration-test</artifactId>
+
+	<properties>
+		<assembly.skipAssembly>true</assembly.skipAssembly>
+		<test.server.dir>${project.build.directory}/smardes-middleware-${project.version}/smardes-backend-services-${project.version}</test.server.dir>
+		<sonar.skip>true</sonar.skip>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>smardes-distribution</artifactId>
+			<version>${project.version}</version>
+			<type>zip</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>smardes-common</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>smardes-json-api</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>smardes-maindata-api</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>smardes-resources-api</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>smardes-todo-api</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<!-- We do not have unit tests in that hierarchy -->
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<!-- Unpack space-gateway-server to be started for integration test -->
+					<execution>
+						<id>unpack-smardes-distribution</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<includeArtifactIds>smardes-distribution</includeArtifactIds>
+							<includeTypes>zip</includeTypes>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<excludes>**/maindata/**,**/rules/**</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<!-- Overwrite space-gateway-server configuration for integration test -->
+					<execution>
+						<id>copy-server-files</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${test.server.dir}</outputDirectory>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<directory>${project.basedir}/src/test/runtime</directory>
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<!-- Start space-gateway-server on Windows for integration test -->
+					<execution>
+						<id>start-gateway-server-windows</id>
+						<phase>none</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="Starting smardes-backend-services in background in ${test.server.dir}/bin" />
+								<exec executable="cmd" dir="${test.server.dir}/bin" spawn="true">
+									<arg value="/c" />
+									<arg value="StartSDServices.cmd" />
+								</exec>
+								<sleep seconds="10" />
+							</target>
+						</configuration>
+					</execution>
+					<!-- Stop space-gateway-server on Windows for integration test -->
+					<execution>
+						<id>stop-gateway-server-windows</id>
+						<phase>none</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="Stopping smardes-backend-services" />
+								<exec executable="cmd" dir="${test.server.dir}/bin" spawn="true">
+									<arg value="/c" />
+									<arg value="StopSDServices.cmd" />
+								</exec>
+								<exec executable="wmic">
+									<arg value="process" />
+									<arg value="where" />
+									<arg value="(" />
+									<arg value="CommandLine" />
+									<arg value="like" />
+									<arg value="%com.camline.projects.smardes.StartServices%" />
+									<arg value=")" />
+									<arg value="delete" />
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+					<!-- Start space-gateway-server on UNIX for integration test -->
+					<execution>
+						<id>start-gateway-server-unix</id>
+						<phase>none</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="Starting space-gateway-server in ${test.server.dir}/bin" />
+								<exec executable="/bin/sh" dir="${test.server.dir}/bin">
+									<arg value="space-gateway_server.start" />
+									<!-- env key="JAVA_HOME" path="/camline/java/jdk7/jre" / -->
+								</exec>
+								<sleep seconds="45" />
+							</target>
+						</configuration>
+					</execution>
+					<!-- Stop space-gateway-server on UNIX for integration test -->
+					<execution>
+						<id>stop-gateway-server-unix</id>
+						<phase>none</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo message="Stoping space-gateway-server" />
+								<exec executable="/bin/sh" dir="${test.server.dir}/bin">
+									<arg value="space-gateway_server.stop" />
+									<!-- env key="JAVA_HOME" path="/camline/java/jdk7/jre" / -->
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<workingDirectory>src/test/test-runtime</workingDirectory>
+					<includes>
+						<include>**/AllTests.java</include>
+					</includes>
+					<systemPropertyVariables>
+						<log4j.configuration>file:properties/log4j.properties</log4j.configuration>
+					</systemPropertyVariables>
+				</configuration>
+				<executions>
+					<execution>
+						<id>integration-test</id>
+						<goals>
+							<goal>integration-test</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>verify</id>
+						<goals>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+        <plugin>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>enforce-dependency-convergence</id>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>windows-runtime-environment</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<!-- Start space-gateway-server on Windows for integration test -->
+							<execution>
+								<id>start-gateway-server-windows</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<echo message="Starting smardes-backend-services in background in ${test.server.dir}/bin" />
+										<exec executable="cmd" dir="${test.server.dir}/bin" spawn="true">
+											<arg value="/c" />
+											<arg value="StartSDServices.cmd" />
+										</exec>
+										<sleep seconds="10" />
+									</target>
+								</configuration>
+							</execution>
+							<!-- Stop space-gateway-server on Windows for integration test -->
+							<execution>
+								<id>stop-gateway-server-windows</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target>
+										<echo message="Stopping smardes-backend-services" />
+										<exec executable="cmd" dir="${test.server.dir}/bin" spawn="true">
+											<arg value="/c" />
+											<arg value="StopSDServices.cmd" />
+										</exec>
+										<!-- exec executable="wmic">
+											<arg value="process" />
+											<arg value="where" />
+											<arg value="(" />
+											<arg value="CommandLine" />
+											<arg value="like" />
+											<arg value="%com.camline.projects.smardes.StartServices%" />
+											<arg value=")" />
+											<arg value="delete" />
+										</exec-->
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>unix-runtime-environment</id>
+			<activation>
+				<os>
+					<family>unix</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>start-gateway-server-unix</id>
+								<phase>pre-integration-test</phase>
+							</execution>
+							<execution>
+								<id>stop-gateway-server-unix</id>
+								<phase>post-integration-test</phase>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

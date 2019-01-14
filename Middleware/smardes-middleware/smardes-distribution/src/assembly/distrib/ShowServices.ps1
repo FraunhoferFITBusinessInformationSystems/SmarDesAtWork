@@ -1,0 +1,1 @@
+Get-WmiObject win32_service | Where-Object -FilterScript {$_.DisplayName -like "SmarDe*"} | Select-Object -Property DisplayName, State, Status, Pathname

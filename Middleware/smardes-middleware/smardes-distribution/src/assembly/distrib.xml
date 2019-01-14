@@ -1,0 +1,88 @@
+<!--
+  Copyright (C) 2018-2019 camLine GmbH
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+	<id>distribution</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet>
+			<directory>${project.basedir}/src/assembly/distrib</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>**</include>
+			</includes>
+			<excludes>
+				<exclude>install.bat</exclude>
+				<exclude>readme.txt</exclude>
+				<exclude>**/StartArtemis.cmd</exclude>
+				<exclude>**/StopArtemis.cmd</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/assembly/distrib</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>install.bat</include>
+				<include>readme.txt</include>
+				<include>ShowServices.*</include>
+				<include>**/StartArtemis.cmd</include>
+				<include>**/StopArtemis.cmd</include>
+			</includes>
+			<lineEnding>windows</lineEnding>
+			<filtered>true</filtered>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}/download</directory>
+			<outputDirectory></outputDirectory>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<unpack>true</unpack>
+			<includes>
+				<include>*:*:zip</include>
+			</includes>
+			<excludes>
+				<exclude>commons-daemon:*:*</exclude>
+			</excludes>
+		</dependencySet>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<outputDirectory>${artifact.artifactId}-${artifact.baseVersion}</outputDirectory>
+			<unpack>true</unpack>
+			<includes>
+				<include>commons-daemon:*:*</include>
+			</includes>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>install</outputDirectory>
+			<includes>
+				<include>net.sf.saxon:*:jar</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+</assembly>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules
+	xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+	<globalVariables>
+		<property name="global.sdgwAddress" value="sdgw"/>
+	</globalVariables>
+	<patchMessageBodyPrototypes>
+		<patchMessageBodyPrototype variable="body" name="setAssignedTo">
+			<property name="body.AssignedTo" expression="device"/>
+		</patchMessageBodyPrototype>
+	</patchMessageBodyPrototypes>
+	<ruleGroup name="Rule Engine Requests">
+		<selector address="RuleEngine" jsonBody="true"/>
+		<rule name="BDEAlarm">
+			<!--
+				msg.body.Source is the name of the dbmon property set in dbmon.properties
+			-->
+			<condition>
+				msg.body.Type == 'DBMonEvent' and
+				msg.body.Source == 'test'
+			</condition>
+			<actions>
+				<startConversation name="FailureReport" variable="cccFailureReport">
+					<pushMessage
+						iterateOver="dq:entries('maindata.devices')"
+						iteratorVar="device"
+						address="global.sdgwAddress"
+						subject="Job">
+						<baseMessage expression="msg">
+							<patchMessageBody variable="job">
+								<property name="job.ReferenceId" expression="job.Id"/>
+								<property name="job.Id" expression="cccFailureReport.id"/>
+								<property name="job.Immediate" expression="true"/>
+								<property name="job.Name" value="FailureReport"/>
+								<property name="job.Priority" value="High"/>
+								<property name="job.Type" value="Job"/>
+								<property name="job.Resource" expression="job.Content"/>
+								<property name="job.CreatedAt" expression="datetime:now()"/>
+								<property name="job.AssignedAt" expression="datetime:now()"/>
+								<property name="job.Resource.text" expression="str:concat('Maschine ', job.Resource.Subject)"/>
+							</patchMessageBody>
+							<patchMessageBodyRef name="setAssignedTo"/>
+						</baseMessage>
+					</pushMessage>
+					<closedMessage
+						iterateOver="dq:entries('maindata.devices')"
+						iteratorVar="device"
+						subject="Notification"
+ 						address="global.sdgwAddress">
+ 						<baseMessage expression="msg">
+							<patchMessageBody variable="noti">
+								<property name="noti.Id" expression="msg.body.ReferenceId" />
+								<property name="noti.ReferenceId" expression="cccFailureReport.id" />
+								<property name="noti.Name" value="StatusUpdate" />
+								<property name="noti.Type" value="Notification" />
+								<property name="noti.Status" value="Done" />
+								<property name="noti.Content" expression="null" />
+							</patchMessageBody>
+							<patchMessageBodyRef name="setAssignedTo"/>
+						</baseMessage>
+					</closedMessage>
+				</startConversation>
+			</actions>
+		</rule>
+		<rule name="Job akzeptieren">
+			<condition>
+				msg.body.Type == 'Job' and
+				msg.body.Name == 'FailureReport'
+			</condition>
+			<actions>
+				<closeConversation id="msg.body.ReferenceId"></closeConversation>
+				<!-- For the JSON file we reformat the ISO8601 date to something which is accepted as file name -->
+				<dumpFile templateName="dump_json" encoding="windows-1252"
+					destinationFile="str:concat(datetime:format(datetime:parseISO8601(msg.body.Resource.datetimebegin), 'yyyy-MM-dd-HH-mm-ss'), '.json')">
+					<context>
+						<entry name="msg" expression="msg"/>
+					</context>
+				</dumpFile>
+				<!-- For CSV we collect all entries of one day in one file (append mode) -->
+				<dumpFile templateName="dump_csv" append="true" encoding="windows-1252"
+					destinationFile="str:concat(datetime:format(datetime:now(), 'yyyy-MM-dd'), '.csv')">
+					<context>
+						<entry name="msg" expression="msg"/>
+					</context>
+				</dumpFile>
+			</actions>
+		</rule>
+		<rule name="Test Queries">
+			<condition name="Case1">
+				msg.body.TestName == 'ConditionalCase1'
+			</condition>
+			<condition name="Case2">
+				msg.body.TestName == 'ConditionalCase2'
+			</condition>
+			<actions>
+				<pushMessage address="global.sdgwAddress">
+					<baseMessage expression="msg">
+						<patchMessageBody variable="body">
+							<property name="body.Result" value="Case1" condition="Case1"/>
+							<property name="body.Result" value="Case2" condition="Case2"/>
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+	</ruleGroup>
+</rules>
+<!-- <property name="job.test8601" expression="datetime:plus(datetime:parseISO8601(job.CreatedAt), 'minutes', 30)"/> -->

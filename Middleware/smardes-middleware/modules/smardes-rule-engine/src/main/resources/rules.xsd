@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2018-2019 camLine GmbH
+
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (http://www.altova.com) by Matthias Hanisch (camLine GmbH) -->
+<xs:schema xmlns="http://www.camline.com/projects/smardes/rules" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.camline.com/projects/smardes/rules" elementFormDefault="qualified">
+	<xs:element name="rules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="globalVariables">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="property" type="assignNameValueExpressionType" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="patchMessageBodyPrototypes" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="patchMessageBodyPrototype" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="setELContextType">
+											<xs:attribute name="name" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ruleGroup" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>One rule group defines rules for a certain kind of messages. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="selector">
+								<xs:annotation>
+									<xs:documentation>Message selector defines a pre-filtering of rule-relevant messages.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="address" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation>The address / queue this rule group listens for messages.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="criteria" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Using the criteria only meaningful messages will be evaluated.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+									<xs:attribute name="jsonBody" type="xs:boolean" default="false">
+										<xs:annotation>
+											<xs:documentation>If set to true we can also use the message body structure in expressions</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="rule" type="ruleType">
+									<xs:annotation>
+										<xs:documentation>A rule consists of a condition based on facts (mostly from the incoming message) and a set of actions that are executed if the condition is fulfilled.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+								<xs:element name="ruleSet" type="ruleSetType"/>
+							</xs:choice>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>Name of the rule group - for logging and other informational purposes</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ruleType">
+		<xs:sequence>
+			<xs:element name="condition" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A condition consists of an expression based on facts. If true then execute the actions below.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Possibility to name a condition. setContextVars supports conditional execution.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="actions">
+				<xs:annotation>
+					<xs:documentation>These actions are executed if the above condition is fulfilled.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="pushMessage" type="conditionalBroadcastMessageType">
+							<xs:annotation>
+								<xs:documentation>Push a new message in a queue.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="dumpFile">
+							<xs:annotation>
+								<xs:documentation>Dumps the message to a file (optionally appends to an existing file).</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="context">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="entry" type="nameValueExpressionType" minOccurs="0" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="templateName" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Name of the template to be used to render the file structure.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="destinationFile" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>destination file name as EL expression</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="append" type="xs:boolean" default="false">
+									<xs:annotation>
+										<xs:documentation>Flag: if true than content will be appended to an existing file</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="encoding" type="xs:string" default="UTF-8">
+									<xs:annotation>
+										<xs:documentation>Output encoding of the dump file. Allowed values are, for example, UTF-8, ISO_8859_1, Windows-1252, ...</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="startConversation">
+							<xs:annotation>
+								<xs:documentation>Start a conversation where we iterator through a group of users until one accepts the task</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
+									<xs:element name="pushMessage" type="conditionalBroadcastMessageType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Push a new message in a queue.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="requestMessage" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Message to send to each target group member</xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="broadcastMessageType">
+													<xs:attribute name="timeout" type="ELExpression" use="required">
+														<xs:annotation>
+															<xs:documentation>Timeout for the user to answer in seconds as EL expression</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+													<xs:attribute name="parallel" type="xs:boolean" use="optional" default="true">
+														<xs:annotation>
+															<xs:documentation>Should the assignees by notified one after the other or all in parallel?</xs:documentation>
+														</xs:annotation>
+													</xs:attribute>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="acceptedMessage" type="conditionalBroadcastMessageType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Informational message to be sent to the above audience when the conversation is accepted</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="rejectedMessage" type="conditionalBroadcastMessageType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Informational message to be sent to the above audience when the conversation is rejected</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="closedMessage" type="conditionalBroadcastMessageType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Informational message to be sent to the above audience when the conversation is closed</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="expiredMessage" type="conditionalBroadcastMessageType" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>Informational message to be sent to the above audience when the conversation is expired.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="conversationMessage" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="conditionalBroadcastMessageType">
+													<xs:attribute name="accepted" type="xs:boolean" default="false"/>
+													<xs:attribute name="rejected" type="xs:boolean" default="false"/>
+													<xs:attribute name="closed" type="xs:boolean" default="false"/>
+													<xs:attribute name="expired" type="xs:boolean" default="false"/>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="executeRule" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="executeRuleType">
+													<xs:attribute name="accepted" type="xs:boolean" default="false"/>
+													<xs:attribute name="rejected" type="xs:boolean" default="false"/>
+													<xs:attribute name="closed" type="xs:boolean" default="false"/>
+													<xs:attribute name="expired" type="xs:boolean" default="false"/>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="name" use="required">
+									<xs:annotation>
+										<xs:documentation>Conversation Name. Can be referred in expressions.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="variable" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Expression variable where to store this conversation context</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="expiry" type="xs:double" default="24">
+									<xs:annotation>
+										<xs:documentation>Expiration in hours. Default is 24.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="continueConversation">
+							<xs:annotation>
+								<xs:documentation>Usually called when a user rejected the task and the next assignee is asked</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="id" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Conversation id</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="userId">
+									<xs:annotation>
+										<xs:documentation>User that accepted the conversation. Mandatory for parallel mode.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="acceptConversation">
+							<xs:annotation>
+								<xs:documentation>Usually called when a user accepted the task</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="id" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Conversation id</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="userId">
+									<xs:annotation>
+										<xs:documentation>User that accepted the conversation. Mandatory for parallel mode.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="closeConversation">
+							<xs:annotation>
+								<xs:documentation>Usually called when the conversation should be closed.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
+								</xs:sequence>
+								<xs:attribute name="id" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Conversation id</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="setGlobalVariables">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="property" type="conditionalNameValueExpressionType" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="setLocalVariables">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="property" type="conditionalNameValueExpressionType" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+								<xs:attribute name="condition" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="variable" type="xs:string" default="local"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="executeRule" type="executeRuleType"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Name of the rule - for logging and other informational purposes</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iterateOver" type="ELExpression">
+			<xs:annotation>
+				<xs:documentation>Expression which returns a list of strings which are parts of a </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iteratorVar" type="xs:string" default="each">
+			<xs:annotation>
+				<xs:documentation>EL variable to be used as iterator variable. Default is 'each'.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="internal" type="xs:boolean" default="false">
+			<xs:annotation>
+				<xs:documentation>If set to true then this rule can only be called from other rules internally - not from a message.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ruleSetType">
+		<xs:sequence>
+			<xs:element name="condition" type="ELExpression">
+				<xs:annotation>
+					<xs:documentation>Common Conditions for all rules under this rule set.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="rule" type="ruleType"/>
+				<xs:element name="ruleSet" type="ruleSetType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" use="required">
+			<xs:annotation>
+				<xs:documentation>Describes the common rule set</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="ELExpression">
+		<xs:annotation>
+			<xs:documentation>a marker that the attribute is an EL expression and not a simple string</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="nameValueExpressionType">
+		<xs:annotation>
+			<xs:documentation>A name-value type where the value can be given as simple string value or as expression.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ELExpression">
+				<xs:attribute name="name" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>Name or base name (if key is defined) of this property.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="value" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>A literal string value - provided for simplicity. Either value or expression can be set.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="expression" type="ELExpression">
+					<xs:annotation>
+						<xs:documentation>An EL expression describing the value. Must be for all non-string datatypes or if the value is resolved at runtime.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="assignNameValueExpressionType">
+		<xs:annotation>
+			<xs:documentation>A name-value type where the value can be given as simple string value or as expression.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="nameValueExpressionType">
+				<xs:attribute name="key">
+					<xs:annotation>
+						<xs:documentation>Optionally it is possible to define a dynamic key in EL. This works only if the value behind name is an associative array.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="conditionalNameValueExpressionType">
+		<xs:complexContent>
+			<xs:extension base="assignNameValueExpressionType">
+				<xs:attribute name="overwrite" type="xs:boolean" default="true">
+					<xs:annotation>
+						<xs:documentation>If false do not overwrite existing values</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="condition" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="setELContextType">
+		<xs:sequence>
+			<xs:element name="property" type="conditionalNameValueExpressionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="variable" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>EL Variable for the body structure to access it in the nested properties</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="broadcastMessageType">
+		<xs:sequence>
+			<xs:element name="baseMessage" minOccurs="0">
+				<xs:complexType>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="patchMessageBody" type="setELContextType"/>
+						<xs:element name="patchMessageBodyRef">
+							<xs:complexType>
+								<xs:attribute name="name" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:attribute name="expression" type="ELExpression" use="required">
+						<xs:annotation>
+							<xs:documentation>An EL expresision to refer to an existing message, e.g. "currentMessage"</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="prefixApplicationProperties" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>All existing properties will be prefixed to avoid naming collisions.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="extraApplicationProperties" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="property" type="nameValueExpressionType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="response" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="timeout" type="xs:long"/>
+					<xs:attribute name="responseVar" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="subject" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Define a fixed subject</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iterateOver" type="ELExpression">
+			<xs:annotation>
+				<xs:documentation>Expression which returns a list of strings which are parts of a </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iteratorVar" type="xs:string" default="each">
+			<xs:annotation>
+				<xs:documentation>EL variable to be used as iterator variable. Default is 'each'.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="address" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Queue address as expression since we never hardcode values here. Can make use of iteratorVar above.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="deliveryDelay" type="ELExpression">
+			<xs:annotation>
+				<xs:documentation>Deferred dellivery in milliseconds</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="conditionalBroadcastMessageType">
+		<xs:complexContent>
+			<xs:extension base="broadcastMessageType">
+				<xs:attribute name="condition" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="executeRuleType">
+		<xs:attribute name="name" use="required">
+			<xs:annotation>
+				<xs:documentation>Name of the rule to be executed</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="condition" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iterateOver" type="ELExpression">
+			<xs:annotation>
+				<xs:documentation>Expression which returns a list of strings which are parts of a </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="iteratorVar" type="xs:string" default="each">
+			<xs:annotation>
+				<xs:documentation>EL variable to be used as iterator variable. Default is 'each'.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>
