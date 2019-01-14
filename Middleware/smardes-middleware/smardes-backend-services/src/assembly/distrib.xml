@@ -1,0 +1,77 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+	<id>distribution</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<fileSets>
+		<fileSet>
+			<directory>${project.build.directory}/generated-sources/license</directory>
+			<outputDirectory>licenses</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}/generated-resources/licenses</directory>
+			<outputDirectory>licenses/terms</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/assembly/distrib</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>**</include>
+			</includes>
+			<excludes>
+				<exclude>bin/*.sh</exclude>
+				<exclude>bin/*.bat</exclude>
+				<exclude>bin/*.cmd</exclude>
+			</excludes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/assembly/distrib</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>bin/*.sh</include>
+			</includes>
+			<fileMode>0755</fileMode>
+			<lineEnding>unix</lineEnding>
+			<filtered>true</filtered>
+		</fileSet>
+		<fileSet>
+			<directory>${project.basedir}/src/assembly/distrib</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>bin/*.bat</include>
+				<include>bin/*.cmd</include>
+			</includes>
+			<fileMode>0755</fileMode>
+			<lineEnding>windows</lineEnding>
+			<filtered>true</filtered>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}/download/sqljdbc_4.2/enu/jre8</directory>
+		    <outputDirectory>externaldb/lib</outputDirectory>
+		    <includes>
+		    	<include>sqljdbc42.jar</include>
+		    </includes>
+		</fileSet>
+		<fileSet>
+		    <outputDirectory>log</outputDirectory>
+		    <excludes><exclude>**/*</exclude></excludes>
+		</fileSet>
+	</fileSets>
+	<dependencySets>
+		<dependencySet>
+			<!-- We usually put libs in a lib directory -->
+			<outputDirectory>lib</outputDirectory>
+
+			<!-- Add only jar dependencies, no zip or pom -->
+			<includes>
+				<include>*:*:jar</include>
+			</includes>
+
+			<!-- Make sure that snapshots are just added with "-SNAPSHOT" -->
+			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+		</dependencySet>
+	</dependencySets>
+</assembly>

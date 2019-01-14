@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2018-2019 camLine GmbH
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<rules xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+
+	<globalVariables />
+
+	<ruleGroup name="Rule Engine Requests">
+		<selector address="RuleEngine" jsonBody="true" />
+		<rule name="Chat - Nachricht senden">
+            <condition name="Chat Nachricht senden">
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'ChatSendMessage'
+            </condition>
+            <actions>
+                <startConversation name="ChatConfirmMessage" variable="cccChatConf">
+                    <setConversationContext variable="ctx">
+                        <property name="ctx.text" expression="msg.body.Resource.text"/>
+                        <property name="ctx.destination" expression="msg.body.Resource.subject"/>
+                        <property name="ctx.receivers" expression="dq:entries('maindata.devicesForUser', ctx.destination)"/>
+                        <property name="ctx.senderDevice" expression="msg.body.CreatedBy" />
+                        <property name="ctx.senderName" expression="dq:entry('maindata.nameForDevice', ctx.senderDevice)" />
+                    </setConversationContext>
+                    <pushMessage iterateOver="cccChatConf.ctx.receivers"
+						iteratorVar="device"
+                        address="global.sdgwAddress"
+                        subject="Job">
+                        <baseMessage expression="cccChatConf.triggerMessage">
+                            <patchMessageBodyRef name="NewConversationJob"/>
+                            <patchMessageBody variable="job">
+                                <property name="job.Id" expression="cccChatConf.id"/>
+                                <property name="job.Name" value="ChatConfirmMessage"/>
+                                <property name="job.AssignedTo" expression="device"/>
+                                <property name="job.Resource.text" expression="msg.body.Resource.text"/>
+                                <property name="job.Resource.subject" expression="cccChatConf.ctx.senderName"/>
+								<property name="job.Resource.list_text" expression="str:concat(cccChatConf.ctx.senderName, ': ', msg.body.Resource.text)"/>
+								<property name="job.Resource.list_title" value="Chat Nachricht"/>
+                                <property name="job.Status" value="Received" />
+                            </patchMessageBody>
+                        </baseMessage>
+                    </pushMessage>
+                    <closedMessage
+                        subject="Notification"
+                         address="global.sdgwAddress">
+                         <baseMessage expression="msg">
+                             <patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+                        </baseMessage>
+                    </closedMessage>
+                </startConversation>
+                <startConversation name="ChatSendClose" variable="cccChatConf">
+                    <pushMessage address="global.sdgwAddress">
+                        <baseMessage expression="msg">
+                            <patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+                            <patchMessageBody variable="noti">
+                                <property name="noti.Id" expression="msg.body.ReferenceId"/>
+                            </patchMessageBody>
+                        </baseMessage>
+                    </pushMessage>
+                </startConversation>
+            </actions>
+        </rule>
+
+		<ruleSet name="(3) Chat - Nachricht als gelesen bestaetigen">
+            <condition>
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'ChatConfirmMessage'
+            </condition>
+	        <rule name="CC existiert und aktiv">
+	            <condition>
+	                el:exists(cc, msg.body.ReferenceId) and not cc[msg.body.ReferenceId].state.finished
+	            </condition>
+	            <actions>
+	                <closeConversation id="msg.body.ReferenceId"/>
+	            </actions>
+	        </rule>
+	        <rule name="Kein CC">
+	            <condition>
+	                not el:exists(cc, msg.body.ReferenceId) or cc[msg.body.ReferenceId].state.finished
+	            </condition>
+	            <actions>
+                    <pushMessage address="global.sdgwAddress">
+                        <baseMessage expression="msg">
+                            <patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+                            <patchMessageBody variable="noti">
+                                <property name="noti.Id" expression="msg.body.ReferenceId"/>
+                            </patchMessageBody>
+                        </baseMessage>
+                    </pushMessage>
+	            </actions>
+	        </rule>
+		</ruleSet>
+	</ruleGroup>
+</rules>

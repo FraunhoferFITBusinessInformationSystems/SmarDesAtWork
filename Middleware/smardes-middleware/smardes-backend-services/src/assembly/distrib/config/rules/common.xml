@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2018-2019 camLine GmbH
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
+-->
+<rules xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+
+	<globalVariables>
+		<property name="global.sdgwAddress" value="sdgw" />
+	</globalVariables>
+
+	<patchMessageBodyPrototypes>
+		<patchMessageBodyPrototype name="NewConversationJob" variable="job">
+			<property name="job.Type" value="Job"/>
+			<property name="job.Status" value="Created"/>
+			<property name="job.Immediate" expression="true"/>
+			<property name="job.Priority" value="High"/>
+		</patchMessageBodyPrototype>
+		<patchMessageBodyPrototype name="ConversationReceivedStatusUpdate" variable="noti">
+			<property name="noti.Id" expression="el:get(msg.body, 'ReferenceId', null)" />
+			<property name="noti.ReferenceId" value="null" />
+			<property name="noti.Name" value="StatusUpdate" />
+			<property name="noti.Type" value="Notification" />
+			<property name="noti.Status" value="Received" />
+			<property name="noti.Resource" value="null" />
+		</patchMessageBodyPrototype>
+		<patchMessageBodyPrototype name="ConversationDoneStatusUpdate" variable="noti">
+			<property name="noti.Id" expression="el:get(msg.body, 'ReferenceId', null)" />
+			<property name="noti.ReferenceId" value="null" />
+			<property name="noti.Name" value="StatusUpdate" />
+			<property name="noti.Type" value="Notification" />
+			<property name="noti.Status" value="Done" />
+			<property name="noti.Resource" value="null" />
+		</patchMessageBodyPrototype>
+	</patchMessageBodyPrototypes>
+</rules>
