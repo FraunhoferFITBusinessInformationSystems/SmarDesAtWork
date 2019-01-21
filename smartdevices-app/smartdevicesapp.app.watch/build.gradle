@@ -1,0 +1,145 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+apply plugin: 'com.android.application'
+apply plugin: 'com.github.jk1.dependency-license-report'
+apply plugin: "com.github.hierynomus.license"
+apply plugin: 'com.google.gms.google-services'
+
+def buildToolsVersion_ =  project.buildToolsVersion
+def compileSdkVersion_ =  project.compileSdkVersion
+android {
+    buildToolsVersion buildToolsVersion_
+    compileSdkVersion compileSdkVersion_
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        applicationId "de.vogler_engineering.smartdevicesapp.app.watch"
+
+        versionCode getAppVersionCode()
+        versionName getAppVersionName(versionCode)
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            versionNameSuffix '-release'
+//            signingConfig signingConfigs.config
+        }
+        debug {
+            versionNameSuffix '-debug'
+        }
+    }
+
+    compileOptions {
+        targetCompatibility project.javaVersionCompatibility
+        sourceCompatibility project.javaVersionCompatibility
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+    def outputPathName = "../../../../../apks/"
+    def outputFileName = "smartdevicesapp.app.watch.${defaultConfig.versionName}"
+    applicationVariants.all { variant ->
+        def outputFileSuffix = "-${variant.name}"
+        variant.outputs.all { output ->
+            output.outputFileName = new File("${outputPathName}${outputFileName}${outputFileSuffix}.apk")
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation "junit:junit:$project.junitTestVersion"
+    testImplementation "org.mockito:mockito-core:$project.mokitoTestVersion"
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    compileOnly    "com.google.android.wearable:wearable:$project.androidWearableVersion"
+    implementation "com.google.android.support:wearable:$project.androidWearableVersion"
+
+    implementation "com.google.android.gms:play-services-wearable:$project.androidWearablePlayServices"
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.percentlayout:percentlayout:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'androidx.preference:preference:1.0.0-beta01'
+    implementation 'androidx.wear:wear:1.0.0'
+
+    implementation "com.google.firebase:firebase-messaging:$project.firebaseMessagingVersion"
+
+    // Dagger core
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    // if you are not using support library, include this instead
+    implementation "com.google.dagger:dagger-android:$project.daggerVersion"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
+
+    //Retrofit & Jackson Converter
+    api "com.squareup.retrofit2:retrofit:$project.retrofit2Version"
+    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: project.retrofit2Version
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofit2Version"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
+    implementation "com.jakewharton.rxbinding2:rxbinding:$project.rxBinding"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+
+    //Lombok
+    compileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$project.lombokVersion"
+
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+    // Modules
+    implementation project(path: ':smartdevicesapp.common')
+    implementation project(path: ':smartdevicesapp.model')
+    implementation project(path: ':smartdevicesapp.viewelements')
+}
+
+repositories {
+    mavenCentral()
+}
+
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders false
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

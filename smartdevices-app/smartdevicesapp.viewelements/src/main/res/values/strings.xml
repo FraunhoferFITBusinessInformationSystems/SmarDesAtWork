@@ -1,0 +1,131 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<!-- TODO Translate this to english -->
+<resources>
+    <string name="app_name">SmarDe´s@Work</string>
+
+    <!-- Dialogs Buttons -->
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_no">Nein</string>
+    <string name="dialog_accept">OK</string>
+    <string name="dialog_dismiss">Abbrechen</string>
+
+    <!-- Toast Messages -->
+    <string name="job_toast_sending_successfull">Erfolgreich versendet!</string>
+    <string name="job_toast_sending_unsuccessfull">Fehler beim Senden!</string>
+    <string name="job_toast_open_failure">Fehler: Auftrag konnte nicht geöffnet werden.</string>
+    <string name="job_toast_sending_canceled">Abbgebrochen</string>
+    <string name="todo_step_toast_open_failure">Fehler: Eintrag konnte nicht geöffnet werden.</string>
+
+    <!-- Strings related to Settings and Preference Screens -->
+    <string name="pref_title_connection_settings">Verbindung</string>
+    <string name="pref_label_server_address">Server Addresse</string>
+    <string name="pref_label_server_port">Server Port</string>
+    <string name="pref_title_user_settings">Benutzer</string>
+    <string name="pref_label_username">Benutzername</string>
+    <string name="pref_label_device_id">Device Id</string>
+    <string name="pref_title_user_notifications">Benachrichtigungstöne</string>
+    <string name="pref_label_notification_default">Standardbenachrichtigung</string>
+    <string name="pref_label_notification_pattern1">Benachrichtigung Muster 1</string>
+    <string name="pref_label_notification_pattern2">Benachrichtigung Muster 2</string>
+    <string name="pref_label_notification_pattern3">Benachrichtigung Muster 3</string>
+    <string name="pref_label_notification_settings_link">Systemeinstellungen</string>
+
+    <!-- Online state strings -->
+    <string name="enum_online_state_online">Verbunden</string>
+    <string name="enum_online_state_pending">verbinden…</string>
+    <string name="enum_online_state_offline">keine Verbindung</string>
+
+    <!-- Strings related to Notifications and Notification Channels -->
+    <string name="notification_default_channel_name">Standard Benachrichtigung</string>
+    <string name="notification_default_channel_description">Standard Benachrichtigungen für SmartDevices-App</string>
+    <string name="notification_default_text">Neue Daten liegen vor.</string>
+    <string name="notification_default_title">SmarDe\'s</string>
+
+    <string name="notification_pattern1_channel_name">Benachrichtigungsmuster 1 (Info)</string>
+    <string name="notification_pattern1_channel_description">Benachrichtigungsmuster 1 (Info) für SmartDevices-App</string>
+    <string name="notification_pattern1_text">Neue Daten liegen vor.</string>
+    <string name="notification_pattern1_title">SmarDe\'s - Info</string>
+
+    <string name="notification_pattern2_channel_name">Benachrichtigungsmuster 2 (Warnung)</string>
+    <string name="notification_pattern2_channel_description">Benachrichtigungsmuster 2 (Warnung) für SmartDevices-App</string>
+    <string name="notification_pattern2_text">Neue Daten liegen vor.</string>
+    <string name="notification_pattern2_title">SmarDe\'s - Warnung</string>
+
+    <string name="notification_pattern3_channel_name">Benachrichtigungsmuster 3 (Störung)</string>
+    <string name="notification_pattern3_channel_description">Benachrichtigungsmuster 3 (Störung) für SmartDevices-App</string>
+    <string name="notification_pattern3_text">Neue Daten liegen vor.</string>
+    <string name="notification_pattern3_title">SmarDe\'s - Störung</string>
+
+
+    <!--Option Menu-->
+    <string name="option_sorting">Sortierung</string>
+    <string name="option_sort_asc">Aufsteigend</string>
+    <string name="option_sort_dec">Absteigend</string>
+    <string name="option_filter">Filter</string>
+    <string name="option_filter_excluding">Ausschließend</string>
+    <string name="option_page_number">Seite</string>
+    <string name="option_page_size">Artikel pro Seite</string>
+    <string name="option_filter_state">Statusfilter</string>
+    <string name="configurable_dialog_inverted_cb_text">Ausschließend</string>
+    <string name="configurable_dialog_no_filters">Keine Filteroptionen möglich.</string>
+    <string name="configurable_dialog_no_sorts">Keine Sortieroptionen vorhanden.</string>
+    <string name="configurable_dialog_sort_orientation">Sortierreihenfolge</string>
+    <string name="configurable_dialog_sort_orientation_asc">Aufsteigend</string>
+    <string name="configurable_dialog_sort_orientation_desc">Absteigend</string>
+    <string name="configurable_filter_dialog">Filter für %s</string>
+    <string name="configurable_sort_dialog">Sortierung für %s</string>
+
+    <!-- Strings related to Configurable Components -->
+    <string name="comp_value_monitor_nominal_label">Soll-Wert:</string>
+    <string name="comp_value_monitor_actual_label">Ist-Wert:</string>
+    <string name="comp_graph_display_nominal_label">Soll:</string>
+    <string name="comp_graph_display_actual_label">Ist:</string>
+    <string name="component_picture_input_add_image">aufnehmen</string>
+    <string name="component_picture_input_remove_image">entfernen</string>
+    <string name="component_picture_input_add">Bild hinzufügen:</string>
+    <string name="comp_external_url_link_error">Fehler beim öffnen des Links.</string>
+    <string name="component_barcode_input_scan_button">Barcode Scannen</string>
+    <string name="component_barcode_input_scan_text">Scannen sie einen Barcode ein!</string>
+
+    <!-- Strings related to Views -->
+    <string name="view_no_connection_subtitle">Verbindung zum Server konnte nicht hergestellt werden.</string>
+    <string name="view_no_connection_title">Offline</string>
+    <string name="view_no_data_title">Keine Daten</string>
+    <string name="view_no_data_subtitle">Es gibt nichts anzuzeigen. Überprüfen sie die Konfiguration.</string>
+    <string name="view_error_image_text">Fehler beim Laden</string>
+    <string name="view_error_text">Fehler</string>
+    <string name="view_error_subtext">Ressource konnte nicht geladen werden.</string>
+    <!-- TodoCard View -->
+    <string name="view_todo_card_numbering">%1$d/%2$d</string>
+    <string name="view_todo_card_not_finished_text">Abschließen</string>
+    <string name="view_todo_card_finished_text">Abgeschlossen</string>
+    <string name="view_todo_card_undo_button">Rückgängig</string>
+    <string name="view_todo_card_nav_prev">Vorheriger\nSchritt</string>
+    <string name="view_todo_card_nav_next">Nächster\nSchritt</string>
+    <!-- TodoOverview View -->
+    <string name="view_todo_list_close_button_text">Liste Abschließen</string>
+    <string name="view_todo_list_close_toast">Liste erfolgreich abgeschlossen</string>
+    <string name="view_todo_list_close_error_toast">Fehler beim schließen der Liste</string>
+
+    <string name="value_display_text_normal">Normal</string>
+    <string name="value_display_text_warning">Warnung</string>
+    <string name="value_display_text_info">Info</string>
+    <string name="value_display_text_error">Fehler</string>
+
+
+    <!-- Other strings -->
+    <string name="file_upload_service_title">Dateiupload</string>
+    <string name="view_todo_list_abort_button_text">Löschen</string>
+    <string name="view_todo_list_forward_list_button_text">Weiterleiten</string>
+    <string name="view_todo_list_abort_dialog_title">Liste abbrechen</string>
+    <string name="view_todo_list_abort_dialog_text">Warnung, aller Fortschritt wird dabei gelöscht!</string>
+    <string name="view_todo_list_forward_dialog_text">Soll die Liste wirklich weitergeleitet werden?</string>
+    <string name="view_todo_list_forward_dialog_title">Weiterleiten der Liste</string>
+    <string name="view_todo_list_close_dialog_text">Soll die Liste abgeschlossen werden?</string>
+    <string name="view_todo_list_close_dialog_title">Liste Abschließen</string>
+</resources>

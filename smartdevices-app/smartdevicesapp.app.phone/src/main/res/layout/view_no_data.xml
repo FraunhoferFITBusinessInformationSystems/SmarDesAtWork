@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/view_no_data_image"
+
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_layers_clear_black_24dp"
+        android:tint="@color/textSuperLight"
+        android:contentDescription="@string/view_no_data_title" />
+
+    <TextView
+        android:id="@+id/view_no_data_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_no_data_image"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:scrollHorizontally="false"
+        android:text="@string/view_no_data_title"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textColor="@color/textSuperLight" />
+
+    <TextView
+        android:id="@+id/view_data_subtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/view_no_data_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:maxLines="5"
+        android:scrollHorizontally="false"
+        android:text="@string/view_no_data_subtitle"
+        android:textAlignment="center"
+        android:textSize="17sp"
+        android:textColor="@color/textSuperLight"/>
+
+</RelativeLayout>

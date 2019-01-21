@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_title_connection_settings"
+        android:key="pref_category_general">
+
+        <EditTextPreference
+            android:defaultValue="http://192.168.100.10"
+            android:inputType="text"
+            android:key="pref_key_general_server_address"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:title="@string/pref_label_server_address" />
+
+        <EditTextPreference
+            android:key="pref_key_general_server_port"
+            android:title="@string/pref_label_server_port"
+            android:inputType="number"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:defaultValue="7000" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_title_user_settings"
+        android:key="pref_category_user">
+        <EditTextPreference
+            android:key="pref_key_general_username"
+            android:title="@string/pref_label_username"
+            android:inputType="text"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:defaultValue="log2" />
+
+        <EditTextPreference
+            android:key="pref_key_general_device_id"
+            android:title="@string/pref_label_device_id"
+            android:inputType="text"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:defaultValue="B" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_title_user_notifications"
+        android:key="pref_category_notifications">
+        <Preference
+            android:key="pref_key_notification_default"
+            android:title="@string/pref_label_notification_default"
+            android:ringtoneType="alarm|ringtone|notification"
+            android:showDefault="true" />
+        <Preference
+            android:key="pref_key_notification_pattern1"
+            android:title="@string/pref_label_notification_pattern1"
+            android:ringtoneType="alarm|ringtone|notification"
+            android:showDefault="true" />
+        <Preference
+            android:key="pref_key_notification_pattern2"
+            android:title="@string/pref_label_notification_pattern2"
+            android:ringtoneType="alarm|ringtone|notification"
+            android:showDefault="true" />
+        <Preference
+            android:key="pref_key_notification_pattern3"
+            android:title="@string/pref_label_notification_pattern3"
+            android:ringtoneType="alarm|ringtone|notification"
+            android:showDefault="true" />
+        <Preference
+            android:enabled="true"
+            android:key="pref_key_notification_settings_link"
+            android:title="@string/pref_label_notification_settings_link" />
+    </PreferenceCategory>
+    <Preference
+        android:selectable="false"
+        android:enabled="false"
+        android:key="pref_key_bottom_spacer" />
+</PreferenceScreen>

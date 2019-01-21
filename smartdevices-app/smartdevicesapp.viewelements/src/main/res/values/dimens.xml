@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<resources>
+    <dimen name="component_picture_input_thumbnail_dimensions">120dp</dimen>
+    <dimen name="component_picture_list_thumbnail_size">100dp</dimen>
+    <dimen name="component_picture_list_selection_border">2dp</dimen>
+
+    <dimen name="material_typography_body1">15sp</dimen>
+    <dimen name="material_typography_body2">15sp</dimen>
+    <dimen name="material_typography_button">15sp</dimen>
+    <dimen name="material_typography_caption">13sp</dimen>
+    <dimen name="material_typography_display1">34sp</dimen>
+    <dimen name="material_typography_display2">45sp</dimen>
+    <dimen name="material_typography_display3">56sp</dimen>
+    <dimen name="material_typography_display4">112sp</dimen>
+    <dimen name="material_typography_headline">24sp</dimen>
+    <dimen name="material_typography_subheading">17sp</dimen>
+    <dimen name="material_typography_title">21sp</dimen>
+</resources>

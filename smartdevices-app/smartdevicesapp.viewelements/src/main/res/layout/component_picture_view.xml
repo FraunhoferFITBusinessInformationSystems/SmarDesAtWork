@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<ListView xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:id="@+id/pictures_view_component_list"-->
+        <!--android:name="de.vogler_engineering.smartdevicesapp.view.components.PicturesViewComponentFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginLeft="8dp"-->
+        <!--android:layout_marginRight="8dp"-->
+        <!--app:layoutManager="LinearLayoutManager"-->
+        <!--tools:context="de.vogler_engineering.smartdevicesapp.view.components.PicturesViewComponentFragment"-->
+        <!--tools:listitem="@layout/fragment_pictures_view_entry" />-->
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--xmlns:tools="http://schemas.android.com/tools"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbarAlwaysDrawVerticalTrack="true">-->
+
+            <!--<ImageView-->
+                <!--android:id="@+id/picture_view_component_image_view"-->
+                <!--android:adjustViewBounds="true"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:scrollbars="vertical">-->
+
+            <!--</ImageView>-->
+
+        <!--</ScrollView>-->
+    <!--</FrameLayout>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

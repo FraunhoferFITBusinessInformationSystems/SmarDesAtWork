@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+android:tint="#0277bd"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<solid android:color="#0277bd" />
+
+</shape>

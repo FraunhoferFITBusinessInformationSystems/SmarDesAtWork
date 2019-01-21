@@ -1,0 +1,16 @@
+
+
+.git
+.gradle
+.idea
+apks
+gradle
+smartdevicesapp.app.navigationtest/build
+smartdevicesapp.app.watch/build
+smartdevicesapp.app.phone/build
+smartdevicesapp.app.phonetest/build
+smartdevicesapp.common/build
+smartdevicesapp.model/build
+smartdevicesapp.service/build
+smartdevicesapp.viewelements/build
+

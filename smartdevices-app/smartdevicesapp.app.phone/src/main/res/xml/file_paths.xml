@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<external-path name="picture_dir" path="Android/data/de.vogler_engineering.apps.test.cameratest01/files/Pictures" />-->
+    <!--<external-path name="images_sent" path="images/sent/" />-->
+    <!--<external-path name="images_received" path="images/received/" />-->
+    <!--<external-path name="images_received2" path="files/Pictures/" />-->
+    <!--<external-files-path name="my_images" path="Pictures"/>-->
+
+    <external-path name="images_sent" path="Android/data/de.vogler_engineering.smartdevicesapp/files/Pictures/Sent/" />
+    <external-path name="images_received" path="Android/data/de.vogler_engineering.smartdevicesapp/files/Pictures/Received/" />
+</paths>

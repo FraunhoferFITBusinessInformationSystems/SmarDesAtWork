@@ -1,0 +1,130 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+apply plugin: 'com.android.library'
+apply plugin: "com.github.hierynomus.license"
+
+android {
+    compileSdkVersion project.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+        }
+    }
+    compileOptions {
+        targetCompatibility project.javaVersionCompatibility
+        sourceCompatibility project.javaVersionCompatibility
+    }
+    lintOptions {
+        abortOnError false
+    }
+    defaultPublishConfig "debug"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.preference:preference:1.0.0-beta01'
+
+    testImplementation "junit:junit:$project.junitTestVersion"
+    testImplementation "org.mockito:mockito-core:$project.mokitoTestVersion"
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    implementation "com.google.firebase:firebase-messaging:$project.firebaseMessagingVersion"
+
+    // Dagger core
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    // if you are not using support library, include this instead
+    implementation "com.google.dagger:dagger-android:$project.daggerVersion"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
+    implementation "com.jakewharton.rxbinding2:rxbinding:$project.rxBinding"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$project.lombokVersion"
+
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+    // ZXING Barcode Reader
+    implementation "com.journeyapps:zxing-android-embedded:$project.zxingAndroidVersion"
+
+    // Material Design Dimensions and Colors
+    implementation 'com.dmitrymalkovich.android:material-design-dimens:1.4'
+
+    // Picasso Image downloading and caching library
+    implementation "com.squareup.picasso:picasso:$project.picassoVersion"
+
+    // Graph Library
+    implementation 'com.jjoe64:graphview:4.2.2'
+
+    // Modules
+//    implementation project(path: ':smartdevicesapp.common', configuration: 'default')
+//    implementation project(path: ':smartdevicesapp.model', configuration: 'default')
+
+    implementation project(path: ':smartdevicesapp.common')
+//    debugImplementation project(path: ':smartdevicesapp.common', configuration: 'debug')
+//    releaseImplementation project(path: ':smartdevicesapp.common')
+//    testImplementation project(path: ':smartdevicesapp.common', configuration: 'debug')
+//    androidTestImplementation project(path: ':smartdevicesapp.common', configuration: 'debug')
+
+    implementation project(path: ':smartdevicesapp.model')
+}
+repositories {
+    mavenCentral()
+}
+
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders true
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

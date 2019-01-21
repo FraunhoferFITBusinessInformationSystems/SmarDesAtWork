@@ -1,0 +1,179 @@
+[
+  {
+    "entry": {
+      "immediate": true,
+      "resource": {
+        "list_title": "Lieferauftrag",
+        "list_text": "Von: Maschine XY - Zu: Instandhaltung",
+        "timeoffset": "0",
+        "subject": "Maschine XY",
+        "destination": "Instandhaltung",
+        "description": "test",
+        "source": "Maschine XY",
+        "priority": "Normal",
+        "helpRequested": "false",
+        "text": "Von: Maschine XY - Zu: Instandhaltung",
+        "time": "2018-09-12T15:36:25.506+02:00",
+        "informations": "123456789"
+      },
+      "status": "Created",
+      "id": "a2da9742-8d12-43c8-9139-e37634fd9418",
+      "referenceId": "ead90073-cc98-497b-b7cf-fd6ae765112f",
+      "priority": "High",
+      "name": "WzLiefern",
+      "createdBy": "pm1.A",
+      "createdAt": "2018-09-12T15:36:25",
+      "assignedTo": "log1.B",
+      "assignedAt": "0001-01-01T00:00:00",
+      "type": "Job"
+    }
+  },
+  {
+    "entry": {
+      "liteDbId": 22,
+      "immediate": true,
+      "resource": {
+        "list_title": "Lieferauftrag",
+        "list_text": "Von: Maschine XY - Zu: Instandhaltung",
+        "timeoffset": "0",
+        "subject": "Maschine XY",
+        "destination": "Instandhaltung",
+        "description": "test",
+        "source": "Maschine XY",
+        "priority": "Normal",
+        "helpRequested": "false",
+        "text": "Von: Maschine XY - Zu: Instandhaltung",
+        "time": "2018-09-12T15:36:25.506+02:00",
+        "informations": "123456789"
+      },
+      "status": "Created",
+      "id": "a2da9742-8d12-43c8-9139-e37634fd9418",
+      "referenceId": "ead90073-cc98-497b-b7cf-fd6ae765112f",
+      "priority": "High",
+      "name": "WzLiefern",
+      "createdBy": "pm1.A",
+      "createdAt": "2018-09-12T15:36:25",
+      "assignedTo": "log1.B",
+      "assignedAt": "0001-01-01T00:00:00",
+      "type": "Job"
+    }
+  },
+  {
+    "entry": {
+      "immediate": true,
+      "resource": {
+        "list_title": "Lieferauftrag",
+        "list_text": "Von: Exzenter 60 - Zu: Instandhaltung",
+        "timeoffset": "0",
+        "subject": "Exzenter 60",
+        "destination": "Instandhaltung",
+        "description": "foobar",
+        "source": "Exzenter 60",
+        "priority": "Wichtig",
+        "helpRequested": "false",
+        "text": "Von: Exzenter 60 - Zu: Instandhaltung",
+        "time": "2018-09-12T15:35:47.142+02:00",
+        "informations": "999999"
+      },
+      "status": "Created",
+      "id": "d1441859-e944-4c54-9bbd-8b9d4b943462",
+      "referenceId": "319cdd3d-94d3-4e07-9bf6-e3af188d0e3c",
+      "priority": "High",
+      "name": "WzLiefern",
+      "createdBy": "pm1.A",
+      "createdAt": "2018-09-12T15:35:47",
+      "assignedTo": "log1.B",
+      "assignedAt": "0001-01-01T00:00:00",
+      "type": "Job"
+    }
+  },
+  {
+    "entry": {
+      "liteDbId": 14,
+      "immediate": true,
+      "resource": {
+        "list_title": "Lieferauftrag",
+        "list_text": "Von: Exzenter 60 - Zu: Instandhaltung",
+        "timeoffset": "0",
+        "subject": "Exzenter 60",
+        "destination": "Instandhaltung",
+        "description": "foobar",
+        "source": "Exzenter 60",
+        "priority": "Wichtig",
+        "helpRequested": "false",
+        "text": "Von: Exzenter 60 - Zu: Instandhaltung",
+        "time": "2018-09-12T15:35:47.142+02:00",
+        "informations": "999999"
+      },
+      "status": "Created",
+      "id": "d1441859-e944-4c54-9bbd-8b9d4b943462",
+      "referenceId": "319cdd3d-94d3-4e07-9bf6-e3af188d0e3c",
+      "priority": "High",
+      "name": "WzLiefern",
+      "createdBy": "pm1.A",
+      "createdAt": "2018-09-12T15:35:47",
+      "assignedTo": "log1.B",
+      "assignedAt": "0001-01-01T00:00:00",
+      "type": "Job"
+    }
+  },
+  {
+    "entry": {
+      "immediate": true,
+      "resource": {
+        "list_title": "Lieferauftrag",
+        "list_text": "Von: Raster 250 - Zu: Instandhaltung",
+        "timeoffset": "0",
+        "subject": "Raster 250",
+        "destination": "Instandhaltung",
+        "description": "1234",
+        "source": "Raster 250",
+        "priority": "Normal",
+        "helpRequested": "false",
+        "text": "Von: Raster 250 - Zu: Instandhaltung",
+        "time": "2018-09-12T15:35:33.855+02:00",
+        "informations": "test"
+      },
+      "status": "Created",
+      "id": "8ad42a6b-b8bb-4432-aa9f-f58b2cbbc9be",
+      "referenceId": "de575475-d59d-4602-84e1-9c82244d6473",
+      "priority": "High",
+      "name": "WzLiefern",
+      "createdBy": "pm1.A",
+      "createdAt": "2018-09-12T15:35:33",
+      "assignedTo": "log1.B",
+      "assignedAt": "0001-01-01T00:00:00",
+      "type": "Job"
+    }
+  },
+  {
+    "entry": {
+      "liteDbId": 6,
+      "immediate": true,
+      "resource": {
+        "list_title": "Lieferauftrag",
+        "list_text": "Von: Raster 250 - Zu: Instandhaltung",
+        "timeoffset": "0",
+        "subject": "Raster 250",
+        "destination": "Instandhaltung",
+        "description": "1234",
+        "source": "Raster 250",
+        "priority": "Normal",
+        "helpRequested": "false",
+        "text": "Von: Raster 250 - Zu: Instandhaltung",
+        "time": "2018-09-12T15:35:33.855+02:00",
+        "informations": "test"
+      },
+      "status": "Created",
+      "id": "8ad42a6b-b8bb-4432-aa9f-f58b2cbbc9be",
+      "referenceId": "de575475-d59d-4602-84e1-9c82244d6473",
+      "priority": "High",
+      "name": "WzLiefern",
+      "createdBy": "pm1.A",
+      "createdAt": "2018-09-12T15:35:33",
+      "assignedTo": "log1.B",
+      "assignedAt": "0001-01-01T00:00:00",
+      "type": "Job"
+    }
+  }
+]

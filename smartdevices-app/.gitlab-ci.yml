@@ -1,0 +1,85 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  tags:
+   - jdk
+   - gradle
+  script:
+  - dir
+  - echo %CI_PROJECT_NAME%
+  - echo %CI_BUILD_REF_NAME%
+  - echo %CI_PIPELINE_ID%
+  - echo %CI_PIPELINE_IID%
+# For Windows:
+# Provide short gradle cache path because windows max path length
+# make sure the windows runner does have 'git config --system core.longpaths true' set.
+# - gradlew.bat assembleDebug -x lint -g C:\gitlab-runner\tmp\gradle-cache -PbuildNumber=%CI_PIPELINE_IID% -s
+#  - gradlew.bat assembleDebug -x lint -PbuildNumber=%CI_PIPELINE_IID% -s
+#  - gradlew.bat assembleDebug -x lint -PbuildNumber=%CI_PIPELINE_IID% -s --no-daemon
+  - gradlew.bat assembleDebug -x lint -g C:\tmp\gradle-cache -PbuildNumber=%CI_PIPELINE_IID%
+#--no-build-cache
+#  - gradlew.bat assembleDebug -x lint -g C:\gitlab-runner\tmp\gradle-cache
+#  - gradlew.bat build -x lint -g C:\gitlab-runner\tmp\gradle-cache
+# For Linux:
+#  - gradlew build -x lint
+#  - gradlew build -x lint -g ./gradle-cache --info
+  artifacts:
+    paths:
+    - apks/
+  allow_failure: true
+    
+    
+buildlinux:
+  stage: build
+  tags:
+   - linux
+   - docker
+  image: thyrlian/android-sdk
+  variables:
+    GIT_SSL_NO_VERIFY: "true"
+  script:
+  - echo $CI_PROJECT_NAME
+  - echo $CI_BUILD_REF_NAME
+  - echo $CI_PIPELINE_ID
+  - echo $CI_PIPELINE_IID
+  - echo "=${ANDROID_HOME}="
+  - ls -al $ANDROID_HOME
+  - ./gradlew build -x lint -x test
+#  - gradlew build -x lint -g ./gradle-cache --info
+  artifacts:
+    paths:
+    - apks/
+  allow_failure: true
+  when: manual
+    
+    
+test:
+  stage: test
+  tags:
+   - jdk
+   - gradle
+  script:
+  - gradlew.bat test -g C:\tmp\gradle-cache -PbuildNumber=%CI_PIPELINE_IID%
+#  - gradlew.bat test -g C:\gitlab-runner\tmp\gradle-cache -s --no-daemon
+#--no-build-cache
+  - script/build.cmd
+  dependencies:
+  - build
+  
+testlinux:
+  stage: test
+  tags:
+   - linux
+   - java
+   - gradle
+  variables:
+    ANDROID_HOME: /usr/lib/android-sdk
+  script:
+  - ./gradlew test -PbuildNumber=$CI_PIPELINE_IID
+  dependencies:
+  - build
+  when: manual

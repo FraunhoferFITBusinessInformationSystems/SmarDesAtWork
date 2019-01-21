@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+
+    <item android:drawable="@drawable/ic_photo_placeholder"
+        android:bottom="15dp"
+        android:end="10dp"/>
+
+    <item android:drawable="@drawable/ic_report_problem_black_24dp"
+        android:top="12dp"
+        android:start="12dp"
+        android:height="14dp"
+        android:width="14dp" />
+
+</layer-list>
