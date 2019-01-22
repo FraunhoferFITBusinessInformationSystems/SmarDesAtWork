@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/view_todo_list_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:minHeight="32dp"
+            android:textColor="@color/textDarkPrimary"
+            android:textSize="@dimen/material_typography_headline"
+            tools:text="Header Text" />
+
+        <TextView
+            android:id="@+id/view_todo_list_subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="1dp"
+            android:minHeight="23dp"
+            android:textColor="@color/textDarkSecondary"
+            android:textSize="@dimen/material_typography_subheading"
+            tools:text="Secondary Text" />
+
+        <GridLayout
+            android:id="@+id/view_todo_list_info_grid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alignmentMode="alignBounds"
+            android:layout_marginTop="8dp"
+            android:numColumns="2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="Auftragsnummer:" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="Gestartet um:" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="Gestartet durch:" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:text="Notizen:" />
+
+        </GridLayout>
+
+        <LinearLayout
+            android:id="@+id/view_todo_list_component_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/textDarkDisabled" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/textDarkDisabled" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/view_todo_list_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/component_toggleable_entry" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/view_todo_list_close_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/textDarkDisabled"
+            android:drawableEnd="@drawable/ic_check_circle_white_24dp"
+            android:enabled="false"
+            android:paddingStart="20dp"
+            android:paddingTop="25dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="25dp"
+            android:text="@string/view_todo_list_close_button_text"
+            android:textColor="@color/material_light_white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp">
+
+        <Button
+            android:id="@+id/view_todo_list_abort_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:layout_marginEnd="5dp"
+            android:drawableStart="@drawable/ic_delete_white_24dp"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/material_light_white"
+            android:text="@string/view_todo_list_abort_button_text"/>
+
+        <Button
+            android:id="@+id/view_todo_list_forward_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:layout_marginStart="5dp"
+            android:drawableStart="@drawable/ic_call_made_white_24dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@color/material_light_white"
+            android:text="@string/view_todo_list_forward_list_button_text"
+            />
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

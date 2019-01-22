@@ -1,0 +1,139 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+apply plugin: 'com.android.library'
+apply plugin: "com.github.hierynomus.license"
+
+android {
+    buildToolsVersion project.buildToolsVersion
+    compileSdkVersion project.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+        }
+        debug {
+            matchingFallbacks = ['debug']
+        }
+    }
+    compileOptions {
+        targetCompatibility project.javaVersionCompatibility
+        sourceCompatibility project.javaVersionCompatibility
+    }
+    dataBinding {
+        enabled = true
+    }
+    lintOptions {
+        abortOnError false
+    }
+    defaultPublishConfig "debug"
+//    testOptions {
+//        unitTests.all {
+//
+//            ///apply test parameters
+//        }
+//    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+
+    testImplementation "junit:junit:$project.junitTestVersion"
+    testImplementation "org.mockito:mockito-core:$project.mokitoTestVersion"
+
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Dagger core
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    // if you are not using support library, include this instead
+    implementation "com.google.dagger:dagger-android:$project.daggerVersion"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+    testImplementation "net.lachlanmckee:timber-junit-rule:$project.timberJunitRule"
+
+    //Lombok
+    compileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    testCompileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$project.lombokVersion"
+    testAnnotationProcessor "org.projectlombok:lombok:$project.lombokVersion"
+
+    //Retrofit & Jackson Converter
+    api "com.squareup.retrofit2:retrofit:$project.retrofit2Version"
+    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: project.retrofit2Version
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofit2Version"
+    testImplementation "com.squareup.retrofit2:retrofit-mock:$project.retrofit2Version"
+
+    // Picasso Image downloading and caching library
+    implementation "com.squareup.picasso:picasso:$project.picassoVersion"
+
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+    testImplementation 'androidx.arch.core:core-testing:2.0.0'
+
+    // RxJava support for Room
+    implementation 'androidx.room:room-rxjava2:2.1.0-alpha03'
+    androidTestImplementation 'androidx.arch.core:core-testing:2.0.0'
+
+    // Modules
+//    implementation project(path: ':smartdevicesapp.service', configuration: 'release')
+//    implementation project(path: ':smartdevicesapp.common',  configuration: 'release')
+//    implementation project(path: ':smartdevicesapp.service', configuration: 'default')
+//    implementation project(path: ':smartdevicesapp.common', configuration: 'default')
+    implementation project(path: ':smartdevicesapp.service')
+    implementation project(path: ':smartdevicesapp.common')
+    testImplementation project(path: ':smartdevicesapp.common')
+    androidTestImplementation project(path: ':smartdevicesapp.common')
+
+    implementation files('lombok.config')
+}
+
+repositories {
+    mavenCentral()
+}
+
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders false
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

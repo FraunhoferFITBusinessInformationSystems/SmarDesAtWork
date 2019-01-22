@@ -1,0 +1,53 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<resources>
+    <!-- String related to navigation-Drawer -->
+    <string name="nav_settings">Einstellungen</string>
+    <string name="nav_logout">Ausloggen</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <!-- Strings related to login -->
+    <string name="login_prompt_username">Benutzername</string>
+    <string name="login_prompt_password">Passwort</string>
+    <string name="login_prompt_devicename">Gerätename</string>
+    <string name="login_prompt_host">Hostname</string>
+    <string name="login_prompt_port">Port</string>
+    <string name="login_action_sign_in">Anmelden</string>
+
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+    <string name="login_prompt_hostname">Server Adresse</string>
+    <string name="login_prompt_hostport">Server Port</string>
+
+    <!-- Additional strings related to Preference screen -->
+    <string name="pref_title_user_design">Darstellung</string>
+    <string name="pref_title_design_drawerlayout">Drawer Layout</string>
+    <string name="pref_title_app_info">App</string>
+    <string name="pref_app_info_check_update">Updates</string>
+    <string name="pref_app_info_overview">Build-Informationen</string>
+
+    <!-- Strings related to app Update Dialog -->
+    <string name="app_update_dialog_message">Eine eine neue App-Version wurde gefunden. \n\nSoll die version \"%s\" heruntergeladen werden?</string>
+    <string name="app_update_dialog_title">App update</string>
+    <string name="app_update_toast_already_uptodate">Ihre App ist auf dem neuesten Stand!</string>
+
+    <!-- Other strings -->
+    <string name="title_settings">Einstellungen</string>
+    <string name="nav_connection">Verbunden</string>
+    <string name="filter_view_smartdevices_main">Smartdevices App</string>
+    <string name="nav_about">Über …</string>
+    <string name="pref_title_notifications">Benachrichtigungen</string>
+
+    <string name="drawer_header_main_title">smartdevices-app</string>
+    <string name="drawer_header_main_subtitle">des SmarDe\'s@Work Forschungsprojekts</string>
+</resources>

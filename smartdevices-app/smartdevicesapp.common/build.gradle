@@ -1,0 +1,92 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+apply plugin: 'com.android.library'
+apply plugin: "com.github.hierynomus.license"
+
+android {
+    buildToolsVersion project.buildToolsVersion
+    compileSdkVersion project.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+    compileOptions {
+        targetCompatibility project.javaVersionCompatibility
+        sourceCompatibility project.javaVersionCompatibility
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+        }
+        debug {
+            matchingFallbacks = ['debug']
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    lintOptions {
+        abortOnError false
+    }
+    defaultPublishConfig "debug"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation "junit:junit:$project.junitTestVersion"
+    testImplementation "org.mockito:mockito-core:$project.mokitoTestVersion"
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    // Dagger core
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+    // if you are not using support library, include this instead
+    implementation "com.google.dagger:dagger-android:$project.daggerVersion"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+
+}
+repositories {
+    mavenCentral()
+}
+
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders false
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

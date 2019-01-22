@@ -1,0 +1,25 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<FrameLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="de.vogler_engineering.smartdevicesapp.watch.ui.settings.SettingsActivity">
+
+        <FrameLayout
+            android:id="@+id/settings_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            />
+
+</FrameLayout>

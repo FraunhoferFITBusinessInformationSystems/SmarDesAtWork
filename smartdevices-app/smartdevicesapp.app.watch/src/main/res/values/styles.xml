@@ -1,0 +1,16 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<resources>
+    <style name="SmartDevicesWatchTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SmartDevicesWatchTheme.AppBarOverlay" parent="SmartDevicesTheme.AppBarOverlay" />
+    <style name="SmartDevicesWatchTheme.PopupOverlay" parent="SmartDevicesTheme.PopupOverlay" />
+</resources>

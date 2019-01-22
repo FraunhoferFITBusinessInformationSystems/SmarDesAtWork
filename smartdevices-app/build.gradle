@@ -1,0 +1,375 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+import java.text.SimpleDateFormat
+
+buildscript {
+    repositories {
+        google()
+        gradlePluginPortal()
+        jcenter()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.0-alpha06'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath 'com.google.gms:google-services:4.2.0'
+}
+}
+
+plugins {
+    id "com.github.hierynomus.license" version "0.15.0"
+    id "com.github.hierynomus.license-base" version"0.15.0"
+    id "com.github.jk1.dependency-license-report" version "1.3"
+}
+apply plugin: "com.github.hierynomus.license"
+apply plugin: 'java'
+
+project.ext {
+
+    versionMajor = 1
+    versionMinor = 0
+
+    compileSdkVersion = 28
+    minSdkVersion = 23
+    targetSdkVersion = 26
+    buildToolsVersion = "27.0.3"
+
+
+    javaVersionCompatibility = 1.8
+
+
+//    androidSupportVersion = "27.1.0"
+    androidSupportVersion = "28.0.0"
+    constraintLayoutVersion = "1.1.3"
+
+    androidWearableVersion = "2.4.0"
+    androidWearablePlayServices = "15.0.1"
+
+    firebaseMessagingVersion = "17.3.4"
+
+    junitTestVersion = "4.12"
+    mokitoTestVersion = "1.10.19"
+
+    supportTestRunnerVersion = "1.0.1"
+    supportEspressoCoreVersion = "3.0.1"
+
+    daggerVersion = "2.15"
+    butterKnifeVersion = "9.0.0-rc2"
+    rxJavaVersion = "2.1.0"
+    rxBinding = "2.1.1"
+    rxAndroidVersion = "2.0.1"
+    timberVersion = "4.6.0"
+    timberJunitRule = "1.0.1"
+    lifecycleVersion = "1.1.1"
+
+    retrofit2Version = "2.5.0"
+    picassoVersion = "2.71828"
+
+    lombokVersion = "1.16.20"
+
+    zxingAndroidVersion = "3.6.0"
+
+    roomVersion = "1.1.1"
+
+    //License Config
+    licenseHeaderFile = rootProject.file('LICENSE_HEADER.md')
+    licenseJavadocStyle = 'JAVADOC_STYLE'
+    licenseIgnoreFailures = true
+    licenseStrictCheck = true
+    licenseSkipExistingHeaders = false
+    licenseValueYear = Calendar.getInstance().get(Calendar.YEAR)
+    licenseValueName = 'Vogler Engineering GmbH'
+
+    licenseDependencyConfiguration = 'debug'
+    licenseIncludeProjectDependencies = true
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://jitpack.io' }
+    }
+
+    sourceSets {
+        intTest {
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
+        }
+    }
+
+    configurations {
+        integrationTestImplementation.extendsFrom implementation
+        integrationTestRuntimeOnly.extendsFrom runtimeOnly
+    }
+
+    ext {
+        /**
+         * Get the version code from command line param
+         *
+         * @return int If the param -PbuildNumber is present then return int value or -1
+         */
+        getBuildNumber = { ->
+            def code = project.hasProperty('buildNumber') ? project.buildNumber.toInteger() : -1
+            println "BuildNumber is set to $code"
+            return code
+        }
+
+        versionPropsFile = file('version.properties')
+        getAppVersionCode = { ->
+            def build = getBuildNumber()
+            if (build.toInteger() == -1){
+                build = readIncrementVersionCode()
+            }
+            println "VersionCode is set to $build"
+            return build
+        }
+
+        readVersionCode = { ->
+            if (versionPropsFile.canRead()) {
+                Properties versionProps = new Properties()
+                versionProps.load(new FileInputStream(versionPropsFile))
+                def code = versionProps['VERSION_CODE'].toInteger()
+                return code
+            }
+            return -1
+        }
+
+        readIncrementVersionCode = { ->
+            if (versionPropsFile.canRead()) {
+                Properties versionProps = new Properties()
+                versionProps.load(new FileInputStream(versionPropsFile))
+                def codeStr = versionProps['VERSION_CODE']
+
+                if(codeStr != null){
+                    def code = codeStr.toInteger() + 1
+                    versionProps['VERSION_CODE']=code.toString()
+                    versionProps.store(versionPropsFile.newWriter(), null)
+                    return code
+                }
+            }
+
+            //else
+            versionPropsFile.createNewFile()
+            Properties versionProps = new Properties()
+            def code = 20
+            versionProps['VERSION_CODE']=code.toString()
+            versionProps.store(versionPropsFile.newWriter(), null)
+            return code
+
+        }
+
+        getAppVersionName = { versionCode ->
+            def code = project.versionMajor + '.' + project.versionMinor + '.' + versionCode
+            println "VersionName is set to $code"
+            return code
+        }
+
+        getBuildTime = {
+            def df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            df.setTimeZone(TimeZone.getTimeZone("UTC"))
+            return df.format(new Date())
+        }
+    }
+
+    task testUnitTests(type: Test, dependsOn: test) {
+        group = "verification"
+        description = "Run all unittests in the project except long runing tests."
+        outputs.upToDateWhen { false }
+        useJUnit {
+            includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.UnitTests'
+            excludeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.SlowTests'
+        }
+    }
+
+    task testAllUnitTests(type: Test) {
+        group = "verification"
+        description = "Run all unittests in the project including long runing tests."
+        outputs.upToDateWhen { false }
+        useJUnit {
+            includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.UnitTests'
+        }
+    }
+
+    task testIntegrationTests(type: Test) {
+        group = "verification"
+        description = "Run all integrationtests in the project except long runing tests."
+        outputs.upToDateWhen { false }
+        useJUnit {
+            includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.IntegrationTests'
+            excludeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.SlowTests'
+        }
+    }
+
+    task testAllIntegrationTests(type: Test) {
+        group = "verification"
+        description = "Run all integrationtests in the project including long runing tests."
+        outputs.upToDateWhen { false }
+        useJUnit {
+            includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.IntegrationTests'
+            excludeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.SlowTests'
+        }
+
+    }
+
+//    task integrationTest2(type: Test) {
+//        description = 'Runs integration tests.'
+//        group = 'verification'
+//
+//        testClassesDirs = sourceSets.intTest.output.classesDirs
+//        classpath = sourceSets.intTest.runtimeClasspath
+//        shouldRunAfter test
+//    }
+//
+//    check.dependsOn intTest
+}
+
+subprojects {
+//    android {
+//        buildToolsVersion project.buildToolsVersion
+//        compileSdkVersion project.compileSdkVersion
+//
+//        compileOptions {
+//            targetCompatibility JavaVersion.VERSION_1_8
+//            sourceCompatibility JavaVersion.VERSION_1_8
+//        }
+//    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+//        testImplementation "junit:junit:$project.junitTestVersion"
+    }
+}
+
+
+
+//task clean(type: Delete) {
+//    delete rootProject.buildDir
+//}
+
+//task testUnitTests(type: Test, dependsOn: test) {
+//    group = "verification"
+//    description = "Run all unittests in the project except long runing tests."
+//    outputs.upToDateWhen { false }
+//    useJUnit {
+//        includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.UnitTests'
+//        excludeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.SlowTests'
+//    }
+//}
+//
+//task testAllUnitTests(type: Test) {
+//    group = "verification"
+//    description = "Run all unittests in the project including long runing tests."
+//    outputs.upToDateWhen { false }
+//    useJUnit {
+//        includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.UnitTests'
+//    }
+//}
+//
+//task testIntegrationTests(type: Test) {
+//    group = "verification"
+//    description = "Run all integrationtests in the project except long runing tests."
+//    outputs.upToDateWhen { false }
+//    useJUnit {
+//        includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.IntegrationTests'
+//        excludeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.SlowTests'
+//    }
+//}
+//
+//task testAllIntegrationTests(type: Test) {
+//    group = "verification"
+//    description = "Run all integrationtests in the project including long runing tests."
+//    outputs.upToDateWhen { false }
+//    useJUnit {
+//        includeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.IntegrationTests'
+//        excludeCategories 'de.vogler_engineering.smartdevicesapp.common.test.categories.SlowTests'
+//    }
+//}
+
+
+import com.github.jk1.license.render.*
+import com.github.jk1.license.importer.*
+
+licenseReport {
+    // Set output directory for the report data.
+    // Defaults to ${project.buildDir}/reports/dependency-license.
+    //outputDir = "$projectDir/build/licenses"
+    outputDir = "${project.buildDir}/reports/licenses"
+
+    // List the groups ids to exclude from dependency report.
+    // By default project's own group is excluded.
+    // For finer granularity, see: excludes.
+    excludeGroups = ['com.android.databinding']
+
+    // List the ids (in module:name format) to exclude from dependency report.
+    // By default excludes is empty.
+//    excludes = ['moduleGroup:moduleName']
+
+    // Set custom report renderer, implementing ReportRenderer.
+    // Yes, you can write your own to support any format necessary.
+    renderers = [
+
+            new XmlReportRenderer('third-party-libs.xml', 'Back-End Libraries'),
+//            new InventoryHtmlReportRenderer('index.html', 'Some Title', new File(projectDir,"../unknown-license-details.txt"))
+            new InventoryHtmlReportRenderer('index.html', 'Some Title')
+    ]
+
+    // Set importers to import any external dependency information, i.e. from npm.
+    // Custom importer should implement DependencyDataImporter interface.
+    //importers = [new XmlReportImporter('Frontend dependencies', file(frontend_libs.xml))]
+
+    // Select projects to examine for dependencies.
+    // Defaults to current project and all its subprojects
+    projects = [project] + project.subprojects
+
+    // Adjust the configurations to use, e.g. for Android projects.
+    //configurations = ['compile']
+    //configurations = ['ALL']
+    // Use 'ALL' to dynamically resolve all configurations:
+    configurations = ALL
+}
+
+/**
+ * Update Licence Header:
+ * 'license' and 'downloadLicense' must be in all Sub-Module build.gradle files.
+ *
+ * Following files are not automatically checked with the plugin and must be manually updated.
+ *  .gradle
+ *  .pro
+ *  AndroidManifest.xml
+ *  .properties
+ *
+ */
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders false
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    //includes(["**/*.java"])
+    //    includes(["**/*.java", "**/*.properties", "**/*.xml"])
+
+    //the source sets to apply the license to
+    //this should be enough for you, it covers all the projects source sets
+    //    sourceSets = project.sourceSets
+
+    //what style your comment should be
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

@@ -1,0 +1,72 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+apply plugin: 'java-library'
+apply plugin: "net.ltgt.apt"
+apply plugin: "com.github.hierynomus.license"
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.10"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation "junit:junit:$project.junitTestVersion"
+    testImplementation "org.mockito:mockito-core:$project.mokitoTestVersion"
+
+    // Dagger core
+    apt "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+
+    // Dagger Android
+    apt "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+
+    //Lombok
+    compileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    apt "org.projectlombok:lombok:$project.lombokVersion"
+
+    //Retrofit & Jackson Converter
+    api "com.squareup.retrofit2:retrofit:$project.retrofit2Version"
+    implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: project.retrofit2Version
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.retrofit2Version"
+}
+
+sourceCompatibility = project.javaVersionCompatibility
+targetCompatibility = project.javaVersionCompatibility
+
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders false
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

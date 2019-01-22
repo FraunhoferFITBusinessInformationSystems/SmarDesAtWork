@@ -1,0 +1,11 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<resources>
+    <style name="SmartDevicesPhoneTheme" parent="SmartDevicesTheme" />
+    <style name="SmartDevicesPhoneTheme.AppBarOverlay" parent="SmartDevicesTheme.AppBarOverlay" />
+    <style name="SmartDevicesPhoneTheme.PopupOverlay" parent="SmartDevicesTheme.PopupOverlay" />
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/smartdevices-app.iml" filepath="$PROJECT_DIR$/smartdevices-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartdevicesapp.app.phone/smartdevicesapp.app.phone.iml" filepath="$PROJECT_DIR$/smartdevicesapp.app.phone/smartdevicesapp.app.phone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartdevicesapp.app.watch/smartdevicesapp.app.watch.iml" filepath="$PROJECT_DIR$/smartdevicesapp.app.watch/smartdevicesapp.app.watch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartdevicesapp.common/smartdevicesapp.common.iml" filepath="$PROJECT_DIR$/smartdevicesapp.common/smartdevicesapp.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartdevicesapp.model/smartdevicesapp.model.iml" filepath="$PROJECT_DIR$/smartdevicesapp.model/smartdevicesapp.model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartdevicesapp.service/smartdevicesapp.service.iml" filepath="$PROJECT_DIR$/smartdevicesapp.service/smartdevicesapp.service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smartdevicesapp.viewelements/smartdevicesapp.viewelements.iml" filepath="$PROJECT_DIR$/smartdevicesapp.viewelements/smartdevicesapp.viewelements.iml" />
+    </modules>
+  </component>
+</project>

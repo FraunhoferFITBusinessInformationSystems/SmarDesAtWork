@@ -1,0 +1,152 @@
+/**
+ * Copyright (c) Vogler Engineering GmbH. All rights reserved.
+ * Licensed under the MIT License. See LICENSE.md in the project root for license information.
+ */
+apply plugin: 'com.android.application'
+apply plugin: 'com.github.jk1.dependency-license-report'
+apply plugin: "com.github.hierynomus.license"
+apply plugin: 'com.google.gms.google-services'
+
+def buildToolsVersion_ =  project.buildToolsVersion
+def compileSdkVersion_ =  project.compileSdkVersion
+android {
+    buildToolsVersion buildToolsVersion_
+    compileSdkVersion compileSdkVersion_
+    defaultConfig {
+        versionCode getAppVersionCode()
+        versionName getAppVersionName(versionCode)
+
+        minSdkVersion project.minSdkVersion
+        targetSdkVersion project.targetSdkVersion
+        applicationId "de.vogler_engineering.smartdevicesapp.app.phone"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        signingConfig signingConfigs.config
+    }
+    buildTypes {
+        release {
+
+            //true: obfuscates code and reduces apk file size (ignores unused libs, ...)
+            minifyEnabled false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //            signingConfig signingConfigs.config
+            buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + System.currentTimeMillis() + "L)"
+//            buildConfigField "String", "SERVER_URL", '"http://testing.com"'
+        }
+        debug {
+            buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + System.currentTimeMillis() + "L)"
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    def outputPathName = "../../../../../apks/"
+    def outputFileName = "smartdevicesapp.app.phone.${defaultConfig.versionName}"
+    applicationVariants.all { variant ->
+        def outputFileSuffix = "-${variant.name}"
+        variant.outputs.all { output ->
+            output.outputFileName = new File("${outputPathName}${outputFileName}${outputFileSuffix}.apk")
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.0.0-beta01'
+
+
+    testImplementation "junit:junit:$project.junitTestVersion"
+    testImplementation "org.mockito:mockito-core:$project.mokitoTestVersion"
+
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation "com.google.firebase:firebase-messaging:$project.firebaseMessagingVersion"
+
+    // Dagger core
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.daggerVersion"
+    implementation "com.google.dagger:dagger:$project.daggerVersion"
+
+    // Dagger Android
+    annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+
+    // if you are not using support library, include this instead
+    implementation "com.google.dagger:dagger-android:$project.daggerVersion"
+
+    // ButterKnife
+    implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$project.butterKnifeVersion"
+
+    // ReactiveX
+    implementation "io.reactivex.rxjava2:rxjava:$project.rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.rxAndroidVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$project.rxBinding"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$project.timberVersion"
+
+    //Lombok
+    compileOnly "org.projectlombok:lombok:$project.lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$project.lombokVersion"
+
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.0.0'
+
+    // BadgedTabLayout
+    implementation 'com.github.rahimlis:badgedtablayout:5da7ae3'
+
+    // Material Design Dimensions and Colors
+//    implementation 'com.dmitrymalkovich.android:material-design-dimens:1.4'
+
+    // ZXING Barcode Reader
+    implementation "com.journeyapps:zxing-android-embedded:$project.zxingAndroidVersion"
+
+    // Picasso Image downloading and caching library
+    implementation "com.squareup.picasso:picasso:$project.picassoVersion"
+
+    // Modules
+    implementation project(path: ':smartdevicesapp.common')
+    implementation project(path: ':smartdevicesapp.model')
+    implementation project(path: ':smartdevicesapp.viewelements')
+}
+
+repositories {
+    mavenCentral()
+}
+
+license {
+    header = rootProject.file('LICENSE_HEADER.md')
+
+    ignoreFailures false
+    strictCheck true
+    skipExistingHeaders false
+
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'Vogler Engineering GmbH'
+
+    mapping {
+        java = 'JAVADOC_STYLE'
+    }
+}
+
+downloadLicenses {
+    dependencyConfiguration = 'debug'
+    includeProjectDependencies true
+}

@@ -1,0 +1,21 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<resources>
+    <string name="app_name">SmartDevicesApp.Model</string>
+    <string name="job_status_enum_created">Neu</string>
+    <string name="job_status_enum_done">Erledigt</string>
+    <string name="job_status_enum_closed">Abgeschlossen</string>
+    <string name="job_status_enum_in_progress">In Bearbeitung</string>
+    <string name="job_status_enum_started">Begonnen</string>
+    <string name="job_status_enum_received">Empfangen</string>
+
+    <string name="enum_online_state_online">verbunden</string>
+    <string name="enum_online_state_pending">verbinden…</string>
+    <string name="enum_online_state_offline">keine Verbindung</string>
+
+
+</resources>

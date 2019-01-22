@@ -1,0 +1,35 @@
+<!--
+
+    Copyright (c) Vogler Engineering GmbH. All rights reserved.
+    Licensed under the MIT License. See LICENSE.md in the project root for license information.
+
+-->
+<!-- TODO Translate this to english -->
+<resources>
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="default_notification_channel_name" translatable="false">fcm_default_channel_name</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_detail">Auftrag</string>
+    <string name="activity_detail_abholungsort">Abholungsort (Von)</string>
+    <string name="activity_detail_lieferort">Lieferort (Zu)</string>
+    <string name="activity_detail_abholung">Abholung (Am|Um)</string>
+    <string name="activity_detail_infos">Weitere Informationen</string>
+
+    <string name="drawer_entry_settings">Einstellungen</string>
+
+
+    <string name="title_settings">Einstellungen</string>
+
+
+    <string name="app_icon_description">App icon</string>
+
+    <string name="drawer_entry_update">Aktualisieren</string>
+
+    <string name="filter_view_smartdevices_main">Smartdevices App</string>
+
+    <!-- Strings related to Views -->
+    <string name="view_no_connection_text">Keine Verbindung</string>
+    <string name="view_no_data_text">Keine Daten vorhanden.</string>
+
+</resources>
