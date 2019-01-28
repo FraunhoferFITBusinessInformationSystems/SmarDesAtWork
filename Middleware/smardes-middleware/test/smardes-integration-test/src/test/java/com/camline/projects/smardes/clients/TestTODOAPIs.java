@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2018-2019 camLine GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -95,7 +95,12 @@ public class TestTODOAPIs {
 	public void testCloseInstance() throws JMSException {
 		UUID instanceId = startInstance(null);
 		List<Map<String, Object>> steps = apiInvoker.eval("steps");
-		boolean success = closeInstance(instanceId);
+
+		boolean success = closeInstance(instanceId, null);
+		assertFalse(success);
+		assertEquals(Errors.TODO_LIST_NOT_COMPLETED.name(), apiInvoker.evalError("errorCode"));
+
+		success = closeInstance(instanceId, Boolean.FALSE);
 		assertFalse(success);
 		assertEquals(Errors.TODO_LIST_NOT_COMPLETED.name(), apiInvoker.evalError("errorCode"));
 
@@ -105,12 +110,23 @@ public class TestTODOAPIs {
 			assertTrue(success);
 		}
 
-		success = closeInstance(instanceId);
+		success = closeInstance(instanceId, Boolean.FALSE);
 		assertTrue(success);
 
-		success = closeInstance(instanceId);
+		success = closeInstance(instanceId, Boolean.FALSE);
 		assertFalse(success);
 		assertEquals(Errors.TODO_LIST_ALREADY_CLOSED.name(), apiInvoker.evalError("errorCode"));
+
+		success = closeInstance(instanceId, Boolean.TRUE);
+		assertFalse(success);
+		assertEquals(Errors.TODO_LIST_ALREADY_CLOSED.name(), apiInvoker.evalError("errorCode"));
+	}
+
+	@Test
+	public void testCloseInstanceForce() throws JMSException {
+		UUID instanceId = startInstance(null);
+		boolean success = closeInstance(instanceId, Boolean.TRUE);
+		assertTrue(success);
 	}
 
 	@Test
@@ -161,8 +177,8 @@ public class TestTODOAPIs {
 		return success;
 	}
 
-	private boolean closeInstance(UUID instanceId) throws JMSException {
-		ToDoCloseInstanceRequest request1 = new ToDoCloseInstanceRequest(instanceId, "test_close");
+	private boolean closeInstance(UUID instanceId, Boolean force) throws JMSException {
+		ToDoCloseInstanceRequest request1 = new ToDoCloseInstanceRequest(instanceId, "test_close", force);
 		boolean success = apiInvoker.invokeRequest(request1, "response1");
 
 		if (success) {
