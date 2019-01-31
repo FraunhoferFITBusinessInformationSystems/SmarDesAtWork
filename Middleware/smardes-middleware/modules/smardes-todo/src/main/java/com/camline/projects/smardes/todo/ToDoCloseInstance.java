@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2018-2019 camLine GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,6 +24,8 @@ package com.camline.projects.smardes.todo;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.BooleanUtils;
 
 import com.camline.projects.smardes.common.br.IBR;
 import com.camline.projects.smardes.jsonapi.ErrorResponse;
@@ -51,15 +53,17 @@ final class ToDoCloseInstance extends AbstractToDoHandler<ToDoCloseInstanceReque
 			return errorResponse;
 		}
 
-		List<ToDoClosedStep> closedSteps = br.createDAO(ToDoClosedStepDAO.class).findByInstance(instance, false);
-		Set<Integer> closedStepNumbers = closedSteps.stream().map(step -> Integer.valueOf(step.getStep()))
-				.collect(Collectors.toSet());
+		if (BooleanUtils.isNotTrue(request.getForce())) {
+			List<ToDoClosedStep> closedSteps = br.createDAO(ToDoClosedStepDAO.class).findByInstance(instance, false);
+			Set<Integer> closedStepNumbers = closedSteps.stream().map(step -> Integer.valueOf(step.getStep()))
+					.collect(Collectors.toSet());
 
-		List<ToDoStepDTO> stepDefs = new ToDoStepDAO().findByTODOList(instance.getDomain(),
-				instance.getDefinitionId());
-		for (ToDoStepDTO stepDef : stepDefs) {
-			if (!closedStepNumbers.contains(Integer.valueOf(stepDef.getStep()))) {
-				return new ErrorResponse(Errors.MODULE, Errors.TODO_LIST_NOT_COMPLETED, request.toString(), null);
+			List<ToDoStepDTO> stepDefs = new ToDoStepDAO().findByTODOList(instance.getDomain(),
+					instance.getDefinitionId());
+			for (ToDoStepDTO stepDef : stepDefs) {
+				if (!closedStepNumbers.contains(Integer.valueOf(stepDef.getStep()))) {
+					return new ErrorResponse(Errors.MODULE, Errors.TODO_LIST_NOT_COMPLETED, request.toString(), null);
+				}
 			}
 		}
 

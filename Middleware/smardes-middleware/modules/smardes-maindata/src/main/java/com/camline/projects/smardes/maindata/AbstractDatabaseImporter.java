@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2018-2019 camLine GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,11 +25,14 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import javax.persistence.Query;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -113,6 +116,7 @@ public abstract class AbstractDatabaseImporter implements BRVoidCallable {
 		start.append(") values (");
 
 		for (final Map<String, Serializable> row : sheetValues) {
+			List<Object> bindParameters = new ArrayList<>();
 			final StringBuilder stmt = new StringBuilder(start);
 			first = true;
 			for (final String columnName : columnNames) {
@@ -121,11 +125,16 @@ public abstract class AbstractDatabaseImporter implements BRVoidCallable {
 				} else {
 					stmt.append(", ");
 				}
+				stmt.append("?");
 				final ColumnType columnType = columnTypes.get(columnName);
-				stmt.append(columnType.printValue(row.get(columnName)));
+				bindParameters.add(columnType.convertValue(row.get(columnName)));
 			}
 			stmt.append(");\n");
-			br.getEntityManager().createNativeQuery(stmt.toString()).executeUpdate();
+			Query query = br.getEntityManager().createNativeQuery(stmt.toString());
+			for (int i = 0; i < bindParameters.size(); i++) {
+				query.setParameter(i+1, bindParameters.get(i));
+			}
+			query.executeUpdate();
 		}
 	}
 
