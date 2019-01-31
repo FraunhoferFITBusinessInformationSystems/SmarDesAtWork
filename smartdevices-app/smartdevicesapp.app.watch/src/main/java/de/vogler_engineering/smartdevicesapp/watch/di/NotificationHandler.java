@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi;
 
 import javax.inject.Singleton;
 
+import de.vogler_engineering.smartdevicesapp.viewelements.SmartDevicesApplication;
 import timber.log.Timber;
 
 /**
@@ -31,16 +32,12 @@ import timber.log.Timber;
 public class NotificationHandler {
     static private String TAG = "NotificationHandler";
 
-    static private String CHANNEL_ID = "SmartDevChannel1";
-    static private String CHANNEL_NAME = "defaultSmartDevChannelName";
-    static private String CHANNEL_DESCRIPTION = "";
-
     private Context context;
     private boolean isActivity = false;
     private MediaPlayer mMediaPlayer;
     private Vibrator v;
 
-    private int notificationDuration = 300000;
+    private final static int NOTIFICATION_DURATION = 300000;
 
     private final Handler mTimeoutHandler = new Handler();
     private final Runnable stopNofificationRunnable = () -> {
@@ -99,15 +96,36 @@ public class NotificationHandler {
 
 
     private void startVibrating(long[] pattern) {
-        v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (v != null && v.hasVibrator()) {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                VibrationEffect waveform = VibrationEffect.createWaveform(pattern, 0);
-                v.vibrate(waveform);
-            } else {
-                v.vibrate(pattern, 0);
-            }
+        Context ctx = tryGetAppContext();
+        if(ctx == null) ctx = context;
+        v = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
+        if(v == null){
+            Timber.tag(TAG).e("Vibrator is null! Could not get Vibrator System Service!");
+            return;
         }
+        if(!v.hasVibrator()){
+            Timber.tag(TAG).e("No Vibrator found.");
+            return;
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            VibrationEffect waveform = VibrationEffect.createWaveform(pattern, 0);
+            v.vibrate(waveform);
+        } else {
+            v.vibrate(pattern, 0);
+        }
+    }
+
+    private Context tryGetAppContext(){
+        if(SmartDevicesApplication.getActualContext() != null){
+//            Context ctx = SmartDevicesApplication.getActualContext();
+//            if(ctx.
+
+            Timber.tag(TAG).d("Resolve Context to %s (SmartDevicesApplication.ActualContext)", SmartDevicesApplication.getActualContext().hashCode());
+            return SmartDevicesApplication.getActualContext().getApplicationContext();
+        }
+        //TODO get other contextes
+        Timber.tag(TAG).d("Could'n resolve Active context!");
+        return null;
     }
 
     public void stopSound() {
@@ -160,7 +178,7 @@ public class NotificationHandler {
     }
 
     private void sheduleNotificationTimeout() {
-        mTimeoutHandler.postDelayed(stopNofificationRunnable, notificationDuration);
+        mTimeoutHandler.postDelayed(stopNofificationRunnable, NOTIFICATION_DURATION);
     }
 
     private void init(Context ctx) {

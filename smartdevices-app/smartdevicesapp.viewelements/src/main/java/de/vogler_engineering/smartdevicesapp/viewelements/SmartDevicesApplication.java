@@ -7,6 +7,7 @@ package de.vogler_engineering.smartdevicesapp.viewelements;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Service;
+import android.content.Context;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,9 @@ public abstract class SmartDevicesApplication extends Application implements Has
 
     @Inject
     DispatchingAndroidInjector<Service> dispatchingServiceInjector;
+
+    private static boolean appRunning = false;
+    private static Context actualContext = null;
 
     protected void setupDebugLogger(){
         Timber.plant(new HuaweiDebugTree());
@@ -63,5 +67,21 @@ public abstract class SmartDevicesApplication extends Application implements Has
     @Override
     public AndroidInjector<Service> serviceInjector() {
         return dispatchingServiceInjector;
+    }
+
+    public static boolean isAppRunning() {
+        return appRunning;
+    }
+
+    public static Context getActualContext() {
+        return actualContext;
+    }
+
+    public static void setActualContext(Context ctx){
+        actualContext = ctx;
+    }
+
+    public static void setAppRunning(boolean state){
+        appRunning = state;
     }
 }

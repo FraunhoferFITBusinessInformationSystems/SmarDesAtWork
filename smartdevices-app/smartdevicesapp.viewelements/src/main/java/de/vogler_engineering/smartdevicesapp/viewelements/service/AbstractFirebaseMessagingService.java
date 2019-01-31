@@ -13,7 +13,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Map;
 
 import de.vogler_engineering.smartdevicesapp.viewelements.Constants;
-import de.vogler_engineering.smartdevicesapp.viewelements.ui.AbstractActivity;
+import de.vogler_engineering.smartdevicesapp.viewelements.SmartDevicesApplication;
 import timber.log.Timber;
 
 public abstract class AbstractFirebaseMessagingService extends FirebaseMessagingService {
@@ -47,15 +47,20 @@ public abstract class AbstractFirebaseMessagingService extends FirebaseMessaging
             }
 
             String action = data.get("action");
-            Timber.tag(TAG).d("Received firebase message Action: %s, Pattern: %d, ID: %s, From: %s",
-                    action, pattern, remoteMessage.getMessageId(), remoteMessage.getFrom());
+            boolean notification = data.containsKey("notification")
+                    && data.get("notification") != null
+                    && data.get("notification").equalsIgnoreCase("true");
 
-            if(data.containsKey("notification") && data.get("notification").equalsIgnoreCase("true")){
+            Timber.tag(TAG).d("Received firebase message Action: %s, Pattern: %d, ID: %s, From: %s, Notification: %s",
+                    action, pattern, remoteMessage.getMessageId(), remoteMessage.getFrom(), notification);
+
+            if(notification){
                 showNotification(remoteMessage, pattern);
             }
 
             //If app is running: send always the broadcast to the app.
-            if(AbstractActivity.isAppRunning()) {
+            if(SmartDevicesApplication.isAppRunning()) {
+                Timber.tag(TAG).d("App is running -> Relay Notification per BC");
                 sendBroadcast(new Intent(action));
             }
         }catch (Exception e){
