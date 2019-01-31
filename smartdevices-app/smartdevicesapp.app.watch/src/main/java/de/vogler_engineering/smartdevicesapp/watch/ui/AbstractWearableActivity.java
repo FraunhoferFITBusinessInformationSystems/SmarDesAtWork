@@ -6,6 +6,8 @@ package de.vogler_engineering.smartdevicesapp.watch.ui;
 
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -24,6 +26,8 @@ import de.vogler_engineering.smartdevicesapp.model.repository.DeviceInfoReposito
 import de.vogler_engineering.smartdevicesapp.model.repository.DynamicValueRepository;
 import de.vogler_engineering.smartdevicesapp.model.repository.EchoRepository;
 import de.vogler_engineering.smartdevicesapp.viewelements.Constants;
+import de.vogler_engineering.smartdevicesapp.viewelements.SmartDevicesApplication;
+import de.vogler_engineering.smartdevicesapp.viewelements.ui.AbstractActivity;
 import de.vogler_engineering.smartdevicesapp.viewelements.ui.AbstractViewModel;
 import de.vogler_engineering.smartdevicesapp.viewelements.ui.manager.FirebaseRelayMessageHandler;
 import de.vogler_engineering.smartdevicesapp.viewelements.util.DeviceInfoUtils;
@@ -177,6 +181,7 @@ public abstract class AbstractWearableActivity extends AppCompatWearableActivity
             disposables.dispose();
         }
         super.onDestroy();
+        setActualContext(null);
     }
 
     @Override
@@ -190,14 +195,15 @@ public abstract class AbstractWearableActivity extends AppCompatWearableActivity
     protected void onResume() {
         super.onResume();
         resumed = true;
-        appRunning = true;
+        setAppRunning(true);
+        setActualContext(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         resumed = false;
-        appRunning = false;
+        setAppRunning(false);
     }
 
     @Override
@@ -218,7 +224,11 @@ public abstract class AbstractWearableActivity extends AppCompatWearableActivity
         disposables.add(disposable);
     }
 
-    public static boolean isAppRunning() {
-        return appRunning;
+    private static void setAppRunning(boolean state){
+        SmartDevicesApplication.setAppRunning(state);
+    }
+
+    private static void setActualContext(Context context){
+        SmartDevicesApplication.setActualContext(context);
     }
 }

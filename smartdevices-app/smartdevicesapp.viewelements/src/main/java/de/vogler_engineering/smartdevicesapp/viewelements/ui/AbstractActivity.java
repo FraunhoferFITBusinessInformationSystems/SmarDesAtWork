@@ -26,6 +26,7 @@ import de.vogler_engineering.smartdevicesapp.model.repository.DeviceInfoReposito
 import de.vogler_engineering.smartdevicesapp.model.repository.DynamicValueRepository;
 import de.vogler_engineering.smartdevicesapp.model.repository.EchoRepository;
 import de.vogler_engineering.smartdevicesapp.viewelements.Constants;
+import de.vogler_engineering.smartdevicesapp.viewelements.SmartDevicesApplication;
 import de.vogler_engineering.smartdevicesapp.viewelements.ui.manager.FirebaseRelayMessageHandler;
 import de.vogler_engineering.smartdevicesapp.viewelements.util.DeviceInfoUtils;
 import io.reactivex.Observable;
@@ -179,27 +180,28 @@ public abstract class AbstractActivity extends AppCompatActivity implements Fire
             disposables.dispose();
         }
         super.onDestroy();
+        setActualContext(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         running = true;
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         resumed = true;
-        appRunning = true;
+        setAppRunning(true);
+        setActualContext(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         resumed = false;
-        appRunning = false;
+        setAppRunning(false);
     }
 
     @Override
@@ -224,7 +226,13 @@ public abstract class AbstractActivity extends AppCompatActivity implements Fire
         disposables.add(disposable);
     }
 
-    public static boolean isAppRunning() {
-        return appRunning;
+    private static void setAppRunning(boolean state){
+        //Running state redirected to abstract Application Class because the different BaseActivity
+        //for the Watch needed this to be accessed from an more General Location.
+        SmartDevicesApplication.setAppRunning(state);
+    }
+
+    private static void setActualContext(Context context){
+        SmartDevicesApplication.setActualContext(context);
     }
 }
