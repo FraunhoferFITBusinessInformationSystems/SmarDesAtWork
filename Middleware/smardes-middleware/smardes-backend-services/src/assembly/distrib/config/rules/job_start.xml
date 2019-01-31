@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+
+	<globalVariables>
+		<property name="global.individualJobStartNames" expression="el:list('ChatSendMessage', 'TodoListStart', 'TodoListPickup')" />
+	</globalVariables>
+
+    <patchMessageBodyPrototypes>
+		<patchMessageBodyPrototype name="BeginJobMessage" variable="job">
+			<property name="job.Type" value="Job"/>
+			<property name="job.Id" expression="msg.body.Id"/>
+			<property name="job.Name" expression="msg.body.Name"/>
+			<property name="job.AssignedTo" expression="msg.body.CreatedBy"/>
+			<property name="job.Status" value="Created"/>
+			<property name="job.Immediate" expression="false" />
+			<property name="job.Status" value="Received" />
+			<property name="job.Resource" expression="el:newStructure()" />
+			<property name="job.Resource.list_title" expression="msg.body.Name"/>
+			<property name="job.Resource.list_text" value="Neuer Auftrag"/>
+		</patchMessageBodyPrototype>
+    </patchMessageBodyPrototypes>
+
+	<ruleGroup name="Rule Engine Requests">
+		<selector address="RuleEngine" jsonBody="true" />
+
+		<!-- TODO this is the conversation start! Include this in Conversation -->
+		<ruleSet name="Generic start Job message">
+            <condition>
+                msg.body.Type == 'JobReply' and
+                msg.body.Action == 'StartJob'
+            </condition>
+
+			<rule name="Job starten: ChatSendMessage">
+				<condition>
+					msg.body.Name == 'ChatSendMessage'
+				</condition>
+				<actions>
+					<setLocalVariables>
+						<property name="local.destinations" expression="dq:mapEntries('maindata.allChatDestinations')"/>
+						<property name="local.destinationItems" expression="el:select(local.destinations, 'dest', 'dest.USER')"/>
+						<property name="local.destinationNames" expression="el:select(local.destinations, 'dest', 'dest.NAME')"/>
+					</setLocalVariables>
+					<pushMessage
+						address="global.sdgwAddress"
+						subject="Job">
+						<baseMessage expression="msg">
+							<patchMessageBodyRef name="BeginJobMessage"/>
+							<patchMessageBody variable="job">
+								<property name="job.Resource.list_title" value="Chat Nachricht"/>
+								<property name="job.Resource.list_text" value="Nachricht senden"/>
+								<property name="job.Resource.subject" expression="local.destinationItems[0]" />
+								<property name="job.Resource.subject_values" expression="str:aggregate(local.destinationItems, ';', '', '')" />
+								<property name="job.Resource.subject_labels" expression="str:aggregate(local.destinationNames, ';', '', '')" />
+							</patchMessageBody>
+						</baseMessage>
+					</pushMessage>
+				</actions>
+			</rule>
+
+			<rule name="Job starten: TodoListStart -> Forward ToDoFind Request">
+				<condition>
+					msg.body.Name == 'TodoListStart'
+				</condition>
+				<actions>
+					<pushMessage address="global.todoAddress"
+						subject="ToDoFind">
+						<baseMessage expression="msg.body.Resource">
+						<patchMessageBody variable="job">
+								<property name="job.context" expression="el:newStructure()" />
+								<property name="job.domain" expression="global.contextDomain"/>
+							</patchMessageBody>
+						</baseMessage>
+						<response responseVar="todo_response" />
+					</pushMessage>
+				</actions>
+			</rule>
+
+			<rule name="Job starten: TodoListPickup -> Forward ToDoInstances Request">
+				<condition>
+					msg.body.Name == 'TodoListPickup'
+				</condition>
+				<actions>
+					<pushMessage address="global.todoAddress"
+						subject="ToDoGetRunningInstances">
+						<baseMessage expression="msg.body.Resource">
+						<patchMessageBody variable="job">
+								<property name="job.context" expression="el:newStructure()" />
+								<property name="job.domain" expression="global.contextDomain"/>
+							</patchMessageBody>
+						</baseMessage>
+						<response responseVar="todo_response" />
+					</pushMessage>
+				</actions>
+			</rule>
+
+			<rule name="Job starten: Generic for all other Jobs">
+				<condition>
+					not el:contains(global.individualJobStartNames, msg.body.Name)
+				</condition>
+				<actions>
+					<pushMessage
+						address="global.sdgwAddress"
+						subject="Job">
+						<baseMessage expression="msg">
+							<patchMessageBodyRef name="BeginJobMessage"/>
+							<patchMessageBody variable="job">
+								<property name="job.Resource.list_title" expression="msg.body.Name"/>
+								<property name="job.Resource.list_text" value="Neuer Auftrag"/>
+							</patchMessageBody>
+						</baseMessage>
+					</pushMessage>
+				</actions>
+			</rule>
+		</ruleSet>
+
+		<rule name="Job starten: TodoListStart -> Return ToDoFind Response">
+			<condition>
+				el:exists(root, 'todo_response') and todo_response.subject == "ToDoFind"
+			</condition>
+			<actions>
+				<pushMessage
+					address="global.sdgwAddress"
+					subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBodyRef name="BeginJobMessage"/>
+						<patchMessageBody variable="job">
+							<property name="job.Resource.list_title" value="TODO-Liste starten"/>
+							<property name="job.Resource.list_text" value="Eine neue TODO-Liste beginnen."/>
+							<!-- <property name="job.Resource.subject" value="Primadonna1;Primadonna2" />TODO fuellen der Liste aus Todo-API -->
+							<!-- <property name="job.Resource.subject"
+								expression="str:aggregate(dq:entries('maindata.bkwToDoLists'), ';', '', '')" /> -->
+							<property name="job.Resource.subject"
+								expression="str:aggregate(el:select(todo_response.body.responseObject.headers, 'each', 'each.id'), ';', '', '')" />
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+		<ruleSet name="Job starten: TodoListPickup -> Return ToDoGetRunningInstances Response">
+			<condition>
+				el:exists(root, 'todo_response') and todo_response.subject == "ToDoGetRunningInstances"
+			</condition>
+			<rule name="Job starten: TodoListPickup -> Daten verarbeiten">
+				<actions>
+					<setLocalVariables>
+						<property name="local.instances" expression="todo_response.body.responseObject.instances" />
+						<property name="local.instance_ids" expression="el:select(local.instances, 'inst', 'inst.id')" />
+						<!-- <property name="local.instance_names" expression="el:select(local.instances, 'inst', str:concat('inst.name', ' ', 'inst.name', ' ', 'inst.startedBy'))" /> -->
+						<property name="local.instance_names" expression="el:select(local.instances, 'each', 'str:concat(each.header.name, \' \', each.startedBy)')" />
+					</setLocalVariables>
+				</actions>
+			</rule>
+			<rule name="Job starten: TodoListPickup -> Send Job Start Message">
+				<actions>
+					<pushMessage
+						address="global.sdgwAddress"
+						subject="Job">
+						<baseMessage expression="msg">
+							<patchMessageBodyRef name="BeginJobMessage"/>
+							<patchMessageBody variable="job">
+								<property name="job.Resource.list_title" value="TODO-Liste weiter bearbeiten"/>
+								<property name="job.Resource.list_text" value="Eine neue TODO-Liste fortführen."/>
+								<!-- <property name="job.Resource.subject" value="Primadonna1;Primadonna2" />TODO fuellen der Liste aus Todo-API -->
+								<!-- <property name="job.Resource.subject"
+									expression="str:aggregate(dq:entries('maindata.bkwToDoLists'), ';', '', '')" /> -->
+								<!-- <property name="job.Resource.subject"
+									expression="str:aggregate(el:select(local.instances, 'inst', 'inst.id'), ';', '', '')" /> -->
+								<property name="job.Resource.subject" expression="local.instance_ids[0]" />
+								<property name="job.Resource.subject_values" expression="str:aggregate(local.instance_ids, ';', '', '')" />
+								<property name="job.Resource.subject_labels" expression="str:aggregate(local.instance_names, ';', '', '')" />
+							</patchMessageBody>
+						</baseMessage>
+					</pushMessage>
+				</actions>
+			</rule>
+		</ruleSet>
+	</ruleGroup>
+</rules>

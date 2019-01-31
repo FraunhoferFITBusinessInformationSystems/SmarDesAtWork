@@ -1,0 +1,57 @@
+TODO-Listen-Report
+==================
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Listenname........: $todo.instance.header.name
+Instanz-ID........: $todo.instance.id
+Beschreibung......:
+$todo.instance.header.description
+#if (!$todo.instance.context.empty)
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Kontext...........:
+#foreach($entry in $todo.instance.context.entrySet())
+  $entry.key: $entry.value
+#end
+#end
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Gestartet von.....: $todo.instance.startedBy
+Startzeitpunkt....: $todo.instance.startedAt
+#if ($todo.instance.abortedBy)
+Abgebrochen von...: $todo.instance.abortedBy
+Abbruchzeitpunkt..: $todo.instance.abortedAt
+#end
+#if ($todo.instance.closedBy)
+Abgeschlossen von.: $todo.instance.closedBy
+Abschlusszeitpunkt: $todo.instance.closedAt
+#end
+#if ($todo.closedSteps.size() < $todo.steps.size())
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ACHTUNG: Es wurden nur $todo.closedSteps.size() von $todo.steps.size() Schritten abgeschlossen.
+#end
+
+TODO-List-Schritte
+==================
+
+#foreach($step in $todo.steps)
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Schritt $step.step: $step.name
+
+#set ($closed = false)
+#foreach($closedStep in $todo.closedSteps)
+#if ($step.step == $closedStep.step)
+Abgeschlossen von.: $closedStep.closedBy
+Abschlusszeitpunkt: am $closedStep.closedAt
+#set ($closed = true)
+#end
+#end
+#if (!$closed)
+ACHTUNG: Schritt wurde nicht durchgeführt!
+#end
+
+$step.description
+#end
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+## Instanz+Header: $todo.instance
+## ClosedSteps: $todo.closedSteps
+## Steps: $todo.steps
+## Alles: $todo
