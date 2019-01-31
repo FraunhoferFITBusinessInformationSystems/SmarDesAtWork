@@ -117,13 +117,9 @@ public class NotificationHandler {
 
     private Context tryGetAppContext(){
         if(SmartDevicesApplication.getActualContext() != null){
-//            Context ctx = SmartDevicesApplication.getActualContext();
-//            if(ctx.
-
             Timber.tag(TAG).d("Resolve Context to %s (SmartDevicesApplication.ActualContext)", SmartDevicesApplication.getActualContext().hashCode());
             return SmartDevicesApplication.getActualContext().getApplicationContext();
         }
-        //TODO get other contextes
         Timber.tag(TAG).d("Could'n resolve Active context!");
         return null;
     }
