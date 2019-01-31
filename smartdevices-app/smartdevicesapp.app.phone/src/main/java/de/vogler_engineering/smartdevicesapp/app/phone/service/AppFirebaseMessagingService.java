@@ -41,7 +41,7 @@ public class AppFirebaseMessagingService extends AbstractFirebaseMessagingServic
     }
 
     @Override
-    protected void showNotification(RemoteMessage msg, int patternCode) {
+    protected void showNotification(String action, RemoteMessage msg, int patternCode) {
         DataUpdateNotificationBuilder builder = new DataUpdateNotificationBuilder(this);
 
         Intent intent = new Intent(this, MainActivity.class);

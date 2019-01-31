@@ -37,13 +37,16 @@ public class NotificationHandler {
     private MediaPlayer mMediaPlayer;
     private Vibrator v;
 
+    private boolean musicActive = false;
     private final static int NOTIFICATION_DURATION = 300000;
+    private final static int VIBRATION_REPEAT_DURATION = 2000;
 
     private final Handler mTimeoutHandler = new Handler();
     private final Runnable stopNofificationRunnable = () -> {
         stopSound();
         stopVibrating();
     };
+    private Runnable restartVibrationRunnable;
 
     @Singleton
     public NotificationHandler() {
@@ -72,19 +75,33 @@ public class NotificationHandler {
             return;
         }
 
-        startSound(sound);
-        startVibrating(pattern);
-        sheduleNotificationTimeout();
+        Context ctx = tryGetAppContext();
+        Timber.tag(TAG).d("Resolved context to %x", ctx.hashCode());
+
+        musicActive = true;
+        startSound(ctx, sound);
+
+        if(restartVibrationRunnable != null){
+            mTimeoutHandler.removeCallbacks(restartVibrationRunnable);
+        }
+        restartVibrationRunnable = () -> {
+            if(musicActive) {
+                startVibrating(ctx, pattern);
+                mTimeoutHandler.postDelayed(restartVibrationRunnable, VIBRATION_REPEAT_DURATION);
+            }
+        };
+        mTimeoutHandler.postDelayed(restartVibrationRunnable, VIBRATION_REPEAT_DURATION);
+        mTimeoutHandler.postDelayed(stopNofificationRunnable, NOTIFICATION_DURATION);
     }
 
-    private void startSound(Uri sound) {
-        if (!wearHasSpeaker(context)) {
+    private void startSound(Context ctx, Uri sound) {
+        if (!wearHasSpeaker(ctx)) {
             return;
         }
 
         stopSound();
 
-        mMediaPlayer = MediaPlayer.create(context, sound);
+        mMediaPlayer = MediaPlayer.create(ctx, sound);
         if (mMediaPlayer == null) {
             Timber.tag(TAG).e("Player is not set!");
             return;
@@ -95,9 +112,7 @@ public class NotificationHandler {
     }
 
 
-    private void startVibrating(long[] pattern) {
-        Context ctx = tryGetAppContext();
-        if(ctx == null) ctx = context;
+    private void startVibrating(Context ctx, long[] pattern) {
         v = (Vibrator) ctx.getSystemService(Context.VIBRATOR_SERVICE);
         if(v == null){
             Timber.tag(TAG).e("Vibrator is null! Could not get Vibrator System Service!");
@@ -108,7 +123,7 @@ public class NotificationHandler {
             return;
         }
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            VibrationEffect waveform = VibrationEffect.createWaveform(pattern, 0);
+            VibrationEffect waveform = VibrationEffect.createWaveform(pattern, 1);
             v.vibrate(waveform);
         } else {
             v.vibrate(pattern, 0);
@@ -116,10 +131,12 @@ public class NotificationHandler {
     }
 
     private Context tryGetAppContext(){
-        if(SmartDevicesApplication.getActualContext() != null){
-            Timber.tag(TAG).d("Resolve Context to %s (SmartDevicesApplication.ActualContext)", SmartDevicesApplication.getActualContext().hashCode());
+        if(SmartDevicesApplication.getActualContext() != null)
             return SmartDevicesApplication.getActualContext().getApplicationContext();
-        }
+        if(context != null && context.getApplicationContext() != null)
+            return context.getApplicationContext();
+        if(context != null)
+            return context;
         Timber.tag(TAG).d("Could'n resolve Active context!");
         return null;
     }
@@ -135,6 +152,10 @@ public class NotificationHandler {
     }
 
     public void stopVibrating() {
+        musicActive = false;
+        if(restartVibrationRunnable != null) {
+            mTimeoutHandler.removeCallbacks(restartVibrationRunnable);
+        }
         if (v != null) {
             v.cancel();
         }
@@ -163,18 +184,18 @@ public class NotificationHandler {
     private void resetNotificationTimeout() {
         //Remove old callbacks
         mTimeoutHandler.removeCallbacks(stopNofificationRunnable);
+        mTimeoutHandler.removeCallbacks(restartVibrationRunnable);
         //Add new Callback with timeout
-        sheduleNotificationTimeout();
+        musicActive = true;
+        mTimeoutHandler.postDelayed(stopNofificationRunnable, NOTIFICATION_DURATION);
+        mTimeoutHandler.postDelayed(restartVibrationRunnable, VIBRATION_REPEAT_DURATION);
     }
 
     public void stopNotification() {
         mTimeoutHandler.removeCallbacks(stopNofificationRunnable);
+        musicActive = false;
         stopSound();
         stopVibrating();
-    }
-
-    private void sheduleNotificationTimeout() {
-        mTimeoutHandler.postDelayed(stopNofificationRunnable, NOTIFICATION_DURATION);
     }
 
     private void init(Context ctx) {
@@ -189,12 +210,16 @@ public class NotificationHandler {
         init(service);
         isActivity = false;
         resetNotificationTimeout();
+        Timber.tag(TAG).d("Init from Service: (Context: %x, App: %x", service.hashCode(),
+                service.getApplicationContext() != null ? service.getApplicationContext().hashCode() : 0);
     }
 
     public void initActivity(Activity act) {
         init(act);
         isActivity = true;
         stopNotification();
+        Timber.tag(TAG).d("Init from Activity: (Context: %x, App: %x", act.hashCode(),
+                act.getApplicationContext() != null ? act.getApplicationContext().hashCode() : 0);
     }
 
 

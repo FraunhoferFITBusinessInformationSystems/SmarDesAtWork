@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-
+<?xml version="1.0" encoding="utf-8"?><!--
     Copyright (c) Vogler Engineering GmbH. All rights reserved.
     Licensed under the MIT License. See LICENSE.md in the project root for license information.
-
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,21 +12,20 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
     <application
         android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/SmartDevicesWatchTheme">
-
         <activity
-            android:launchMode="singleTask"
             android:name=".ui.main.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,6 +34,7 @@
             </intent-filter>
             <intent-filter android:label="@string/filter_view_smartdevices_main">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "smartdevices://main” -->
@@ -46,7 +43,6 @@
                     android:scheme="smartdevices" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="@string/title_activity_settings"
@@ -55,7 +51,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
-
         <activity
             android:name=".ui.job.JobActivity"
             android:label="@string/title_activity_detail"
@@ -64,7 +59,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.main.MainActivity" />
         </activity>
-
 
         <uses-library
             android:name="com.google.android.wearable"
@@ -82,13 +76,16 @@
             android:name=".service.UpdateService"
             android:enabled="true"
             android:exported="false" />
-
-        <service android:name=".service.AppFirebaseMessagingService"
+        <service
+            android:name=".service.AppFirebaseMessagingService"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <service
+            android:name=".service.NotificationService"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ package de.vogler_engineering.smartdevicesapp.watch.service;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -20,8 +21,10 @@ import de.vogler_engineering.smartdevicesapp.viewelements.notification.DataUpdat
 import de.vogler_engineering.smartdevicesapp.viewelements.notification.NotificationOptions;
 import de.vogler_engineering.smartdevicesapp.viewelements.notification.NotificationUtils;
 import de.vogler_engineering.smartdevicesapp.viewelements.service.AbstractFirebaseMessagingService;
+import de.vogler_engineering.smartdevicesapp.watch.App;
 import de.vogler_engineering.smartdevicesapp.watch.di.NotificationHandler;
 import de.vogler_engineering.smartdevicesapp.watch.ui.main.MainActivity;
+import timber.log.Timber;
 
 import static de.vogler_engineering.smartdevicesapp.viewelements.notification.NotificationOptions.getNotificationOptionsForPatternCode;
 
@@ -58,7 +61,13 @@ public class AppFirebaseMessagingService extends AbstractFirebaseMessagingServic
     }
 
     @Override
-    protected void showNotification(RemoteMessage msg, int patternCode) {
+    protected void showNotification(String action, RemoteMessage msg, int patternCode) {
+        Timber.tag(TAG).d("Entering showNotification. Issue \"StartService\"-Intent. (CurrentContext: %x, App: %x)", this.hashCode(),
+                this.getApplicationContext() != null ? this.getApplicationContext().hashCode() : 0);
+//        Intent i = NotificationService.getPlayNotificationIntent(this, action, patternCode, msg);
+//        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startService(i);
+
         NotificationOptions options = getNotificationOptionsForPatternCode(patternCode);
 
         //Init the Notification service & Reset Timeout.
@@ -74,25 +83,11 @@ public class AppFirebaseMessagingService extends AbstractFirebaseMessagingServic
             Notification notification = builder.createNotification(pendingIntent, options);
             builder.sendNotification(notification, options);
 
-            //Get current sound and vibration from notification channel, if api > oreo
-//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                NotificationChannel channel = NotificationUtils.getNotificationChannel(this,
-//                        options.getChannelId());
-//                if (channel != null) {
-//                    long[] pattern = channel.getVibrationPattern();
-//                    Uri sound = channel.getSound();
-//                    notificationHandler.startNotification(sound, pattern);
-//                    return;
-//                }
-//            } else {
-                //On Watch use only normal notifications, no notification channel settings.
-                //Channels didn't work with vibration and sound behaviour stored in there.
-                //Start Vibrator and SoundPlayer
-                Uri sound = builder.getSoundFromPreference(options);
-                notificationHandler.startNotification(sound, options.getVibrationPattern());
-                return;
-//            }
-//            notificationHandler.startNotification(options.getVibrationPattern());
+            //On Watch use only normal notifications, no notification channel settings.
+            //Channels didn't work with vibration and sound behaviour stored in there.
+            //Start Vibrator and SoundPlayer
+            Uri sound = builder.getSoundFromPreference(options);
+            notificationHandler.startNotification(sound, options.getVibrationPattern());
         } catch (Exception e) {
             e.printStackTrace();
         }
