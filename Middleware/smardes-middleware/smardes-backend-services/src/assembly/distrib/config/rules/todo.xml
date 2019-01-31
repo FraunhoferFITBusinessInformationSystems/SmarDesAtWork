@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+
+	<globalVariables>
+		<property name="global.todoAddress" value="ToDo" />
+		<property name="global.resourceAddress" value="Resources" />
+		<property name="global.sdgwTodoAddress" value="sdgwToDo" />
+		<property name="global.todoResponseIgnores" expression="el:list('ToDoFind', 'ToDoGetRunningInstances')" />
+		<property name="global.contextDomain" value="BKWRuest" />
+		<property name="global.jobsPerInstance" expression="el:newStructure()"/>
+		<!-- <property name="global.contextDomain" value="DietzWz" /> -->
+	</globalVariables>
+
+	<ruleGroup name="Rule Engine Requests">
+		<selector address="RuleEngine" jsonBody="true" />
+
+		<ruleSet name="TodoList completed/aborted">
+			<condition>
+				msg.body.Type == 'DBMonEvent' and msg.body.Source == 'todoreport'
+			</condition>
+			<rule name="Dump completed/aborted TodoList">
+				<actions>
+					<pushMessage address="global.todoAddress"
+						subject="ToDoGetInstanceDetails">
+						<baseMessage expression="null">
+							<patchMessageBody variable="req">
+								<property name="req.instanceId" expression="msg.body.Content.UUID_"/>
+							</patchMessageBody>
+						</baseMessage>
+						<response responseVar="todolist_details" />
+					</pushMessage>
+					<dumpFile templateName="dump_todolist" encoding="windows-1252"
+						destinationFile="str:concat(datetime:format(datetime:parseISO8601(datetime:now()), 'yyyy-MM-dd-HH-mm-ss'), '.txt')">
+						<context>
+							<entry name="todo" expression="todolist_details.body.responseObject" />
+						</context>
+					</dumpFile>
+				</actions>
+			</rule>
+		</ruleSet>
+
+		<rule name="Forward ToDoFind Request">
+			<condition>
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'ToDoFind'
+            </condition>
+			<actions>
+				<pushMessage address="global.todoAddress"
+					subject="ToDoFind">
+					<baseMessage expression="msg.body.Resource" />
+					<response responseVar="todo_response" />
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="Forward TodoFind Request with parameter mapping">
+			<condition>
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'TodoGetAllLists'	<!-- Job Name frei definierbar zwischen SDGW und RE -->
+            </condition>
+			<actions>
+				<pushMessage address="global.todoAddress"
+					subject="ToDoFind">
+					<baseMessage expression="null">
+						<patchMessageBody variable="req">
+							<property name="req.domain" expression="global.contextDomain"/>
+							<property name="req.context" expression="el:newStructure()"/>
+						</patchMessageBody>
+					</baseMessage>
+					<response responseVar="todo_response" />
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="Return ToDoFind Response">
+			<condition>
+				el:exists(root, 'todo_response') and todo_response.subject == "ToDoFind"
+            </condition>
+			<actions>
+				<pushMessage address="global.sdgwAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBody variable="job">
+							<property name="job.Resource" expression="el:newStructure()"/>
+							<property name="job.Resource.api"
+								expression="todo_response.body.responseObject" />
+							<property name="job.Resource.subject"
+								expression="str:aggregate(
+												el:select(todo_response.body.responseObject.headers, 'each',
+														'str:concat(each.id, \' \', each.name, \' \', each.description)'),
+												';', '', '')" />
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<!-- rule name="Forward ToDoGetDetails Request">
+			<condition>
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'ToDoGetDetails'
+            </condition>
+			<actions>
+				<pushMessage address="global.todoAddress"
+					subject="ToDoGetDetails">
+					<baseMessage expression="msg.body.Resource" />
+					<response responseVar="todo_response" />
+				</pushMessage>
+			</actions>
+		</rule>-->
+
+
+		<rule name="Generic ToDo* Response SendBack">
+			<condition>
+				el:exists(root, 'todo_response') and
+				not el:contains(global.todoResponseIgnores, todo_response.subject)
+            </condition>
+			<actions>
+				<pushMessage address="global.sdgwTodoAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBody variable="job">
+							<property name="job.Resource"
+								expression="todo_response.body.responseObject" />
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="Forward TodoListStart Request with parameter mapping">
+			<condition>
+                msg.body.Type == 'Job' and
+                (msg.body.Name == 'TodoListStart' or msg.body.Name == 'TodoListBarcodeStart')
+            </condition>
+			<actions>
+				<pushMessage address="global.todoAddress"
+					subject="ToDoStartInstance">
+					<baseMessage expression="null">
+						<patchMessageBody variable="req">
+							<property name="req.domain" expression="global.contextDomain" />
+							<property name="req.definitionId" expression="msg.body.Resource.subject"/>
+							<property name="req.startedBy" expression="msg.body.CreatedBy"/>
+						</patchMessageBody>
+					</baseMessage>
+					<response responseVar="todo_response" />
+				</pushMessage>
+				<pushMessage address="global.sdgwAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="TodoListStart Response SendBack">
+			<condition>
+				el:exists(root, 'todo_response') and
+				todo_response.subject == "ToDoStartInstance"
+            </condition>
+			<actions>
+				<setGlobalVariables>
+					<property name="global.jobsPerInstance"
+						key="todo_response.body.responseObject.instanceId" expression="el:list(msg.body.Id)"/>
+				</setGlobalVariables>
+				<pushMessage address="global.sdgwAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBody variable="job">
+							<!-- Für den Fall, dass Response-Parameter vom Naming passen -->
+							<!-- property name="job.Resource"
+								expression="todo_response.body.responseObject" /-->
+							<!-- Explizites Mapping des Response -->
+							<property name="job.Resource.instance_id"
+								expression="todo_response.body.responseObject.instanceId" />
+							<property name="job.Resource.list_id" expression="job.Resource.subject" />
+							<property name="job.Resource.list_title" value="ToDo-Liste"/>
+							<property name="job.Resource.list_text" expression="todo_response.body.responseObject.header.name" />
+							<property name="job.Resource.domain" expression="global.contextDomain" />
+							<property name="job.AssignedTo" expression="job.CreatedBy" />
+							<property name="job.Name" value="GenericTodoList" />
+							<property name="job.Type" value="TodoList" />
+							<property name="job.Status" value="Created" />
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="Forward TodoListPickup Request with parameter mapping">
+			<condition>
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'TodoListPickup'
+            </condition>
+			<actions>
+				<pushMessage address="global.todoAddress"
+					subject="ToDoGetInstanceDetails">
+					<baseMessage expression="null">
+						<patchMessageBody variable="req">
+							<property name="req.instanceId" expression="msg.body.Resource.subject"/>
+						</patchMessageBody>
+					</baseMessage>
+					<response responseVar="todo_response" />
+				</pushMessage>
+				<pushMessage address="global.sdgwAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="TodoListPickup Response SendBack">
+			<condition>
+				el:exists(root, 'todo_response') and
+				todo_response.subject == "ToDoGetInstanceDetails"
+            </condition>
+			<actions>
+				<setGlobalVariables>
+					<property name="global.jobsPerInstance"
+						key="todo_response.body.responseObject.instance.id"
+						expression="el:add(el:get(global.jobsPerInstance, todo_response.body.responseObject.instance.id, el:list()), msg.body.Id)"/>
+				</setGlobalVariables>
+				<pushMessage address="global.sdgwAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBody variable="job">
+							<!-- Für den Fall, dass Response-Parameter vom Naming passen -->
+							<!-- property name="job.Resource"
+								expression="todo_response.body.responseObject" /-->
+							<!-- Explizites Mapping des Response -->
+							<property name="job.Resource.instance_id"
+								expression="todo_response.body.responseObject.instance.id" />
+							<property name="job.Resource.list_id"
+								expression="todo_response.body.responseObject.instance.header.id" />
+							<property name="job.Resource.list_title" value="ToDo-Liste"/>
+							<property name="job.Resource.list_text" expression="todo_response.body.responseObject.instance.header.name" />
+							<property name="job.Resource.domain" expression="global.contextDomain" />
+							<property name="job.AssignedTo" expression="job.CreatedBy" />
+							<property name="job.Name" value="GenericTodoList" />
+							<property name="job.Type" value="TodoList" />
+							<property name="job.Status" value="Created" />
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="TodoList Close Instance">
+			<condition>
+				msg.body.Type == 'Job' and
+				msg.body.Name == 'GenericTodoList'
+			</condition>
+			<actions>
+				<pushMessage address="global.todoAddress" subject="ToDoCloseInstance">
+					<baseMessage expression="null">
+						<patchMessageBody variable="req">
+							<property name="req.closedBy" expression="msg.body.CreatedBy"/>
+							<property name="req.instanceId" expression="msg.body.Resource.instance_id"/>
+						</patchMessageBody>
+					</baseMessage>
+					<response responseVar="todo_response" />
+				</pushMessage>
+
+				<!-- TODO: FIXME first Listen for List-Closed-Response and then close job. -->
+				<pushMessage address="global.sdgwAddress" subject="Job"
+					iteratorVar="jobId"
+					iterateOver="el:get(global.jobsPerInstance, msg.body.Resource.instance_id, el:list(msg.body.ReferenceId))">
+					<baseMessage expression="msg">
+						<patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+						<patchMessageBody variable="job">
+							<property name="job.Id" expression="jobId"/>
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<!--
+			#########################################################################
+			## File Resource Requests                                              ##
+			#########################################################################
+		-->
+		<rule name="Forward GetFile Request">
+			<condition>
+                msg.body.Type == 'Job' and
+                msg.body.Name == 'GetFile'	<!-- Job Name frei definierbar zwischen SDGW und RE -->
+            </condition>
+			<actions>
+				<pushMessage address="global.resourceAddress"
+					subject="GetFile">
+					<baseMessage expression="null">
+						<patchMessageBody variable="req">
+							<property name="req.path" expression="msg.body.Resource.path"/>
+						</patchMessageBody>
+					</baseMessage>
+					<response responseVar="getfile_response" />
+				</pushMessage>
+			</actions>
+		</rule>
+
+		<rule name="Return GetFile Response">
+			<condition>
+				el:exists(root, 'getfile_response') and
+				getfile_response.subject == "GetFile"
+            </condition>
+			<actions>
+				<pushMessage address="global.sdgwAddress" subject="Job">
+					<baseMessage expression="msg">
+						<patchMessageBody variable="job">
+							<property name="job.Resource" expression="el:newStructure()"/>
+							<property name="job.Resource.api"
+								expression="getfile_response.body.responseObject" />
+						</patchMessageBody>
+					</baseMessage>
+				</pushMessage>
+			</actions>
+		</rule>
+	</ruleGroup>
+</rules>
