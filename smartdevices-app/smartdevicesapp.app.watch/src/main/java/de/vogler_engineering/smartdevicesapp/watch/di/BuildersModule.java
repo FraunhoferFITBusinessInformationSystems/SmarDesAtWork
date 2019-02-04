@@ -6,6 +6,7 @@ package de.vogler_engineering.smartdevicesapp.watch.di;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
+import de.vogler_engineering.smartdevicesapp.watch.service.NotificationService;
 import de.vogler_engineering.smartdevicesapp.watch.ui.job.JobActivity;
 import de.vogler_engineering.smartdevicesapp.watch.ui.main.MainActivity;
 import de.vogler_engineering.smartdevicesapp.watch.ui.settings.SettingsActivity;
@@ -32,5 +33,8 @@ public abstract class BuildersModule {
 
     @ContributesAndroidInjector()
     abstract UpdateService bindUpdateService();
+
+    @ContributesAndroidInjector()
+    abstract NotificationService bindNotificationService();
 
 }

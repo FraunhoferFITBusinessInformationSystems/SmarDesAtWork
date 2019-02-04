@@ -55,7 +55,7 @@ public abstract class AbstractFirebaseMessagingService extends FirebaseMessaging
                     action, pattern, remoteMessage.getMessageId(), remoteMessage.getFrom(), notification);
 
             if(notification){
-                showNotification(remoteMessage, pattern);
+                showNotification(action, remoteMessage, pattern);
             }
 
             //If app is running: send always the broadcast to the app.
@@ -82,5 +82,5 @@ public abstract class AbstractFirebaseMessagingService extends FirebaseMessaging
         super.onNewToken(s);
     }
 
-    protected abstract void showNotification(RemoteMessage msg, int patternCode);
+    protected abstract void showNotification(String action, RemoteMessage msg, int patternCode);
 }
