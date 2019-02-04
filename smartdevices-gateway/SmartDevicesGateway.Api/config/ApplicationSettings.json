@@ -1,0 +1,71 @@
+﻿{
+  "ServiceName": "SmartDevicesGateway",
+  "AmqpServiceConfig": {
+    "ConnectionString": "amqp://smardes:smardes@localhost:5672",
+    "ClientName": "SmartDevicesGateway",
+    "QueueName": "sdgw"
+  },
+  "ProxyConfig": {
+    "Disabled": false,
+    "UseSystemDefaults": true,
+    "UseSystemCredentials": false,
+    "BypassOnLocal": false,
+    "BypassList": null,
+    "Hostname": "",
+    "Port": 8080,
+    "RequiresAuthentication": true,
+    "Username": "",
+    "Password": "",
+    "Domain": ""
+  },
+  "ServerUrls": [
+    "http://*:7000"
+  ],
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Debug"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Debug"
+      }
+    },
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Warning",
+      "Microsoft": "Warning"
+    }
+  },
+  "Logging.Development": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Trace",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "IpRateLimiting": {
+    "EnableEndpointRateLimiting": true,
+    "StackBlockedRequests": false,
+    "RealIpHeader": null,
+    "ClientIdHeader": null,
+    "HttpStatusCode": 429,
+    "IpWhitelist": [],
+    "EndpointWhitelist": [],
+    "ClientWhitelist": [],
+    "GeneralRules": [
+      {
+        "Endpoint": "*",
+        "Period": "1m",
+        "Limit": 20000
+      }
+    ]
+  },
+  "FcmServiceConfig": {
+    "ApiUrl": "https://fcm.googleapis.com/fcm/send",
+    "ServerKey": "insert-your-token-here"
+  }
+}

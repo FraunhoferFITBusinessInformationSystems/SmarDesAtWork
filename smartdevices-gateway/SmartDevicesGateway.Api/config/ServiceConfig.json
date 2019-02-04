@@ -1,0 +1,10 @@
+﻿{
+  "AuthServiceConfig": {
+
+  },
+  "FcmServiceConfig": {
+    "ApiUrl": "https://fcm.googleapis.com/fcm/send",
+    "ServerKey_": "AAAAAiXkZ2Y:APA91bE9uEL9vimw2KcgbD9-GqqhACl45TOjDafsEvOEB9xwgywXjZJbyZoFZjllBhFP4nF1_JMA8_eaNtp843qMlJPvdmG8X4aYTgYaL9m7d_tk_2E_ccfxh7rcNxt_bushW1dSnW2L",
+    "ServerKey": "AAAAoWqHZKs:APA91bFjAb6O1eh5yV46ouWxEt9VOXgz-GRh20REUaZQe9zAPT1NR9jFa_0yDME03ntt4ea4N6g1sVhJpcRfctG8uMN6Q4nbtMIAL2luOEgKdhmfzYuctnprmpkMay44vDCH1dbL-sF2"
+  }
+}

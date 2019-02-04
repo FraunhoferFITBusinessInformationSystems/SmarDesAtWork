@@ -1,0 +1,12 @@
+﻿{
+  "AmqpServiceConfig": {
+    "ConnectionString": "amqp://user:password@localhost:5672",
+    "ClientName": "SDGW-integration-test"
+  },
+  "AuthServiceConfig": {
+  },
+  "FcmServiceConfig": {
+    "ApiUrl": "https://fcm.googleapis.com/fcm/send",
+    "ServerKey": "insert-your-token-here"
+  }
+}
