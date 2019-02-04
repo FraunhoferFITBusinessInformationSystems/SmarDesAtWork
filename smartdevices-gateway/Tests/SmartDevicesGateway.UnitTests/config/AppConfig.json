@@ -1,0 +1,6 @@
+﻿{
+  "AuthServer": "https://your-server-here:8443/auth/realms/smart-des",
+  "ServerVersion": "0.1a",
+
+  "ResourceDirectory": "resources/"
+}

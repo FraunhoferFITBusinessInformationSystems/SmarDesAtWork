@@ -1,0 +1,65 @@
+﻿{
+  "Users": [
+    {
+      "Username": "alice",
+      "Password": "1234",
+      "Fullname": "Alice A.",
+      "Groups": [ "Produktionsmitarbeiter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Smartphone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "S1PressureLiveFeed",
+            "Produktionsmitarbeiter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "bob",
+      "Password": "1234",
+      "Fullname": "Bob B.",
+      "Groups": [ "BTLogistiker" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Smartphone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "S1TempLiveFeed"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Smartphone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "S1TempLiveFeed",
+            "S1PressureLiveFeed",
+            "Produktionsmitarbeiter",
+            "BTDebugger"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "hans",
+      "Password": "1234",
+      "Fullname": "Hans H.",
+      "Groups": [ "BTLogistiker" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Smartphone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "S1LiveFeed",
+            "Produktionsmitarbeiter"
+          ] 
+        }
+      ]
+    }
+  ]
+}

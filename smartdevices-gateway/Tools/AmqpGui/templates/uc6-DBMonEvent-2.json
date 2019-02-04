@@ -1,0 +1,14 @@
+﻿{
+  "Id": "$guid:random()",
+  "Type": "DBMonEvent",
+  "Source": "uc6dbmon",
+  "Content": {
+    "ressource_nr": "00059944",
+    "aussendurchm_ist": 12.2,
+    "aussendurchm_HH": 12.6,
+    "aussendurchm_H": 12.4,
+    "aussendurchm_soll": 12.2,
+    "aussendurchm_L": 12.0,
+    "aussendurchm_LL": 11.8
+  }
+}

@@ -1,0 +1,49 @@
+﻿{
+  "ServiceName": "SmartDevicesGateway",
+  "AmqpServiceConfig": {
+    "ConnectionString": "amqp://user:password@localhost:5672",
+    "ClientName": "SmartDevicesGateway",
+    "QueueName": "sdgw"
+  },
+  "ServerUrls": [
+    "http://*:7100"
+  ],
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Debug"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Debug"
+      }
+    }
+  },
+  "Logging.Development": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Trace",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "IpRateLimiting": {
+    "EnableEndpointRateLimiting": true,
+    "StackBlockedRequests": false,
+    "RealIpHeader": null,
+    "ClientIdHeader": null,
+    "HttpStatusCode": 429,
+    "IpWhitelist": [],
+    "EndpointWhitelist": [],
+    "ClientWhitelist": [],
+    "GeneralRules": [
+      {
+        "Endpoint": "*",
+        "Period": "1m",
+        "Limit": 20000
+      }
+    ]
+  }
+}

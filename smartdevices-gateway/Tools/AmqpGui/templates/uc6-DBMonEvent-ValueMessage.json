@@ -1,0 +1,11 @@
+﻿{
+  "Id": "$guid:random()",
+  "Type": "DBMonEvent",
+  "Source": "uc6dbmon",
+  "Content": {
+    "ressource_nr": "00001744",
+    "massedruck": 22.4,
+    "massetemperatur": 165,
+    "drehzahl": 6000
+  }
+}
