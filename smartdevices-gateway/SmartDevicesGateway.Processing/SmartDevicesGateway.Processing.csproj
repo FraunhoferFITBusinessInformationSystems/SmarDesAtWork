@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AMQPNetLite" Version="2.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartDevicesGateway.Common\SmartDevicesGateway.Common.csproj" />
+    <ProjectReference Include="..\SmartDevicesGateway.Model.Persistence\SmartDevicesGateway.Model.Persistence.csproj" />
+    <ProjectReference Include="..\SmartDevicesGateway.Model\SmartDevicesGateway.Model.csproj" />
+    <ProjectReference Include="..\SmartDevicesGateway.Services\SmartDevicesGateway.Services.csproj" />
+    <ProjectReference Include="..\Vogler.Amqp\Vogler.Amqp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controller\Amqp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
+      <HintPath>..\..\..\..\Users\sg.VOGLER-ENGINEER.000\.nuget\packages\microsoft.extensions.configuration.abstractions\2.1.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

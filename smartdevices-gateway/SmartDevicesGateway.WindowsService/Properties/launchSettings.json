@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "SmartDevicesGateway.WindowsService": {
+      "commandName": "Project"
+    }
+  }
+}

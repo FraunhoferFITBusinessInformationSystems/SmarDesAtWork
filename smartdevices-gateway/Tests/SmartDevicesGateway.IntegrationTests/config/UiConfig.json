@@ -1,0 +1,67 @@
+﻿{
+  "AppId": "Sample",
+  "AppTitle": "SmartDevicesApp",
+  "AppSubtitle": "Sample Application",
+  "AppTitleResource": null,
+  "AppTheme": null,
+
+  "Uis": [
+    {
+      "Id": "ChatSendMessage",
+      "Title": "Nachricht Bestätigen",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "Spinner",
+          "Id": "subject",
+          "Name": "Senden an",
+          "Items": "debug1.A;debug2.A;debug3.A;debug4.A"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "text",
+          "Name": "Message"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Senden",
+          "TextSecondary": "Abbrechen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "RemoveJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "ChatConfirmMessage",
+      "Title": "Nachricht bestätigen",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Message"
+        },
+        {
+          "Type": "Button",
+          "Id": "submit",
+          "Name": "Bestätigen",
+          "OnClick": "SendJob",
+          "Primary": true
+        }
+      ]
+    }
+  ],
+  "ValueDefinitions": [
+  ],
+  "ActionDefinitions": [
+    {
+      "Id": "ChatAction",
+      "Type": "GenericAction",
+      "Name": "Chat",
+      "JobKey": "ChatSendMessage",
+      "Image": "ic_broken_image"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+﻿{
+  "DeviceGroups": [
+    {
+      "GroupName": "S1LiveFeed",
+      "LiveFeed": {
+        "DataUpdateInterval": 500,
+        "Values": [
+          "S1Temperature1",
+          "S1Pressure1"
+        ]
+      },
+      "Dashboard": null
+    },
+    {
+      "GroupName": "S1TempLiveFeed",
+      "LiveFeed": {
+        "DataUpdateInterval": 500,
+        "Values": [
+          "S1Temperature1"
+        ]
+      },
+      "Dashboard": null
+    },
+    {
+      "GroupName": "S1PressureLiveFeed",
+      "LiveFeed": {
+        "DataUpdateInterval": 500,
+        "Values": [
+          "S1Pressure1",
+          "S1Poti",
+          "S1Knopf1"
+        ]
+      },
+      "Dashboard": null
+    },
+    {
+      "GroupName": "Produktionsmitarbeiter",
+      "LiveFeed": null,
+      "Dashboard": {
+        "Actions": [
+          "WzBruchMeldenAction",
+          "ChatAction"
+        ]
+      }
+    },
+    {
+      "GroupName": "BTInstandhalter",
+      "LiveFeed": null,
+      "Dashboard": null
+    },
+    {
+      "GroupName": "BTLogistiker",
+      "LiveFeed": null,
+      "Dashboard": null
+    },
+    {
+      "GroupName": "BTDebugger",
+      "LiveFeed": null,
+      "Dashboard": {
+        "Actions": [
+          "WzBruchMeldenAction",
+          "DebugAction01",
+          "DebugAction02"
+        ]
+      }
+    },
+    {
+      "GroupName": "Bediener",
+      "LiveFeed": null,
+      "Dashboard": {
+        "Actions": [ ]
+      }
+    }
+  ]
+}

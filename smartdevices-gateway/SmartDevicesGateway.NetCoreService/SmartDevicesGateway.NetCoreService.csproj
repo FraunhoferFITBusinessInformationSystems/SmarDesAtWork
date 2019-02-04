@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <StartupObject>SmartDevicesGateway.NetCoreService.NetCoreService</StartupObject>
+    <AssemblyName>NetCoreService</AssemblyName>
+    <RootNamespace>SmartDevicesGateway.NetCoreService</RootNamespace>
+    <Authors>Vogler Engineering Developer Team</Authors>
+    <Company>Vogler Engineering</Company>
+    <Product>Template</Product>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\SmartDevicesGateway.Api\SmartDevicesGateway.Api.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Start.bat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Start.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+
+</Project>

@@ -1,0 +1,29 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:7000/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "SmartDevicesGateway": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "api/config/info/bob.A",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:7000/"
+    },
+    "SmartDevicesGateway-DevServer": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "DevelopmentServer"
+      },
+      "applicationUrl": "http://localhost:7000/"
+    }
+  }
+}

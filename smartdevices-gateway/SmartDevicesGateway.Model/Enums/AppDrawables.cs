@@ -1,0 +1,44 @@
+﻿//
+// Copyright (c) Vogler Engineering GmbH. All rights reserved.
+// Licensed under the MIT License. See LICENSE.md in the project root for license information.
+//
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace SmartDevicesGateway.Model.Enums
+{
+    [JsonConverter(typeof(StringEnumConverter))]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    public enum AppDrawables
+    {
+        unknown = 0,
+        settings,
+        info,
+        warn,
+        error,
+        help,
+        reply,
+        job,
+        action,
+        livefeed,
+        message,
+        notification,
+        wrench,
+        broken,
+        list,
+        play,
+        sync,
+        photo,
+        camera,
+        add,
+        remove,
+        check,
+        barcode,
+        list_add, 
+        list_check,
+        list_play,
+        smartdes
+    }
+}

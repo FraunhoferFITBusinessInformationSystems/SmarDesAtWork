@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionString": "amqp://user:password@localhost:5672",
+  "ClientName": "AmqpTestDriver",
+  "Queue": "ToDo3"
+}

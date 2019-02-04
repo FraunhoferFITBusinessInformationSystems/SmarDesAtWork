@@ -1,0 +1,20 @@
+﻿{
+  "LiteDbId": 0,
+  "Immediate": false,
+  "Resource": {
+    "number": "12345678",
+    "notes": "Sample text",
+    "submit": null,
+    "subject": "CoffeeDescale"
+  },
+  "Status": "Created",
+  "Id": "$guid:random()",
+  "ReferenceId": "135d4754-d98e-4c28-b5c0-99e67182eaf4",
+  "Priority": "Low",
+  "Name": "TodoListStart",
+  "CreatedBy": "debug1.A",
+  "CreatedAt": "$datetime:nowUTC()",
+  "AssignedTo": null,
+  "AssignedAt": "0001-01-01T00:00:00+00:00",
+  "Type": "Job"
+}

@@ -1,0 +1,7 @@
+﻿{
+  "ConnectionString": "amqp://user:password@localhost:5672",
+  "ClientName": "AmqpTestDriver",
+  "PLCDataQueue": "PLCData",
+  "SDGWQueue": "sdgw",
+  "RuleEngineQueue": "RuleEngine"
+}

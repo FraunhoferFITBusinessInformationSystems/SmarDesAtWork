@@ -1,0 +1,11 @@
+﻿{
+  "TestServiceAConfig": {
+    "A": "AAA"
+  },
+  "TestServiceBConfig": {
+    "B": "BBB"
+  },
+  "TestServiceCConfig": {
+    "C": "CCC"
+  }
+}
