@@ -47,7 +47,7 @@ captures/
 hs_err_pid*
 
 
-resources/
+/resources/
 */google-services.json
 
 /local.properties
