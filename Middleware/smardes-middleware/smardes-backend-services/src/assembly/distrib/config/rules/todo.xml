@@ -141,6 +141,9 @@
 							<property name="req.domain" expression="global.contextDomain" />
 							<property name="req.definitionId" expression="msg.body.Resource.subject"/>
 							<property name="req.startedBy" expression="msg.body.CreatedBy"/>
+							<property name="req.context" expression="el:newStructure()"/>
+							<property name="req.context.number" expression="el:get(msg.body.Resource, 'number', null)" />
+							<property name="req.context.notes" expression="el:get(msg.body.Resource, 'notes', null)" />
 						</patchMessageBody>
 					</baseMessage>
 					<response responseVar="todo_response" />
@@ -173,8 +176,8 @@
 							<property name="job.Resource.instance_id"
 								expression="todo_response.body.responseObject.instanceId" />
 							<property name="job.Resource.list_id" expression="job.Resource.subject" />
-							<property name="job.Resource.list_title" value="ToDo-Liste"/>
-							<property name="job.Resource.list_text" expression="todo_response.body.responseObject.header.name" />
+							<property name="job.Resource.list_title" expression="str:concat('ToDo-Liste: ', todo_response.body.responseObject.header.name)"/>
+							<property name="job.Resource.list_text" expression="str:concat('Auftrag: ', job.Resource.number, ' Notiz: ', job.resource.notes)" />
 							<property name="job.Resource.domain" expression="global.contextDomain" />
 							<property name="job.AssignedTo" expression="job.CreatedBy" />
 							<property name="job.Name" value="GenericTodoList" />
@@ -235,6 +238,7 @@
 							<property name="job.Resource.list_text" expression="todo_response.body.responseObject.instance.header.name" />
 							<property name="job.Resource.domain" expression="global.contextDomain" />
 							<property name="job.AssignedTo" expression="job.CreatedBy" />
+							<property name="job.CreatedAt" expression="todo_response.body.responseObject.instance.startedAt" />
 							<property name="job.Name" value="GenericTodoList" />
 							<property name="job.Type" value="TodoList" />
 							<property name="job.Status" value="Created" />
@@ -244,35 +248,86 @@
 			</actions>
 		</rule>
 
-		<rule name="TodoList Close Instance">
+		<ruleSet name="TodoList Client Response">
 			<condition>
-				msg.body.Type == 'Job' and
-				msg.body.Name == 'GenericTodoList'
+						msg.body.Type == 'Job' and
+						msg.body.Name == 'GenericTodoList' and
+						el:exists(msg.body.Resource, 'action') 
 			</condition>
-			<actions>
-				<pushMessage address="global.todoAddress" subject="ToDoCloseInstance">
-					<baseMessage expression="null">
-						<patchMessageBody variable="req">
-							<property name="req.closedBy" expression="msg.body.CreatedBy"/>
-							<property name="req.instanceId" expression="msg.body.Resource.instance_id"/>
-						</patchMessageBody>
-					</baseMessage>
-					<response responseVar="todo_response" />
-				</pushMessage>
+			<rule name="TodoList Close Action">
+				<condition>
+						msg.body.Resource.action == 'close'
+				</condition>
+				<actions>
+					<setLocalVariables>
+						<property name="local.DEBUG_MESSAGE" value="TodoList Closed!" />
+					</setLocalVariables>
 
-				<!-- TODO: FIXME first Listen for List-Closed-Response and then close job. -->
-				<pushMessage address="global.sdgwAddress" subject="Job"
-					iteratorVar="jobId"
-					iterateOver="el:get(global.jobsPerInstance, msg.body.Resource.instance_id, el:list(msg.body.ReferenceId))">
-					<baseMessage expression="msg">
-						<patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
-						<patchMessageBody variable="job">
-							<property name="job.Id" expression="jobId"/>
-						</patchMessageBody>
-					</baseMessage>
-				</pushMessage>
-			</actions>
-		</rule>
+					<pushMessage address="global.todoAddress" subject="ToDoCloseInstance">
+						<baseMessage expression="null">
+							<patchMessageBody variable="req">
+								<property name="req.closedBy" expression="msg.body.CreatedBy"/>
+								<property name="req.instanceId" expression="msg.body.Resource.instance_id"/>
+								<property name="req.force" expression="msg.body.Resource.force"/>
+							</patchMessageBody>
+						</baseMessage>
+						<response responseVar="todo_response" />
+					</pushMessage>
+
+					<!-- TODO: FIXME first Listen for List-Closed-Response and then close job. -->
+					<pushMessage address="global.sdgwAddress" subject="Job"
+						iteratorVar="jobId"
+						iterateOver="el:get(global.jobsPerInstance, msg.body.Resource.instance_id, el:list(msg.body.ReferenceId))">
+						<baseMessage expression="msg">
+							<patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+							<patchMessageBody variable="job">
+								<property name="job.Id" expression="jobId"/>
+							</patchMessageBody>
+						</baseMessage>
+					</pushMessage>
+				</actions>
+			</rule>
+			<rule name="TodoList Abort Action">
+				<condition>
+						msg.body.Resource.action == 'abort'
+				</condition>
+				<actions>
+					<setLocalVariables>
+						<property name="local.DEBUG_MESSAGE" value="TodoList Aborted!" />
+					</setLocalVariables>
+
+					<pushMessage address="global.todoAddress" subject="ToDoAbortInstance">
+						<baseMessage expression="null">
+							<patchMessageBody variable="req">
+								<property name="req.abortedBy" expression="msg.body.CreatedBy"/>
+								<property name="req.instanceId" expression="msg.body.Resource.instance_id"/>
+							</patchMessageBody>
+						</baseMessage>
+						<response responseVar="todo_response" />
+					</pushMessage>
+
+					<!-- TODO: FIXME first Listen for List-Closed-Response and then close job. -->
+					<pushMessage address="global.sdgwAddress" subject="Job" iteratorVar="jobId" iterateOver="el:get(global.jobsPerInstance, msg.body.Resource.instance_id, el:list(msg.body.ReferenceId))">
+						<baseMessage expression="msg">
+							<patchMessageBodyRef name="ConversationDoneStatusUpdate"/>
+							<patchMessageBody variable="job">
+								<property name="job.Id" expression="jobId"/>
+							</patchMessageBody>
+						</baseMessage>
+					</pushMessage>
+				</actions>
+			</rule>
+			<rule name="TodoList Forward Action">
+				<condition>
+						msg.body.Resource.action == 'forward'
+				</condition>
+				<actions>
+					<setLocalVariables>
+						<property name="local.DEBUG_MESSAGE" value="TodoList Forwarded!" />
+					</setLocalVariables>
+				</actions>
+			</rule>
+		</ruleSet>
 
 		<!--
 			#########################################################################
