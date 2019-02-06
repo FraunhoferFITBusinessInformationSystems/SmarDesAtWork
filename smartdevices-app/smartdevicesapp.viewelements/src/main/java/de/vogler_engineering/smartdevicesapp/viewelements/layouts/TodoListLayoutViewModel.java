@@ -43,9 +43,7 @@ import de.vogler_engineering.smartdevicesapp.viewelements.dialog.SimpleOkCancelD
 import de.vogler_engineering.smartdevicesapp.viewelements.util.UiMessageUtil;
 import de.vogler_engineering.smartdevicesapp.viewelements.viewmodel.BasicConfigurableViewModelFeaturesImpl;
 import io.reactivex.Single;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import lombok.experimental.var;
 import timber.log.Timber;
 
 public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
@@ -169,7 +167,7 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
     private final MutableLiveData<TodoListOverview> overview = new MutableLiveData<>();
     private final MutableLiveData<String> head = new MutableLiveData<>();
     private final MutableLiveData<String> subhead = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> closeEnabled = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> allDone = new MutableLiveData<>();
     private final MutableLiveData<TodoListContextInfo> contextInfo = new MutableLiveData<>();
     private ObservableArrayList<TodoListStep> steps = new ObservableArrayList<>();
 
@@ -190,11 +188,11 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
     }
 
     public LiveData<Boolean> getCloseEnabledObservable() {
-        return closeEnabled;
+        return allDone;
     }
 
-    public boolean isCloseEnabled(){
-        return closeEnabled.getValue() == null ? false : closeEnabled.getValue();
+    public boolean isAllDone(){
+        return allDone.getValue() == null ? false : allDone.getValue();
     }
 
     public LiveData<TodoListContextInfo> getContextInfoObservable() {
@@ -235,7 +233,7 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
                 break;
             }
         }
-        closeEnabled.postValue(allChecked);
+        allDone.postValue(allChecked);
     }
 
     private Map<String, String> gatherResources(String action){
@@ -248,27 +246,50 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
     }
 
     public void onCloseListClick(Context context) {
-        if(instanceId != null && isCloseEnabled()){
+        if(instanceId != null){
+            boolean forceClose = !isAllDone();
+
             if(dialogDisposable != null && !dialogDisposable.isDisposed()){
                 Timber.tag(TAG).e("Dialog not disposed! Could not start new Dialog.");
                 return;
             }
-            dialogDisposable = Single.fromCallable(() -> new SimpleOkCancelDialogBuilder(context))
-                    .subscribeOn(schedulersFacade.newThread())
-                    .observeOn(schedulersFacade.ui())
-                    .map(x -> {
-                        x.setupDialog(
-                                this::onCloseDialogResult,
-                                R.drawable.ic_assignment_turned_in_black_24dp,
-                                R.string.view_todo_list_close_dialog_title,
-                                R.string.view_todo_list_close_dialog_text,
-                                DialogButtonOptions.YesNo);
-                        return x;
-                    })
-                    .subscribe(
-                            AlertDialog.Builder::show,
-                            (err) -> Timber.tag(TAG).e(err, "Could not create Abort Dialog!")
-                    );
+
+            if(forceClose){
+                dialogDisposable = Single.fromCallable(() -> new SimpleOkCancelDialogBuilder(context))
+                        .subscribeOn(schedulersFacade.newThread())
+                        .observeOn(schedulersFacade.ui())
+                        .map(x -> {
+                            x.setupDialog(
+                                    (c) -> resolveDialogResult(c, "close", true),
+                                    R.drawable.ic_warning_yellow_24dp,
+                                    R.string.view_todo_list_force_close_dialog_title,
+                                    R.string.view_todo_list_force_close_dialog_text,
+                                    DialogButtonOptions.YesNo);
+                            return x;
+                        })
+                        .subscribe(
+                                AlertDialog.Builder::show,
+                                (err) -> Timber.tag(TAG).e(err, "Could not create Abort Dialog!")
+                        );
+            }else{
+                dialogDisposable = Single.fromCallable(() -> new SimpleOkCancelDialogBuilder(context))
+                        .subscribeOn(schedulersFacade.newThread())
+                        .observeOn(schedulersFacade.ui())
+                        .map(x -> {
+                            x.setupDialog(
+                                    (c) -> resolveDialogResult(c, "close"),
+                                    R.drawable.ic_assignment_turned_in_black_24dp,
+                                    R.string.view_todo_list_close_dialog_title,
+                                    R.string.view_todo_list_close_dialog_text,
+                                    DialogButtonOptions.YesNo);
+                            return x;
+                        })
+                        .subscribe(
+                                AlertDialog.Builder::show,
+                                (err) -> Timber.tag(TAG).e(err, "Could not create Abort Dialog!")
+                        );
+            }
+
         }
     }
 
@@ -284,7 +305,7 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
                 .observeOn(schedulersFacade.ui())
                 .map(x -> {
                     x.setupDialog(
-                            this::onAbortDialogResult,
+                            (c) -> resolveDialogResult(c, "abort"),
                             R.drawable.ic_warning_black_24dp,
                             R.string.view_todo_list_abort_dialog_title,
                             R.string.view_todo_list_abort_dialog_text,
@@ -307,7 +328,7 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
                 .observeOn(schedulersFacade.ui())
                 .map(x -> {
                     x.setupDialog(
-                            this::onForwardDialogResult,
+                            (c) -> resolveDialogResult(c, "forward"),
                             R.drawable.ic_call_made_white_24dp,
                             R.string.view_todo_list_forward_dialog_title,
                             R.string.view_todo_list_forward_dialog_text,
@@ -320,24 +341,16 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
                 );
     }
 
-
-    private void onCloseDialogResult(String choice) {
-        if(choice.equals(SimpleOkCancelDialogBuilder.ButtonChoice.YES)){
-            Map<String, String> resources = gatherResources("close");
-            mFeatures.sendJob(resources);
-        }
+    private void resolveDialogResult(String buttonChoice, String action){
+        resolveDialogResult(buttonChoice, action, false);
     }
 
-    private void onAbortDialogResult(String choice) {
-        if(choice.equals(SimpleOkCancelDialogBuilder.ButtonChoice.YES)){
-            Map<String, String> resources = gatherResources("abort");
-            mFeatures.sendJob(resources);
-        }
-    }
-
-    private void onForwardDialogResult(String choice) {
-        if(choice.equals(SimpleOkCancelDialogBuilder.ButtonChoice.YES)){
-            Map<String, String> resources = gatherResources("forward");
+    private void resolveDialogResult(String buttonChoice, String action, boolean force){
+        if(buttonChoice.equals(SimpleOkCancelDialogBuilder.ButtonChoice.YES)) {
+            Map<String, String> resources = gatherResources(action);
+            if(force) {
+                resources.put("force", String.valueOf(true));
+            }
             mFeatures.sendJob(resources);
         }
     }
@@ -345,8 +358,6 @@ public class TodoListLayoutViewModel extends AbstractLayoutViewModel {
     public String getContextDomain(){
         return contextDomain;
     }
-
-
 
     public class TodoListChangedListener extends ArrayListChangedListener<TodoListStep> {
 

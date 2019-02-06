@@ -116,9 +116,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:backgroundTint="@color/textDarkDisabled"
+            android:backgroundTint="@color/colorPrimary"
             android:drawableEnd="@drawable/ic_check_circle_white_24dp"
-            android:enabled="false"
             android:paddingStart="20dp"
             android:paddingTop="25dp"
             android:paddingEnd="20dp"
@@ -153,8 +152,7 @@
             android:drawableStart="@drawable/ic_call_made_white_24dp"
             android:backgroundTint="@color/colorPrimary"
             android:textColor="@color/material_light_white"
-            android:text="@string/view_todo_list_forward_list_button_text"
-            />
+            android:text="@string/view_todo_list_forward_list_button_text" />
 
 
 
