@@ -36,7 +36,6 @@ import de.vogler_engineering.smartdevicesapp.watch.di.NotificationHandler;
 import de.vogler_engineering.smartdevicesapp.watch.helper.MultiFunctionButtonHelper;
 import de.vogler_engineering.smartdevicesapp.watch.service.UpdateService;
 import de.vogler_engineering.smartdevicesapp.watch.ui.AbstractWearableActivity;
-import timber.log.Timber;
 
 
 public class MainActivity extends AbstractWearableActivity {
@@ -138,15 +137,7 @@ public class MainActivity extends AbstractWearableActivity {
 //        imageViewStart.setImageResource(R.mipmap.ic_launcher_round);
         notificationHandler.initActivity(this);
 
-        mNoDataView.setClickable(true);
-        mNoDataView.setOnClickListener(this::onNoDataClicked);
-
         setAmbientEnabled();
-    }
-
-    private void onNoDataClicked(View l) {
-        Timber.tag(TAG).d("No data Present, stop Notification sound & vibration.");
-        notificationHandler.stopNotification();
     }
 
     @Override

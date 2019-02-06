@@ -39,7 +39,7 @@
             android:visibility="gone" />
 
         <include
-            android:id=" @+id/no_data_view"
+            android:id="@+id/no_data_view"
             layout="@layout/view_no_data"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
