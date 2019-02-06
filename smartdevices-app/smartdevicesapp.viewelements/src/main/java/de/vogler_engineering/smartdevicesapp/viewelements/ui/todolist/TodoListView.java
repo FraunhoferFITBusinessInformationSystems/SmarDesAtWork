@@ -124,10 +124,6 @@ public class TodoListView extends LayoutView implements ComponentDataProvider {
             viewModel.getHeadObservable().observe(lifecycleOwner, (t) -> mHeadText.setText(t));
             mSubheadText.setText(viewModel.getSubhead());
             viewModel.getSubheadObservable().observe(lifecycleOwner, (t) -> mSubheadText.setText(t));
-            setCloseButtonEnableState(context, viewModel.isCloseEnabled());
-            viewModel.getCloseEnabledObservable().observe(lifecycleOwner, (t) ->
-                    setCloseButtonEnableState(context, !(t==null || !t)));
-
             viewModel.getContextInfoObservable().observe(lifecycleOwner, t -> updateContextInfo(context, t));
 
             mCloseButton.setOnClickListener((v) -> viewModel.onCloseListClick(context));
@@ -216,12 +212,6 @@ public class TodoListView extends LayoutView implements ComponentDataProvider {
 
 
 
-    }
-
-    private void setCloseButtonEnableState(Context context, boolean enabled){
-        mCloseButton.setEnabled(enabled);
-        mCloseButton.setBackgroundTintList(context.getResources().getColorStateList(enabled?R.color.colorPrimary:R.color.textDarkDisabled, null));
-//        mCloseButton.setTextColor(context.getColor(enabled?R.color.material_light_white:R.color.material_grey_500));
     }
 
     @Override

@@ -127,4 +127,6 @@
     <string name="view_todo_list_forward_dialog_title">Weiterleiten der Liste</string>
     <string name="view_todo_list_close_dialog_text">Soll die Liste abgeschlossen werden?</string>
     <string name="view_todo_list_close_dialog_title">Liste Abschließen</string>
+    <string name="view_todo_list_force_close_dialog_title">Liste vorzeitig Abschließen</string>
+    <string name="view_todo_list_force_close_dialog_text">Achtung! Nicht alle offenen Schritte der Liste sind abgearbeitet. Trotzdem abschließen?</string>
 </resources>
