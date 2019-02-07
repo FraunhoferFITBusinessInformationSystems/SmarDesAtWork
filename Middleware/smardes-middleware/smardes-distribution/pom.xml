@@ -86,7 +86,7 @@
 							<url>https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u202-b08/OpenJDK8U-jre_x64_windows_hotspot_8u202b08.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/download</outputDirectory>
-							<sha512>fbba66014bd75b4888d6bf9035b4f63cb4e8eaba86ae834d4b84b8f6f2a24e1f729ef70dc65a18e337b67e355ed1bb26e73a0e107a839deabfb22dac92d883f2</sha512>
+							<sha512>d16f56e6f865dc7a57ff00b956a2e5fc9d3187d6de1980aa963d964108784a905f8ae109dda8453a5dbd83a99443d2ce2463bc8db4785b5786ee8d79d260f73c</sha512>
 						</configuration>
 					</execution>
 					<execution>
@@ -99,7 +99,7 @@
 							<url>https://archive.apache.org/dist/activemq/activemq-artemis/2.6.4/apache-artemis-2.6.4-bin.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/download</outputDirectory>
-							<sha512>df2725e5ac443075fd2102619cd42c39d87a660b0473bf46c6a0f7840185e5a2b342cb436d9dc9d5ce73c4c0fb5a1f20c93100ca1b956d02b7e458e2d0d28f08</sha512>
+							<sha512>6a03caa8bcbe271d23a2595eb8786ace55ccb230143acc562da8d7dbaf93afccce3641d6da370226b35ff52062bd9f4f565291df8ca0f660cbacb7da066a1a27</sha512>
 						</configuration>
 					</execution>
 				</executions>
