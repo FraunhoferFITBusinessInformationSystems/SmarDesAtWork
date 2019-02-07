@@ -31,10 +31,13 @@
 						</baseMessage>
 						<response responseVar="todolist_details" />
 					</pushMessage>
-					<dumpFile templateName="dump_todolist" encoding="windows-1252"
-						destinationFile="str:concat(datetime:format(datetime:parseISO8601(datetime:now()), 'yyyy-MM-dd-HH-mm-ss'), '.txt')">
+					<setLocalVariables>
+						<property name="local.todo" expression="todolist_details.body.responseObject"/>
+					</setLocalVariables>
+					<dumpFile templateName="dump_todolist" encoding="windows-1252" append="true"
+						destinationFile="str:concat(local.todo.instance.header.name, '-', datetime:format(datetime:parseISO8601(datetime:now()), 'yyyy-MM-dd'), '.txt')">
 						<context>
-							<entry name="todo" expression="todolist_details.body.responseObject" />
+							<entry name="todo" expression="local.todo" />
 						</context>
 					</dumpFile>
 				</actions>
