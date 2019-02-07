@@ -39,6 +39,7 @@
 				<exclude>readme.txt</exclude>
 				<exclude>**/StartArtemis.cmd</exclude>
 				<exclude>**/StopArtemis.cmd</exclude>
+				<exclude>**/sqlline.bat</exclude>
 			</excludes>
 		</fileSet>
 		<fileSet>
@@ -50,6 +51,7 @@
 				<include>ShowServices.*</include>
 				<include>**/StartArtemis.cmd</include>
 				<include>**/StopArtemis.cmd</include>
+				<include>**/sqlline.bat</include>
 			</includes>
 			<lineEnding>windows</lineEnding>
 			<filtered>true</filtered>

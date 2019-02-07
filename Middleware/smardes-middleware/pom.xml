@@ -62,10 +62,10 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 
 		<!-- Must match with downloaded AdoptOpenJDK JRE -->
-		<jre.basedir>jdk8u192-b12-jre</jre.basedir>
+		<jre.basedir>jdk8u202-b08-jre</jre.basedir>
 
 		<!-- Must match with downloaded Artemis -->
-		<artemis.version>2.6.3</artemis.version>
+		<artemis.version>2.6.4</artemis.version>
 
 		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
