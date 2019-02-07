@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Copyright (C) 2018-2019 camLine GmbH
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +30,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +61,7 @@ public class ConversationManager {
 	private final String conversationName;
 	private final boolean parallelMode;
 	private final Map<String, ScheduledFuture<?>> timeoutHandlers;
-	private final List<Pair<State, OffsetDateTime>> protocol;
+	private final List<Triple<State, OffsetDateTime, String>> protocol;
 
 	private State state;
 	private ListIterator<String> usersIterator;
@@ -76,7 +75,7 @@ public class ConversationManager {
 		this.timeoutHandlers = new ConcurrentHashMap<>();
 		this.state = State.INIT;
 		this.protocol = new ArrayList<>();
-		protocol.add(Pair.of(State.INIT, OffsetDateTime.now()));
+		protocol.add(Triple.of(State.INIT, OffsetDateTime.now(), null));
 	}
 
 	public boolean isParallelMode() {
@@ -105,7 +104,7 @@ public class ConversationManager {
 		return currentAssignee;
 	}
 
-	public List<Pair<State, OffsetDateTime>> getProtocol() {
+	public List<Triple<State, OffsetDateTime, String>> getProtocol() {
 		return protocol;
 	}
 
@@ -141,9 +140,9 @@ public class ConversationManager {
 			 * In parallel mode we get only called at most on conversation timeout. Therefore
 			 * this leads immediately to state REJECTED.
 			 */
-			logger.warn("There is no 'next assignee' in parallel mode. Finish conversation as rejected.");
+			logger.info("There is no 'next assignee' in parallel mode. Finish conversation as rejected.");
 			this.currentAssignee = null;
-			finish(State.REJECTED);
+			finish(State.REJECTED, null);
 			return Triple.of(state, currentAssignee, Boolean.TRUE);
 		}
 
@@ -157,7 +156,7 @@ public class ConversationManager {
 		if (!usersIterator.hasNext()) {
 			logger.warn("No assignees anymore. Finish Conversation as rejected.");
 			this.currentAssignee = null;
-			finish(State.REJECTED);
+			finish(State.REJECTED, null);
 			return Triple.of(state, currentAssignee, Boolean.TRUE);
 		}
 
@@ -189,9 +188,9 @@ public class ConversationManager {
 	/*
 	 * This method must be only called synchronized.
 	 */
-	private void finish(final State finishState) {
+	private void finish(final State finishState, final String userId) {
 		this.state = finishState;
-		protocol.add(Pair.of(state, OffsetDateTime.now()));
+		protocol.add(Triple.of(state, OffsetDateTime.now(), userId));
 
 		/*
 		 * Kill all timeout handlers gracefully. It does not matter if there
@@ -224,7 +223,7 @@ public class ConversationManager {
 			this.currentAssignee = userId;
 		}
 
-		finish(State.ACCEPTED);
+		finish(State.ACCEPTED, userId);
 
 		return true;
 	}
@@ -237,9 +236,10 @@ public class ConversationManager {
 		if (users.containsKey(userId) && users.get(userId) == null) {
 			users.put(userId, OffsetDateTime.now());
 		}
+
 		boolean allRejected = users.entrySet().stream().allMatch(entry -> entry.getValue() != null);
 		if (allRejected) {
-			finish(State.REJECTED);
+			finish(State.REJECTED, null);
 			return true;
 		}
 		return false;
@@ -253,12 +253,12 @@ public class ConversationManager {
 		return true;
 	}
 
-	public synchronized boolean tryClose() {
+	public synchronized boolean tryClose(String userId) {
 		if (state.isFinished()) {
 			return false;
 		}
 
-		finish(State.CLOSED);
+		finish(State.CLOSED, userId);
 
 		return true;
 	}
@@ -268,7 +268,7 @@ public class ConversationManager {
 			return false;
 		}
 
-		finish(State.EXPIRED);
+		finish(State.EXPIRED, null);
 
 		return true;
 	}

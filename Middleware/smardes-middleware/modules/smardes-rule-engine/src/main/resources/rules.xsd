@@ -269,24 +269,9 @@
 								<xs:documentation>Usually called when a user rejected the task and the next assignee is asked</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
-								</xs:sequence>
-								<xs:attribute name="id" type="xs:string" use="required">
-									<xs:annotation>
-										<xs:documentation>Conversation id</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="userId">
-									<xs:annotation>
-										<xs:documentation>User that accepted the conversation. Mandatory for parallel mode.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="condition" type="xs:string">
-									<xs:annotation>
-										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
+								<xs:complexContent>
+									<xs:extension base="conversationActionType"/>
+								</xs:complexContent>
 							</xs:complexType>
 						</xs:element>
 						<xs:element name="acceptConversation">
@@ -294,24 +279,9 @@
 								<xs:documentation>Usually called when a user accepted the task</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
-								</xs:sequence>
-								<xs:attribute name="id" type="xs:string" use="required">
-									<xs:annotation>
-										<xs:documentation>Conversation id</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="userId">
-									<xs:annotation>
-										<xs:documentation>User that accepted the conversation. Mandatory for parallel mode.</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="condition" type="xs:string">
-									<xs:annotation>
-										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
+								<xs:complexContent>
+									<xs:extension base="conversationActionType"/>
+								</xs:complexContent>
 							</xs:complexType>
 						</xs:element>
 						<xs:element name="closeConversation">
@@ -319,19 +289,9 @@
 								<xs:documentation>Usually called when the conversation should be closed.</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
-								</xs:sequence>
-								<xs:attribute name="id" type="xs:string" use="required">
-									<xs:annotation>
-										<xs:documentation>Conversation id</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
-								<xs:attribute name="condition" type="xs:string">
-									<xs:annotation>
-										<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
-									</xs:annotation>
-								</xs:attribute>
+								<xs:complexContent>
+									<xs:extension base="conversationActionType"/>
+								</xs:complexContent>
 							</xs:complexType>
 						</xs:element>
 						<xs:element name="setGlobalVariables">
@@ -567,6 +527,26 @@
 		<xs:attribute name="iteratorVar" type="xs:string" default="each">
 			<xs:annotation>
 				<xs:documentation>EL variable to be used as iterator variable. Default is 'each'.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="conversationActionType">
+		<xs:sequence>
+			<xs:element name="setConversationContext" type="setELContextType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Conversation id</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="userId">
+			<xs:annotation>
+				<xs:documentation>User that accepted the conversation. Mandatory for parallel mode.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="condition" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Execute only if the desired rule condition matched</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>

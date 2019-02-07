@@ -43,6 +43,7 @@ import com.camline.projects.smartdev.ruledef.BroadcastMessageType.BaseMessage.Pa
 import com.camline.projects.smartdev.ruledef.BroadcastMessageType.ExtraApplicationProperties;
 import com.camline.projects.smartdev.ruledef.ConditionalBroadcastMessageType;
 import com.camline.projects.smartdev.ruledef.ConditionalNameValueExpressionType;
+import com.camline.projects.smartdev.ruledef.ConversationActionType;
 import com.camline.projects.smartdev.ruledef.ExecuteRuleType;
 import com.camline.projects.smartdev.ruledef.NameValueExpressionType;
 import com.camline.projects.smartdev.ruledef.RuleSetType;
@@ -256,26 +257,24 @@ class ConfigurationChecker extends BaseVisitor<Boolean, RuntimeException> {
 
 	@Override
 	public Boolean visit(AcceptConversation acceptConversation) {
-		if (!checkConditionName(acceptConversation.getCondition())) {
-			return Boolean.FALSE;
-		}
-		return checkOrNull(acceptConversation.getSetConversationContext());
+		return doVisit(acceptConversation);
 	}
 
 	@Override
 	public Boolean visit(ContinueConversation continueConversation) {
-		if (!checkConditionName(continueConversation.getCondition())) {
-			return Boolean.FALSE;
-		}
-		return checkOrNull(continueConversation.getSetConversationContext());
+		return doVisit(continueConversation);
 	}
 
 	@Override
 	public Boolean visit(CloseConversation closeConversation) {
-		if (!checkConditionName(closeConversation.getCondition())) {
+		return doVisit(closeConversation);
+	}
+
+	private Boolean doVisit(ConversationActionType conversationActionType) {
+		if (!checkConditionName(conversationActionType.getCondition())) {
 			return Boolean.FALSE;
 		}
-		return checkOrNull(closeConversation.getSetConversationContext());
+		return checkOrNull(conversationActionType.getSetConversationContext());
 	}
 
 	private Boolean checkOrNull(SetELContextType setELContextType) {
