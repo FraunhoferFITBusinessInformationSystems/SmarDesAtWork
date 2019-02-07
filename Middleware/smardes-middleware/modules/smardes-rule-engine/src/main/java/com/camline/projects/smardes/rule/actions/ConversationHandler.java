@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,7 @@ import com.camline.projects.smardes.rule.ConversationManager.State;
 import com.camline.projects.smardes.rule.NamedConditions;
 import com.camline.projects.smardes.rule.RuleGroupContext;
 import com.camline.projects.smartdev.ruledef.ConditionalBroadcastMessageType;
+import com.camline.projects.smartdev.ruledef.ConversationActionType;
 import com.camline.projects.smartdev.ruledef.RuleType.Actions.AcceptConversation;
 import com.camline.projects.smartdev.ruledef.RuleType.Actions.CloseConversation;
 import com.camline.projects.smartdev.ruledef.RuleType.Actions.ContinueConversation;
@@ -99,6 +101,8 @@ public class ConversationHandler extends RuleActionHandler {
 
 		broadcastMessagesConditionally(startConversation.getPushMessage(), "pushMessage",
 				conversationContext.getNamedConditions());
+
+		conversationContextRepository.dump();
 	}
 
 	private void expireConversationContext(final ConversationContext cc) {
@@ -111,22 +115,16 @@ public class ConversationHandler extends RuleActionHandler {
 					ExecuteRule::isExpired);
 		}
 		conversationContextRepository.remove(cc.getUuid());
-		logger.info("{} conversations left in repository", Integer.valueOf(conversationContextRepository.size()));
+		conversationContextRepository.dump();
 	}
 
 	public void continueConversation(final ContinueConversation continueConversation) {
-		final String conversationId = expressionHandler.evaluateExpression(continueConversation.getId(), String.class);
-		final UUID uuid = UUID.fromString(conversationId);
-		final ConversationContext conversationContext = conversationContextRepository.get(uuid);
-
-		if (conversationContext == null) {
-			logger.warn("Unknown conversation id {}. Cannot continue...", uuid);
+		final Pair<ConversationContext, String> conversationContextData = extractConversationContextData(continueConversation);
+		if (conversationContextData == null) {
 			return;
 		}
-		logger.info("Continue conversation {} with uuid {}", conversationContext.getName(),
-				conversationContext.getUuid());
-
-		String userId = resolveUserId(continueConversation.getUserId());
+		ConversationContext conversationContext = conversationContextData.getLeft();
+		String userId = conversationContextData.getRight();
 
 		if (!conversationContext.getConversationManager().isParallelMode()) {
 			expressionHandler.patchValues(continueConversation.getSetConversationContext(), conversationContext.getCtx(),
@@ -145,18 +143,12 @@ public class ConversationHandler extends RuleActionHandler {
 	}
 
 	public void acceptConversation(final AcceptConversation acceptConversation) {
-		final String conversationId = expressionHandler.evaluateExpression(acceptConversation.getId(), String.class);
-		final UUID uuid = UUID.fromString(conversationId);
-		final ConversationContext conversationContext = conversationContextRepository.get(uuid);
-
-		if (conversationContext == null) {
-			logger.warn("Unknown conversation id {}. Cannot accept...", uuid);
+		final Pair<ConversationContext, String> conversationContextData = extractConversationContextData(acceptConversation);
+		if (conversationContextData == null) {
 			return;
 		}
-		logger.info("Accept conversation {} with uuid {}", conversationContext.getName(),
-				conversationContext.getUuid());
-
-		String userId = resolveUserId(acceptConversation.getUserId());
+		ConversationContext conversationContext = conversationContextData.getLeft();
+		String userId = conversationContextData.getRight();
 
 		final boolean stateChanged = conversationContext.getConversationManager().accept(userId);
 		if (stateChanged) {
@@ -168,8 +160,41 @@ public class ConversationHandler extends RuleActionHandler {
 		}
 	}
 
-	private String resolveUserId(String userId) {
-		return userId != null ? expressionHandler.evaluateExpression(userId) : null;
+	public void closeConversation(final CloseConversation closeConversation) {
+		final Pair<ConversationContext, String> conversationContextData = extractConversationContextData(closeConversation);
+		if (conversationContextData == null) {
+			return;
+		}
+		ConversationContext conversationContext = conversationContextData.getLeft();
+		String userId = conversationContextData.getRight();
+
+		final boolean stateChanged = conversationContext.getConversationManager().tryClose(userId);
+		if (stateChanged) {
+			feedbackConversation(conversationContext, closeConversation.getSetConversationContext(),
+					conversationContext.getStartConversation().getClosedMessage(), ConversationMessage::isClosed,
+					"closedMessage");
+			executeInternalRules(conversationContext.getNamedConditions(),
+					conversationContext.getStartConversation().getExecuteRule(), ExecuteRule::isClosed);
+		} else {
+			logger.warn("Conversation {} is already closed.", conversationContext.getId());
+		}
+	}
+
+	private Pair<ConversationContext, String> extractConversationContextData(ConversationActionType conversationActionType) {
+		final String conversationId = expressionHandler.evaluateExpression(conversationActionType.getId(), String.class);
+		final UUID uuid = UUID.fromString(conversationId);
+		final ConversationContext conversationContext = conversationContextRepository.get(uuid);
+		if (conversationContext == null) {
+			logger.warn("Unknown conversation id {}. Ignore action {}...", uuid, conversationActionType.getClass());
+			return null;
+		}
+		logger.info("{} {} with uuid {}", conversationActionType.getClass(), conversationContext.getName(),
+					conversationContext.getUuid());
+
+		String userId = conversationActionType.getUserId() != null
+				? expressionHandler.evaluateExpression(conversationActionType.getUserId())
+				: null;
+		return Pair.of(conversationContext, userId);
 	}
 
 	private void executeInternalRules(NamedConditions namedConditions, List<ExecuteRule> executeRules,
@@ -187,29 +212,6 @@ public class ConversationHandler extends RuleActionHandler {
 			}
 
 			ruleGroupContext.executeInternalRule(executeRule);
-		}
-	}
-
-	public void closeConversation(final CloseConversation closeConversation) {
-		final String conversationId = expressionHandler.evaluateExpression(closeConversation.getId(), String.class);
-		final UUID uuid = UUID.fromString(conversationId);
-		final ConversationContext conversationContext = conversationContextRepository.get(uuid);
-
-		if (conversationContext == null) {
-			logger.warn("Unknown conversation id {}. Cannot close...", uuid);
-			return;
-		}
-		logger.info("Close conversation {} with uuid {}", conversationContext.getName(), conversationContext.getUuid());
-
-		final boolean stateChanged = conversationContext.getConversationManager().tryClose();
-		if (stateChanged) {
-			feedbackConversation(conversationContext, closeConversation.getSetConversationContext(),
-					conversationContext.getStartConversation().getClosedMessage(), ConversationMessage::isClosed,
-					"closedMessage");
-			executeInternalRules(conversationContext.getNamedConditions(),
-					conversationContext.getStartConversation().getExecuteRule(), ExecuteRule::isClosed);
-		} else {
-			logger.warn("Conversation {} is already closed.", conversationContext.getId());
 		}
 	}
 
@@ -234,21 +236,23 @@ public class ConversationHandler extends RuleActionHandler {
 				conversationContext.getNamedConditions());
 	}
 
-	private void sendMessageAndMonitor(final ConversationContext conversationContext, final String lastAssignee) {
-		final ConversationManager conversationManager = conversationContext.getConversationManager();
+	private void sendMessageAndMonitor(final ConversationContext cc, final String lastAssignee) {
+		final ConversationManager conversationManager = cc.getConversationManager();
 		final Triple<State, String, Boolean> result = conversationManager.nextAssignee(lastAssignee);
 		final State state = result.getLeft();
 		final String assignee = result.getMiddle();
 		final Boolean stateChanged = result.getRight();
 
-		final StartConversation startConversation = conversationContext.getStartConversation();
-		expressionHandler.setContextVariable(startConversation.getVariable(), conversationContext);
+		final StartConversation startConversation = cc.getStartConversation();
+		expressionHandler.setContextVariable(startConversation.getVariable(), cc);
 
 		if (state != State.PENDING) {
 			if (stateChanged.booleanValue()) {
 				if (state == State.REJECTED) {
-					feedbackConversation(conversationContext, null, startConversation.getRejectedMessage(),
+					feedbackConversation(cc, null, startConversation.getRejectedMessage(),
 							ConversationMessage::isRejected, "rejectedMessage");
+					executeInternalRules(cc.getNamedConditions(), startConversation.getExecuteRule(),
+							ExecuteRule::isRejected);
 				}
 			} else {
 				logger.info("Conversation already finished with status {}", state);
@@ -262,14 +266,14 @@ public class ConversationHandler extends RuleActionHandler {
 		}
 
 		expressionHandler.setContextVariable(startConversation.getRequestMessage().getIteratorVar(), assignee);
-		pushMessage(startConversation.getRequestMessage(), conversationContext.getNamedConditions());
+		pushMessage(startConversation.getRequestMessage(), cc.getNamedConditions());
 
 		final long timeout = expressionHandler
 				.evaluateLongExpression(startConversation.getRequestMessage().getTimeout());
 		final ScheduledFuture<?> future = conversationMonitor.schedule(() -> {
 			logger.info("Assignee {} didn't answer within given time frame. Treat as REJECTED.", assignee);
 			try {
-				sendMessageAndMonitor(conversationContext, assignee);
+				sendMessageAndMonitor(cc, assignee);
 			} catch (final RuntimeException e) {
 				logger.error("Error in sending rejected message", e);
 			}
