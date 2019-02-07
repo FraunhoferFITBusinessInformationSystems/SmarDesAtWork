@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright (C) 2018-2019 camLine GmbH
-  
+
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-  
+
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-  
+
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,7 +49,7 @@
 		<dependency>
 			<groupId>sqlline</groupId>
 			<artifactId>sqlline</artifactId>
-			<version>1.4.0</version>
+			<version>1.6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sf.saxon</groupId>
@@ -83,7 +83,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u192-b12/OpenJDK8U-jre_x64_windows_hotspot_8u192b12.zip</url>
+							<url>https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u202-b08/OpenJDK8U-jre_x64_windows_hotspot_8u202b08.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/download</outputDirectory>
 							<sha512>fbba66014bd75b4888d6bf9035b4f63cb4e8eaba86ae834d4b84b8f6f2a24e1f729ef70dc65a18e337b67e355ed1bb26e73a0e107a839deabfb22dac92d883f2</sha512>
@@ -96,7 +96,7 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>https://archive.apache.org/dist/activemq/activemq-artemis/2.6.3/apache-artemis-2.6.3-bin.zip</url>
+							<url>https://archive.apache.org/dist/activemq/activemq-artemis/2.6.4/apache-artemis-2.6.4-bin.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${project.build.directory}/download</outputDirectory>
 							<sha512>df2725e5ac443075fd2102619cd42c39d87a660b0473bf46c6a0f7840185e5a2b342cb436d9dc9d5ce73c4c0fb5a1f20c93100ca1b956d02b7e458e2d0d28f08</sha512>
