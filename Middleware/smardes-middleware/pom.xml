@@ -51,6 +51,8 @@
 
 		<module>smardes-backend-services</module>
 
+		<module>test/smardes-test-clients</module>
+
 		<module>smardes-distribution</module>
 
 		<module>test/smardes-integration-test</module>
