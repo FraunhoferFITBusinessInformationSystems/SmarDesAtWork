@@ -81,17 +81,17 @@
 			</includes>
 		</dependencySet>
 		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
 			<outputDirectory>tools/sqlline/lib</outputDirectory>
 			<includes>
 				<include>sqlline:*:jar</include>
-				<include>jline:*:jar</include>
+				<include>org.jline:*:jar</include>
 			</includes>
 		</dependencySet>
 		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
 			<outputDirectory>install</outputDirectory>
 			<includes>
-				<include>sqlline:*:jar</include>
-				<include>jline:*:jar</include>
 				<include>net.sf.saxon:*:jar</include>
 			</includes>
 		</dependencySet>
