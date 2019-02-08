@@ -25,7 +25,7 @@
 
 	<groupId>com.camline.projects.smardes</groupId>
 	<artifactId>smardes-middleware</artifactId>
-	<version>1.5.1</version>
+	<version>1.5.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
