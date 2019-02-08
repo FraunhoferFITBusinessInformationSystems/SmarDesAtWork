@@ -23,6 +23,7 @@ package com.camline.projects.smardes.rule;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -74,8 +75,11 @@ public class ConversationManager {
 		this.parallelMode = parallelMode;
 		this.timeoutHandlers = new ConcurrentHashMap<>();
 		this.state = State.INIT;
+
 		this.protocol = new ArrayList<>();
 		protocol.add(Triple.of(State.INIT, OffsetDateTime.now(), null));
+
+		this.users = Collections.emptyMap();
 	}
 
 	public boolean isParallelMode() {
