@@ -75,8 +75,8 @@
 	</properties>
 
 	<scm>
-		<connection>scm:git:https://github.com/mjh-c/SmarDesAtWork.git</connection>
-		<developerConnection>scm:git:https://github.com/mjh-c/SmarDesAtWork.git</developerConnection>
+		<connection>scm:git:https://github.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork.git</connection>
+		<developerConnection>scm:git:https://github.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork.git</developerConnection>
 		<url>https://github.com/FraunhoferFITBusinessInformationSystems/SmarDesAtWork</url>
 		<tag>HEAD</tag>
 	</scm>
