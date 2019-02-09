@@ -21,13 +21,18 @@
  ******************************************************************************/
 package com.camline.projects.smardes.rule;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.camline.projects.smardes.jsonapi.el.ELMessage;
+import com.camline.projects.smardes.rule.ConversationManager.State;
 import com.camline.projects.smartdev.ruledef.RuleType.Actions.StartConversation;
 
 public class ConversationContextRepository extends ConcurrentHashMap<UUID, ConversationContext> {
@@ -65,9 +70,17 @@ public class ConversationContextRepository extends ConcurrentHashMap<UUID, Conve
 		StringBuilder dump = new StringBuilder();
 		dump.append(size() + " conversations left in repository:");
 		for (ConversationContext cc : values()) {
-			if (logger.isDebugEnabled() || !cc.getState().isFinished()) {
-				dump.append("\n\t" + cc.getId() + ": " + cc.getName() + " " + cc.getState() + " " + cc.getUsers());
+			if (!logger.isDebugEnabled() && cc.getState().isFinished()) {
+				/*
+				 * No debug - only log recent conversations
+				 */
+				List<Triple<State, OffsetDateTime, String>> protocol = cc.getProtocol();
+				OffsetDateTime lastDt = protocol.get(protocol.size() - 1).getMiddle();
+				if (lastDt.plusMinutes(10).toInstant().isAfter(Instant.now())) {
+					continue;
+				}
 			}
+			dump.append("\n\t" + cc.getId() + ": " + cc.getName() + " " + cc.getState() + " " + cc.getUsers());
 		}
 		logger.info("{}", dump);
 	}
