@@ -39,7 +39,7 @@ Der Instandhalter startet eine Wartungsanleitung und arbeitet die Schritte diese
 
 Bei einem Schichtwechsel frägt ein Mitarbeiter der folgenden Schicht die aktuell offenen Wartungsaufträge ab und schließt diese bis zum ende ab.
 
-##Sample Use-Case 4 - Error Recording
+## Sample Use-Case 4 - Error Recording
 [(sequencediagram.org - UC4 ErrorRecording)](https://sequencediagram.org/index.html#initialData=C4S2BsFMAIGUEMC2AHK0CqBnSBaAwvNtACzQ7QCiATlQPZXQBKkAxvQCYgB2A5gFB94LYPWgAiAPLJIVeCKpjohaAAUAsn2TwqoFiC1dg4tSHbsoAd22RFytQHVN23fviHjFWLczQ1ngUKgAG5yMH6wgsIgIcBhjnzhOAB8DgBccCA8XPDg0IhCABbcMDJ0VAn2yerpAHK0oABmAJ7QFmAF0KX0kcGhqhp86jjJadAAgiwskMjAAkNJ1dAAYiAAHtw80MAFJTTdc2oj9unMyPRGbdtMkIS0XEpc7NAAOtlmYCB3OdAAklwN9HyoDumD47BuURiMHUAgcI08J0g4HgLTcmAsMj4QA)
 ![Sample Use-Case 4 - Error Recording - Sequence diagram](diagrams/sample-UC4-ErrorRecording.svg "Sample Use-Case 4 - Error Recording - Sequence diagram")
 
