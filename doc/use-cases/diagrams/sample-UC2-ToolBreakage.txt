@@ -1,0 +1,65 @@
+title Sample Use-Case 2 - Tool-Breakage
+
+actor "SD1\nOperator" as SD1
+actor "SD2\nLogistician" as SD2
+actor "SD3\nMaintainer" as SD3
+participant "Middleware" as SDGW
+
+autonumber 1
+SD1->SDGW: Action: "ToolBreakage"\n with info "help requested?" and "tool repairable?"
+activate SDGW
+
+opt on site inspection neccessary
+
+SDGW->SD3: Request: "ToolInspection" On site Inspection\nInfo: Description, Images, Tool-Info
+activate SD3
+deactivate SDGW
+SDGW<-SD3: Answer "Problem solved /\nTool-delivery to Maintenance"
+deactivate SD3
+activate SDGW
+end
+SD1->SD1: Disassemble Tool
+activate SD1
+
+SDGW->SD2:Request: "ToolDelivery" Pickup Tool from Production at specified Time
+
+SDGW->SD3: Request: "ToolMaintenance"\nPrepare for repair of the tool
+deactivate SDGW
+
+SD1->SD1: Disassemble\nfinished
+deactivate SD1
+
+
+activate SD2
+
+SD2->SD2:Pickup Tool in Production \nand deliver to Maintenance
+SD2->SDGW: Answer: Tool is deliverd.
+deactivate SD2
+activate SDGW
+
+SDGW->SD3: Notification: Start fixing the Tool
+deactivate SDGW
+activate SD3
+
+SD3->SD3: Tool Maintenance
+
+SDGW<-SD3: Answer: Maintenance finished\n(Tool-Pickup in x Minutes)
+activate SDGW
+SDGW->SD2: Request: "ToolDelivery" Pickup Tool from Maintenance at specified Time
+
+SDGW->SD1:Request: "ToolInstallation" Prepare for tool installation in x Minutes
+activate SD1
+deactivate SDGW
+
+space 1
+
+deactivate SD3
+activate SD2
+
+SD2->SD2:Pickup Tool in Maintenance\nand deliver to Production
+SD2->SDGW: Answer: Tool is deliverd.
+deactivate SD2
+SD1->SD1: Tool-Installation
+
+SDGW<-SD1: Answer: Installation successful (yes/no)
+deactivate SD1

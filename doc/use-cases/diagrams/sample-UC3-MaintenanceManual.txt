@@ -1,0 +1,40 @@
+title Sample Use-Case 3 - Maintenance Manual (TODO-List)
+
+actor "Operator A" as PMA
+participant "Middleware" as MW
+actor "Operator B" as PMB
+
+activate MW
+
+PMA->MW: Start maintenance process
+activate PMA
+
+MW-->PMA: Maintenance manual
+
+loop Sub-tasks / Steps
+PMA->MW: Step executed/done
+end
+
+alt Operator A finishes the Maintenance process itself
+PMA-->MW: Maintenance finished
+deactivate PMA
+
+else shift is ending before maintenance is finished
+activate PMA
+PMA->PMA: Shift ended
+deactivate PMA
+
+
+PMB->MW: Get unfinished maintenance process
+activate PMB
+
+MW-->PMB: Maintenance manual with\nprogress from [Operator A]
+
+loop Sub-tasks / Steps
+PMB->MW: Step executed/done
+end
+PMB-->MW: Maintenance finished
+deactivate PMB
+end
+space 1
+deactivate MW

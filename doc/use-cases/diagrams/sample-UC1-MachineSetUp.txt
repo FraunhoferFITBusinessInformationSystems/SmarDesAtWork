@@ -1,0 +1,21 @@
+title Sample Use-Case 1 - Machine Set-Up
+
+participant "MES" as ERP
+actor "Logistician" as SD1
+actor "Operator" as SD2
+participant "Middleware" as MW
+
+ERP->MW: Start machine set-up (with planned production start)
+activate MW
+
+MW->SD1: Prepare machine set-up\n(deliver tool and material)
+activate SD1
+
+MW<--SD1: Preparing finished
+deactivate SD1
+
+MW->SD2: Start machine set-up
+activate SD2
+SD2-->MW: finished set-up\n(machine is running)
+deactivate SD2
+deactivate MW
