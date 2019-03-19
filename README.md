@@ -4,12 +4,12 @@ Public research project funded by the Bavarian Research Foundation
 
 ## Table of Contents
 
-* [Installation](doc/Installation.md)
-* [Usage](doc/Installation.md#Usage)
+* [Installation](doc/installation.md)
+* [Usage](doc/installation.md#Usage)
 * [Documentation](doc/documentation.md)
   * [Architecture](doc/documentation.md#Architecture)
   * [Components](doc/documentation.md#Components)
-    * [smardes-middleware](Other/README.md)
+    * [smardes-middleware](smardes-middleware/README.md)
     * [smartdevices-gateway](smartdevices-gateway/README.md)
     * [smartdevices-app](smartdevices-app/README.md)
   * [Interaction](doc/documentation.md#Interaction)
