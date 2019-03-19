@@ -1,0 +1,18 @@
+title Use-Case 5 - Live Data
+
+entity "Machine-\nInterface" as M
+participant "SmartDevice" as SD
+participant "Middleware" as MW
+
+activate MW
+
+M->MW: Send machine data
+
+MW->MW:Filter, clean and\naggregate values
+
+activate SD
+MW->SD: Send values to SmartDevice
+
+SD->SD: Visualize Live-Data
+deactivate SD
+

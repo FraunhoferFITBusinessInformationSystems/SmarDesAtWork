@@ -1,0 +1,51 @@
+title Use-Case 6 - Value Monitoring
+
+entity "Machine-\nInterface" as M
+actor "Operator" as O
+actor "Production Manager" as P
+participant "Middleware" as MW
+
+activate MW
+
+M->MW: Send machine data
+
+MW->MW: Analyse and evaluate\nmachine data 
+
+MW->MW: Check thresholds
+
+opt Event: Machine malfunction
+
+MW->O: Notification: Machine malfunction
+
+alt Accept
+O-->MW: Accept
+activate O
+O->O: Fix malfunction
+O->MW: Confirm fixing
+deactivate O
+
+else Decline or Timeout / no user interaction
+O-->MW: Decline
+ref over MW: escalation = TRUE\ncontinue with escalation pattern
+
+note over O,MW: Repeat notifing the Operator after timeout.\nIf the Operator declines, continue with escalation Pattern
+end 
+opt escalation && malfunction not fixed
+MW->P: Error: Machine malfunction
+activate P
+MW->O: Error: Machine malfunction
+activate O
+MW<--P: Confirm/Accept
+deactivate P
+MW<--O: Confirm/Accept
+deactivate O
+
+MW<-MW: Verfiy answer
+activate MW
+space 1
+deactivate MW
+
+note over O,MW: Repeat notifing after timeout until malfunction is fixed.
+end
+end
+

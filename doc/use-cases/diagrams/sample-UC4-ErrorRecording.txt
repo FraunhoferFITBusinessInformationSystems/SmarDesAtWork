@@ -1,0 +1,22 @@
+title Sample Use-Case 4 - Error Recording
+
+actor "Operator" as PM
+participant "Middleware" as MW
+participant "MES" as MES
+
+activate MES
+activate MW
+
+MES->MW: Signal machine error
+MW->PM: Notify with error
+activate PM
+
+PM-->MW: Accept
+
+PM->PM: Fixing the error
+
+
+PM->MW: Report with Reason and \nadditional Informations
+deactivate PM
+
+MW->MES: Relay answer
