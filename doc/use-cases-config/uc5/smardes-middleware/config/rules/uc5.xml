@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+
+	<globalVariables>
+		<property name="global.UC5LiveData">json:eval('{
+			"pressure": {
+				"unit": "bar",
+				"valuename": "Pressure"
+			},
+			"temperature_act": {
+				"unit": "°C",
+				"valuename": "Temperature"
+			},
+			"numrev": {
+				"unit": "1/min",
+				"valuename": "NumRevolutions"
+			}
+		}')
+		</property>
+	</globalVariables>
+
+	<patchMessageBodyPrototypes>
+		<patchMessageBodyPrototype variable="body" name="ValueMessage">
+			<property name="body.Id" expression="uuid:random()" />
+			<property name="body.Type" value="ValueMessage" />
+			<property name="body.Source" value="ValueUpdate" />
+			<property name="body.ValueName"
+				expression="str:concat('m', local.equipment, ':', local.varSetup.valuename)" />
+			<property name="body.Value" expression="msg.body.Content[varColumn]" />
+			<property name="body.Unit" expression="local.varSetup.unit" />
+			<property name="body.SetPoint" expression="0" />
+			<property name="body.Severity" value="Normal" />
+		</patchMessageBodyPrototype>
+	</patchMessageBodyPrototypes>
+
+	<ruleGroup name="Rule Engine Requests">
+		<selector address="RuleEngine" jsonBody="true"/>
+
+		<ruleSet name="Rules for DB Monitoring">
+			<condition>
+				msg.body.Type == 'DBMonEvent' and msg.body.Source == 'uc5'
+			</condition>
+
+			<rule name="Setup local variables">
+				<actions>
+					<setLocalVariables>
+						<property name="local.equipment" expression="msg.body.Content.equipment"/>
+					</setLocalVariables>
+				</actions>
+			</rule>
+
+			<rule name="Live-Data Display Measurement Values" iterateOver="el:mapKeys(global.UC5LiveData)" iteratorVar="varColumn">
+				<condition>
+					el:exists(msg.body.Content, varColumn)
+				</condition>
+				<condition name="temperature">
+					varColumn eq 'temperature_act'
+				</condition>
+				<actions>
+					<setLocalVariables>
+						<property name="local.varSetup" expression="global.UC5LiveData[varColumn]"/>
+					</setLocalVariables>
+					<pushMessage address="global.sdgwAddress" subject="ValueMessage">
+						<baseMessage expression="null">
+							<patchMessageBodyRef name="ValueMessage"/>
+							<patchMessageBody variable="body">
+								<property name="body.SetPoint" expression="msg.body.Content.temperature_setp" condition="temperature" />
+								<property name="body.Severity" condition="temperature">
+									msg.body.Content.temperature_act le msg.body.Content.temperature_LL ? 'Error' :
+									msg.body.Content.temperature_act le msg.body.Content.temperature_L ? 'Warning' :
+									msg.body.Content.temperature_act ge msg.body.Content.temperature_HH ? 'Error' :
+									msg.body.Content.temperature_act ge msg.body.Content.temperature_H ? 'Warning' : 'Normal'
+								</property>
+								<property name="body.HH" expression="msg.body.Content.temperature_HH" condition="temperature" />
+								<property name="body.H" expression="msg.body.Content.temperature_H" condition="temperature" />
+								<property name="body.L" expression="msg.body.Content.temperature_L" condition="temperature" />
+								<property name="body.LL" expression="msg.body.Content.temperature_LL" condition="temperature" />
+ 							</patchMessageBody>
+						</baseMessage>
+					</pushMessage>
+				</actions>
+			</rule>
+		</ruleSet>
+	</ruleGroup>
+</rules>
