@@ -128,7 +128,7 @@ namespace SmartDevicesGateway.Api
             //Setup ConfigService
             var confService = new ConfigService(_loggerFactory) {ContentRoot = ContentRoot, Environment = _hostingEnvironment.EnvironmentName};
 
-            confService.RegisterConfigFile(Path.Combine(ContentRoot, "config/ServiceConfig.json"), typeof(ServiceConfig));
+//            confService.RegisterConfigFile(Path.Combine(ContentRoot, "config/ServiceConfig.json"), typeof(ServiceConfig));
             confService.RegisterConfigFile(Path.Combine(ContentRoot, "config/SmartDeviceConfig.json"), typeof(SmartDeviceConfig));
             confService.RegisterConfigFile(Path.Combine(ContentRoot, "config/UserConfig.json"), typeof(UserConfig));
             confService.RegisterConfigFile(Path.Combine(ContentRoot, "config/AppConfig.json"), typeof(AppConfig));

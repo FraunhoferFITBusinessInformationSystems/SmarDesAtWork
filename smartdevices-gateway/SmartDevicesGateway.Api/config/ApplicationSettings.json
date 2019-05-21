@@ -1,10 +1,18 @@
 ﻿{
   "ServiceName": "SmartDevicesGateway",
   "AmqpServiceConfig": {
-    "ConnectionString": "amqp://smardes:smardes@localhost:5672",
+    "ConnectionString": "amqp://user:password@localhost:5672",
     "ClientName": "SmartDevicesGateway",
     "QueueName": "sdgw"
   },
+  "FcmServiceConfig": {
+    "ApiUrl": "https://fcm.googleapis.com/fcm/send",
+    "ServerKey": "insert-your-token-here"
+  },
+  "ServerUrls": [
+    "http://*:7000"
+  ],
+
   "ProxyConfig": {
     "Disabled": false,
     "UseSystemDefaults": true,
@@ -18,9 +26,6 @@
     "Password": "",
     "Domain": ""
   },
-  "ServerUrls": [
-    "http://*:7000"
-  ],
   "Logging": {
     "IncludeScopes": false,
     "Debug": {
@@ -63,9 +68,5 @@
         "Limit": 20000
       }
     ]
-  },
-  "FcmServiceConfig": {
-    "ApiUrl": "https://fcm.googleapis.com/fcm/send",
-    "ServerKey": "insert-your-token-here"
   }
 }

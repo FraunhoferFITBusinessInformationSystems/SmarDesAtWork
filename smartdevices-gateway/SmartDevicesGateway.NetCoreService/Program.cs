@@ -44,6 +44,12 @@ namespace SmartDevicesGateway.NetCoreService
             catch (Exception e)
             {
                 Logger.Error(e);
+                if (Debugger.IsAttached)
+                {
+                    Console.Error.WriteLine($"[CRITICAL] Application stopped due to an Exception \"{e.Message}\"");
+                    Console.Error.WriteLine($"Press any key to continue...");
+                    Console.ReadKey();
+                }
             }
         }
     }

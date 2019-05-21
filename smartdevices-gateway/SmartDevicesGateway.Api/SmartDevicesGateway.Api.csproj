@@ -11,6 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="config\AppConfig.json" />
+    <Content Remove="config\ApplicationSettings.json" />
+    <Content Remove="config\log4net.config" />
+    <Content Remove="config\SmartDeviceConfig.json" />
+    <Content Remove="config\UiConfig.json" />
+    <Content Remove="config\UserConfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="log\" />
     <Folder Include="resources\">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -51,6 +60,24 @@
 
   <ItemGroup>
     <None Include="..\SmartDevicesGateway.sln.licenseheader" Link="SmartDevicesGateway.sln.licenseheader" />
+    <None Include="config\AppConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\ApplicationSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\SmartDeviceConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\UiConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="config\UserConfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\index.html" />
   </ItemGroup>
 
@@ -62,37 +89,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="config\AppConfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\ApplicationSettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\ApplicationSettings.Staging.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\ApplicationSettings.Development.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\ApplicationSettings.DevelopmentServer.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Update="config\ApplicationSettings.Prod.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\log4net.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\ServiceConfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\SmartDeviceConfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\UiConfig.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Update="config\UserConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="resources\gui.json">
@@ -178,6 +175,6 @@
     </None>
   </ItemGroup>
 
-  <ProjectExtensions><VisualStudio><UserProperties config_4ServiceConfig_1json__JSONSchema="Logger.Info($&quot;Environment configuration found in: \&quot;{configFile}\&quot;&quot;);" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>

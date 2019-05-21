@@ -1,0 +1,461 @@
+﻿{
+  "Users": [
+    {
+      "Username": "pm",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "Produktionsmitarbeiter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "pm1",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "Produktionsmitarbeiter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "pm2",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "Produktionsmitarbeiter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "log",
+      "Fullname": "Logistiker",
+      "Groups": [ "Logistiker" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "log1",
+      "Fullname": "Logistiker",
+      "Groups": [ "Logistiker" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "log2",
+      "Fullname": "Logistiker",
+      "Groups": [ "Logistiker" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "log3",
+      "Fullname": "Logistiker",
+      "Groups": [ "Logistiker" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Logistiker"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "inst",
+      "Fullname": "Instandhaltung",
+      "Groups": [ "Instandhalter" ],
+      "Groups": [ "Instandhalter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Instandhalter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Instandhalter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "inst1",
+      "Fullname": "Instandhaltung",
+      "Groups": [ "Instandhalter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Instandhalter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Instandhalter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "inst2",
+      "Fullname": "Instandhaltung",
+      "Groups": [ "Instandhalter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Instandhalter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Instandhalter"
+          ]
+        }
+      ]
+    },
+    {
+      "Username": "pl1",
+      "Fullname": "Instandhaltung",
+      "Groups": [ "Instandhalter" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Produktionsmitarbeiter",
+            "ValueDisplay",
+            "Chat"
+          ]
+        }
+      ]
+    },
+
+
+
+    {
+      "Username": "debug1",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug2",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug3",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug4",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug5",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug6",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug7",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug8",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug9",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    },
+    {
+      "Username": "debug10",
+      "Fullname": "Produktionsmitarbeiter",
+      "Groups": [ "TestDebugGroup" ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": [ "TestDebugGroup" ]
+        }
+      ]
+    }
+  ]
+}
