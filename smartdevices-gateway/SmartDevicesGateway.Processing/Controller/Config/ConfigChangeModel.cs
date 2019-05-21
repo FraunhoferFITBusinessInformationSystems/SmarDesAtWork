@@ -58,14 +58,8 @@ namespace SmartDevicesGateway.Processing.Controller.Config
 
         private void OnUiConfigChangedEvent(object sender, ConfigChangedEventArgs<UiConfig> e)
         {
-            NotifySmartDevicesForConfigChange();
-        }
-
-        private void OnSDConfigChangedEvent(object sender,
-            ConfigChangedEventArgs<SmartDeviceConfig> configChangedEventArgs)
-        {
             //Update methods for all handler and services
-            var valueSpecifications = configChangedEventArgs?.NewValue?.ValueDefinitions?.ToList();
+            var valueSpecifications = e?.NewValue?.ValueDefinitions?.ToList();
             var sources = valueSpecifications?.Select(x => x.DataSource).ToList();
 
             if (sources != null)
@@ -73,10 +67,16 @@ namespace SmartDevicesGateway.Processing.Controller.Config
                 _valueHandler.UpdateDataSources(sources);
             }
 
-            if (configChangedEventArgs?.OldValue != null)
+            if (e?.OldValue != null)
             {
                 NotifySmartDevicesForConfigChange();
             }
+            
+        }
+
+        private void OnSDConfigChangedEvent(object sender, ConfigChangedEventArgs<SmartDeviceConfig> e)
+        {
+            NotifySmartDevicesForConfigChange();
         }
 
         private void NotifySmartDevicesForConfigChange()
