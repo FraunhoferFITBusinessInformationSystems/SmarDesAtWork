@@ -27,13 +27,10 @@ namespace ConfigGenerator
 
         private static readonly string DefaultPath
             = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location) + 
-              (Debugger.IsAttached ? @"\..\..\..\..\..\SmartDevicesGateway.Api\bin\Debug\netstandard2.0\config" : "config");
-
-        //C:\prj\smartdevices-gateway\Tools\ConfigGenerator\bin\Debug\netcoreapp2.2\..\..
+              (Debugger.IsAttached ? @"\..\..\..\..\..\SmartDevicesGateway.Api\config" : "config");
 
         private static readonly JsonSerializerSettings Settings = new JsonSerializerSettings()
         {
-//            ContractResolver = new CamelCasePropertyNamesContractResolver(),
             NullValueHandling = NullValueHandling.Include,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             DateTimeZoneHandling = DateTimeZoneHandling.Utc,
@@ -50,11 +47,12 @@ namespace ConfigGenerator
         static void Main(string[] args)
         {
             Logger.Debug($"{nameof(Main)} called with {string.Join(" ", args)}.");
-            
-            var exampleConfig = new DefaultConfig().GenerateConfig();
-            var config = exampleConfig
-                .MergeWith(new Uc1ToolBreakage().GenerateConfig())
-                .MergeWith(new Uc2MachineSetUp().GenerateConfig());
+
+            var config = new SmartDeviceConfig();
+            config = config.MergeWith(new DefaultConfig().GenerateConfig());
+//            config = config.MergeWith(new Uc1ToolBreakage().GenerateConfig());
+//            config = config.MergeWith(new Uc2MachineSetUp().GenerateConfig());
+            config = config.MergeWith(new Uc5LiveData().GenerateConfig());
             
             Logger.Info($"Config generated.");
             Logger.Info($"Writing config files...");
@@ -66,9 +64,7 @@ namespace ConfigGenerator
 
             Write(new SmartDevicesGateway.Model.Config.SDConfig.SmartDeviceConfig
             {
-                DeviceGroups = config.DeviceGroups,
-                Uis = config.Uis,
-                ValueDefinitions = config.ValueDefinitions
+                DeviceGroups = config.DeviceGroups
             }, "SmartDeviceConfig");
 
             Write(new UiConfig

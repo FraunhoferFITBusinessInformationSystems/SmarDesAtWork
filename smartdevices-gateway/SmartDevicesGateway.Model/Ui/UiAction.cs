@@ -21,7 +21,13 @@ namespace SmartDevicesGateway.Model.Ui
         [SuppressMessage("ReSharper", "InvertIf")]
         public UiAction(UiComponent other) : base(other)
         {
-            const string key = "JobKey";
+            if (other is UiAction otherAction)
+            {
+                JobKey = otherAction.JobKey;
+                return;
+            }
+
+            const string key = nameof(JobKey);
             if (AdditionalProperties.ContainsKey(key))
             {
                 JobKey = AdditionalProperties[key]?.ToString();

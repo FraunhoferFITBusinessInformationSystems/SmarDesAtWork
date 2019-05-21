@@ -36,6 +36,7 @@ namespace SmartDevicesGateway.Model.Ui
             this.Type = other.Type;
             this.Id = other.Id;
             this.Name = other.Name;
+            this.Tab = other.Tab;
             other.AdditionalProperties.ForEach(kvpair => this.AdditionalProperties.Add(kvpair.Key, kvpair.Value));
         }        
     }
