@@ -1,4 +1,4 @@
-﻿{
+{
   "DeviceGroups": [
     {
       "GroupName": "Chat",
@@ -8,78 +8,37 @@
           "ChatAction"
         ]
       },
-      "VisibleTabs": [ "dashboard", "actions" ]
+      "VisibleTabs": [
+        "actions",
+        "dashboard"
+      ]
     },
     {
-      "GroupName": "ValueDisplay",
-      "Dashboard": {
-        "Actions": [ "ValueDisplay01", "ValueDisplay02", "ValueDisplay04", "GraphDisplay01", "ChatAction" ]
-      },
+      "GroupName": "LiveData",
       "LiveFeed": {
         "DataUpdateInterval": 500,
         "Values": [
-          "Massedruck",
-          "Massetemperatur",
-          "Drehzahl",
-          "Aussendurchmesser"
+          "mEQ1:NumRevolutions",
+          "mEQ1:Pressure",
+          "mEQ1:Temperature",
+          "mEQ2:NumRevolutions",
+          "mEQ2:Pressure",
+          "mEQ2:Temperature"
         ]
       },
-      "VisibleTabs": [ "livedata" ]
-    },
-    {
-      "GroupName": "WatchChat",
       "Dashboard": {
-        "Actions": [ "ChatActionWatch" ]
-      },
-      "VisibleTabs": [ "dashboard" ]
-    },
-    {
-      "GroupName": "TestDebugGroup",
-      "Dashboard": {
-        "Actions": [ "ValueDisplay01", "ValueDisplay02", "ValueDisplay03", "ValueDisplay04", "ChatAction", "TodoListStartAction", "TodoListPickupAction", "TodoListBarcodeAction" ]
-      },
-      "LiveFeed": {
-        "DataUpdateInterval": 500,
-        "Values": [
-          "Massedruck",
-          "Massetemperatur",
-          "Drehzahl",
-          "Aussendurchmesser"
+        "Actions": [
+          "ValueDisplay1a",
+          "ValueDisplay1b",
+          "ValueDisplay1c",
+          "ValueDisplay2a",
+          "ValueDisplay2b",
+          "ValueDisplay2c"
         ]
       },
-      "VisibleTabs": [ "dashboard", "actions", "livedata" ]
-    },
-    {
-      "GroupName": "TodoEditor",
-      "LiveFeed": null,
-      "Dashboard": {
-        "Actions": [ "TodoListStartAction", "TodoListBarcodeAction", "TodoListPickupAction" ]
-      },
-      "VisibleTabs": [ "dashboard", "actions" ]
-    },
-    {
-      "GroupName": "Produktionsmitarbeiter",
-      "LiveFeed": null,
-      "Dashboard": {
-        "Actions": []
-      },
-      "VisibleTabs": [ "dashboard", "actions" ]
-    },
-    {
-      "GroupName": "Logistiker",
-      "LiveFeed": null,
-      "Dashboard": {
-        "Actions": []
-      },
-      "VisibleTabs": [ "dashboard" ]
-    },
-    {
-      "GroupName": "Instandhalter",
-      "LiveFeed": null,
-      "Dashboard": {
-        "Actions": []
-      },
-      "VisibleTabs": [ "dashboard" ]
+      "VisibleTabs": [
+        "livedata"
+      ]
     }
   ]
 }

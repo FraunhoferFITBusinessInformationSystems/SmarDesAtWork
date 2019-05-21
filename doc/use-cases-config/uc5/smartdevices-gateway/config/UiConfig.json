@@ -1,563 +1,257 @@
-﻿{
-  "AppId": "Sample",
-  "AppTitle": "SmartDevicesApp",
-  "AppSubtitle": "Sample Application",
-  "AppTitleResource": null,
-  "AppTheme": null,
-
+{
+  "Info": {
+    "Id": "Sample",
+    "Title": "SmartDevices",
+    "Subtitle": "Sample App",
+    "TitleResource": null,
+    "Theme": null
+  },
   "Uis": [
     {
-      "Id": "ChatSendMessage",
       "Title": "Nachricht senden",
-      "Type": "JobView",
-      "OnBackPressed": "RemoveJob",
       "Elements": [
         {
           "Type": "Spinner",
           "Id": "subject",
-          "Name": "Senden an"
+          "Name": "Senden an",
+          "Tab": "dashboard"
         },
         {
           "Type": "TextInput",
           "Id": "text",
-          "Name": "Message"
-        },
-        {
-          "Type": "DoubleButton",
-          "Id": "submit",
-          "Name": "Senden",
-          "TextSecondary": "Abbrechen",
-          "OnClickPrimary": "SendJob",
-          "OnClickSecondary": "RemoveJob",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "ChatConfirmMessage",
-      "Title": "Nachricht bestätigen",
-      "Type": "JobView",
-      "Elements": [
-        {
-          "Type": "TextView",
-          "Id": "subject",
-          "Name": "Absender"
-        },
-        {
-          "Type": "TextView",
-          "Id": "text",
-          "Name": "Message"
-        },
-        {
-          "Type": "Button",
-          "Id": "submit",
-          "Name": "Bestätigen",
-          "OnClick": "SendJob",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "TodoListStart",
-      "Title": "TODO-Liste Starten",
-      "Type": "JobView",
-      "OnBackPressed": "RemoveJob",
-      "Elements": [
-        {
-          "Type": "Spinner",
-          "Id": "subject",
-          "Name": "Liste"
-        },
-        {
-          "Type": "TextInput",
-          "Id": "number",
-          "Name": "Auftragsnummer"
-        },
-        {
-          "Type": "TextInput",
-          "Id": "notes",
-          "Name": "Weitere Informationen"
-        },
-        {
-          "Type": "DoubleButton",
-          "Id": "submit",
-          "Name": "Senden",
-          "TextSecondary": "Abbrechen",
-          "OnClickPrimary": "SendJob",
-          "OnClickSecondary": "RemoveJob",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "TodoListBarcodeStart",
-      "Title": "Todo-Liste: Auftrag scannen",
-      "Type": "JobView",
-      "OnBackPressed": "RemoveJob",
-      "Elements": [
-        {
-          "Type": "BarcodeInput",
-          "Id": "subject",
-          "Name": "Barcode"
-        },
-        {
-          "Type": "TextInput",
-          "Id": "number",
-          "Name": "Auftragsnummer"
-        },
-        {
-          "Type": "TextInput",
-          "Id": "notes",
-          "Name": "Weitere Informationen"
-        },
-        {
-          "Type": "DoubleButton",
-          "Id": "submit",
-          "Name": "Senden",
-          "TextSecondary": "Abbrechen",
-          "OnClickPrimary": "SendJob",
-          "OnClickSecondary": "RemoveJob",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "TodoListPickup",
-      "Title": "TODO-Liste weiter bearbeiten",
-      "Type": "JobView",
-      "OnBackPressed": "RemoveJob",
-      "Elements": [
-        {
-          "Type": "Spinner",
-          "Id": "subject",
-          "Name": "Liste"
+          "Name": "Message",
+          "Tab": "dashboard"
         },
         {
           "Type": "DoubleButton",
           "Id": "submit",
           "Name": "Bearbeiten",
+          "Tab": "dashboard",
           "TextSecondary": "Abbrechen",
           "OnClickPrimary": "SendJob",
           "OnClickSecondary": "RemoveJob",
           "Primary": true
         }
-      ]
+      ],
+      "Type": "JobView",
+      "Id": "ChatSendMessage",
+      "Name": null,
+      "Tab": "dashboard",
+      "OnBackPressed": "RemoveJob"
     },
     {
-      "Id": "FailureReport",
-      "Title": "Fehler an Maschine",
-      "Type": "JobView",
+      "Title": "Nachricht bestätigen",
       "Elements": [
         {
           "Type": "TextView",
           "Id": "subject",
-          "Name": "Maschine"
-        },
-        {
-          "Type": "DateView",
-          "Id": "datetimebegin",
-          "Name": "Startzeitpunkt"
-        },
-        {
-          "Type": "DateView",
-          "Id": "datetimeend",
-          "Name": "Endzeitpunkt"
-        },
-        {
-          "Type": "Spacer",
-          "Id": "spacer1",
-          "Name": "Antwort"
-        },
-        {
-          "Type": "TextInput",
-          "Id": "message",
-          "Name": "Nachricht",
-          "InputType": "multiline"
-        },
-        {
-          "Type": "Spinner",
-          "Id": "answer",
-          "Name": "Nächste Aktion / Antwort"
-        },
-        {
-          "Type": "Button",
-          "Id": "submit",
-          "Name": "Senden",
-          "OnClick": "SendJob",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "SchwellwertVerletzung",
-      "Title": "Schwellwertverletzung",
-      "Type": "JobView",
-      "Elements": [
-        {
-          "Type": "TextView",
-          "Id": "subject",
-          "Name": "Maschine"
+          "Name": "Absender",
+          "Tab": "dashboard"
         },
         {
           "Type": "TextView",
           "Id": "text",
-          "Name": "Text"
-        },
-        {
-          "Type": "DateView",
-          "Id": "time",
-          "Name": "Zeit"
-        },
-        {
-          "Type": "TextView",
-          "Id": "actual_value",
-          "Name": "Ist-Wert"
-        },
-        {
-          "Type": "TextView",
-          "Id": "set_point",
-          "Name": "Soll-Wert"
+          "Name": "Message",
+          "Tab": "dashboard"
         },
         {
           "Type": "Button",
           "Id": "submit",
           "Name": "Bestätigen",
+          "Tab": "dashboard",
           "OnClick": "SendJob",
           "Primary": true
         }
-      ]
-    },
-    {
-      "Id": "Pattern1",
-      "Title": "Vorwarnung Füllstand",
+      ],
       "Type": "JobView",
-      "Elements": [
-        {
-          "Type": "TextView",
-          "Id": "subject",
-          "Name": "Maschine"
-        },
-        {
-          "Type": "TextView",
-          "Id": "text",
-          "Name": "Text"
-        },
-        {
-          "Type": "DateView",
-          "Id": "time",
-          "Name": "Zeit"
-        },
-        {
-          "Type": "DoubleButton",
-          "Id": "submit",
-          "Name": "Bearbeitet",
-          "Value": "Accept",
-          "TextSecondary": "Ablehnen",
-          "OnClickPrimary": "SendJob",
-          "OnClickSecondary": "SendJob",
-          "ValueSecondary": "Decline",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "Pattern2",
-      "Title": "Warnung: Leermeldung",
-      "Type": "JobView",
-      "Elements": [
-        {
-          "Type": "TextView",
-          "Id": "subject",
-          "Name": "Maschine"
-        },
-        {
-          "Type": "TextView",
-          "Id": "text",
-          "Name": "Text"
-        },
-        {
-          "Type": "DateView",
-          "Id": "time",
-          "Name": "Zeit"
-        },
-        {
-          "Type": "DoubleButton",
-          "Id": "submit",
-          "Name": "Bearbeitet",
-          "Value": "Accept",
-          "TextSecondary": "Ablehnen",
-          "OnClickPrimary": "SendJob",
-          "OnClickSecondary": "SendJob",
-          "ValueSecondary": "Decline",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "Pattern3",
-      "Title": "Eskalation: Leermeldung",
-      "Type": "JobView",
-      "Elements": [
-        {
-          "Type": "TextView",
-          "Id": "subject",
-          "Name": "Maschine"
-        },
-        {
-          "Type": "TextView",
-          "Id": "text",
-          "Name": "Text"
-        },
-        {
-          "Type": "TextView",
-          "Id": "assignee",
-          "Name": "Bearbeiter"
-        },
-        {
-          "Type": "DateView",
-          "Id": "time",
-          "Name": "Zeit"
-        },
-        {
-          "Type": "DoubleButton",
-          "Id": "submit",
-          "Name": "Bearbeitet",
-          "Value": "Accept",
-          "TextSecondary": "Ablehnen",
-          "OnClickPrimary": "SendJob",
-          "OnClickSecondary": "SendJob",
-          "ValueSecondary": "Decline",
-          "Primary": true
-        }
-      ]
-    },
-    {
-      "Id": "GenericTodoList",
-      "Title": "TODO-Liste",
-      "Type": "TodoList",
-      "CanDelete": true,
-      "CanForward": false
+      "Id": "ChatConfirmMessage",
+      "Name": null,
+      "Tab": "dashboard"
     }
   ],
   "ValueDefinitions": [
     {
-      "Name": "S1Temperature1",
-      "DataSource": {
-        "QueueName": "PLCData",
-        "Namespace": "s1",
-        "Name": "Temperature"
-      }
-    },
-    {
-      "Name": "S1Pressure1",
-      "DataSource": {
-        "QueueName": "PLCData",
-        "Namespace": "s1",
-        "Name": "Pressure"
-      }
-    },
-    {
-      "Name": "S1Poti",
-      "DataSource": {
-        "QueueName": "PLCData",
-        "Namespace": "s1",
-        "Name": "Poti"
-      }
-    },
-    {
-      "Name": "S1Knopf1",
-      "DataSource": {
-        "QueueName": "PLCData",
-        "Namespace": "s1",
-        "Name": "Knopf"
-      }
-    },
-    {
-      "Name": "Massedruck",
+      "Name": "mEQ1:NumRevolutions",
       "DataSource": {
         "QueueName": "sdgw",
-        "Namespace": "m00001744",
-        "Name": "Massedruck"
+        "Name": "NumRevolutions",
+        "Namespace": "mEQ1"
       }
     },
     {
-      "Name": "Massetemperatur",
+      "Name": "mEQ1:Pressure",
       "DataSource": {
         "QueueName": "sdgw",
-        "Namespace": "m00001744",
-        "Name": "Massetemperatur"
+        "Name": "Pressure",
+        "Namespace": "mEQ1"
       }
     },
     {
-      "Name": "Drehzahl",
+      "Name": "mEQ1:Temperature",
       "DataSource": {
         "QueueName": "sdgw",
-        "Namespace": "m00001744",
-        "Name": "Drehzahl"
+        "Name": "Temperature",
+        "Namespace": "mEQ1"
       }
     },
     {
-      "Name": "Aussendurchmesser",
+      "Name": "mEQ2:NumRevolutions",
       "DataSource": {
         "QueueName": "sdgw",
-        "Namespace": "m00001744",
-        "Name": "Aussendurchmesser"
+        "Name": "NumRevolutions",
+        "Namespace": "mEQ2"
+      }
+    },
+    {
+      "Name": "mEQ2:Pressure",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "Pressure",
+        "Namespace": "mEQ2"
+      }
+    },
+    {
+      "Name": "mEQ2:Temperature",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "Temperature",
+        "Namespace": "mEQ2"
       }
     }
   ],
   "ActionDefinitions": [
     {
+      "JobKey": "ChatSendMessage",
+      "Type": "GenericAction",
       "Id": "ChatAction",
-      "Type": "GenericAction",
       "Name": "Chat",
-      "JobKey": "ChatSendMessage",
-      "Image": "notification",
-      "Tab": "actions"
+      "Tab": "actions",
+      "Image": "notification"
     },
     {
-      "Id": "ChatActionWatch",
-      "Type": "GenericAction",
-      "Name": "Chat",
-      "JobKey": "ChatSendMessage",
-      "Image": "notification",
-      "Tab": "dashboard"
-    },
-    {
-      "Id": "TodoListStartAction",
-      "Type": "GenericAction",
-      "Name": "Neue TODO-Liste starten",
-      "JobKey": "TodoListStart",
-      "Image": "list_add",
-      "Tab": "actions"
-    },
-    {
-      "Id": "TodoListBarcodeAction",
-      "Type": "GenericAction",
-      "Name": "TODO-Liste: Auftrag scannen",
-      "JobKey": "TodoListBarcodeStart",
-      "Image": "barcode",
-      "Tab": "actions"
-    },
-    {
-      "Id": "TodoListPickupAction",
-      "Type": "GenericAction",
-      "Name": "TODO-Liste weiter bearbeiten",
-      "JobKey": "TodoListPickup",
-      "Image": "list_play",
-      "Tab": "actions"
-    },
-    {
-      "Id": "ValueDisplay01",
+      "JobKey": null,
       "Type": "ValueMonitor",
-      "Name": "m00001744:Massedruck",
+      "Id": "ValueDisplay1a",
+      "Name": "mEQ1:NumRevolutions",
       "Tab": "livedata"
     },
     {
-      "Id": "ValueDisplay02",
+      "JobKey": null,
       "Type": "ValueMonitor",
-      "Name": "m00001744:Massetemperatur",
+      "Id": "ValueDisplay1b",
+      "Name": "mEQ1:Pressure",
       "Tab": "livedata"
     },
     {
-      "Id": "ValueDisplay03",
-      "Type": "ValueMonitor",
-      "Name": "m00001744:Drehzahl",
-      "Tab": "livedata"
-    },
-    {
-      "Id": "ValueDisplay04",
-      "Type": "ValueMonitor",
-      "Name": "m00001744:Aussendurchmesser",
-      "Tab": "livedata"
-    },
-    {
-      "Id": "GraphDisplay01",
+      "JobKey": null,
       "Type": "GraphDisplay",
-      "Name": "m00001744:Aussendurchmesser",
+      "Id": "ValueDisplay1c",
+      "Name": "mEQ1:Temperature",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "ValueMonitor",
+      "Id": "ValueDisplay2a",
+      "Name": "mEQ2:NumRevolutions",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "ValueMonitor",
+      "Id": "ValueDisplay2b",
+      "Name": "mEQ2:Pressure",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "GraphDisplay",
+      "Id": "ValueDisplay2c",
+      "Name": "mEQ2:Temperature",
       "Tab": "livedata"
     }
   ],
   "TabDefinitions": [
     {
-      "title": "Live-Daten",
-      "key": "livedata",
-      "mainTab": false,
-      "showBadgeNumber": false,
-      "icon": "livefeed",
-      "sortEntries": [
+      "Title": "Live-Data",
+      "Key": "livedata",
+      "MainTab": false,
+      "ShowBadgeNumber": false,
+      "Icon": "livefeed",
+      "SortEntries": [
         {
-          "name": "Name",
-          "key": "name"
+          "Name": "Name",
+          "Key": "name"
         },
         {
-          "name": "Id",
-          "key": "id"
+          "Name": "Id",
+          "Key": "id"
         }
       ],
-      "filterEntries": []
+      "FilterEntries": []
     },
     {
-      "title": "Aufträge",
-      "key": "dashboard",
-      "mainTab": true,
-      "showBadgeNumber": true,
-      "icon": "job",
-      "sortEntries": [
+      "Title": "Jobs",
+      "Key": "dashboard",
+      "MainTab": true,
+      "ShowBadgeNumber": true,
+      "Icon": "job",
+      "SortEntries": [
         {
-          "name": "Titel",
-          "key": "title"
+          "Name": "Titel",
+          "Key": "title"
         },
         {
-          "name": "Text",
-          "key": "text"
+          "Name": "Text",
+          "Key": "text"
         },
         {
-          "name": "Erstelldatum",
-          "key": "createdate"
+          "Name": "Create Date",
+          "Key": "createdate"
         },
         {
-          "name": "Typ",
-          "key": "type"
+          "Name": "Type",
+          "Key": "type"
         },
         {
-          "name": "Status",
-          "key": "state"
+          "Name": "State",
+          "Key": "state"
         }
       ],
-      "filterEntries": [
+      "FilterEntries": [
         {
-          "name": "Title",
-          "key": "title",
-          "invertable": true,
-          "filterType": "text"
+          "Name": "Titel",
+          "Key": "title",
+          "Invertable": false,
+          "FilterType": "text"
         },
         {
-          "name": "Text",
-          "key": "text",
-          "invertable": true,
-          "filterType": "text"
+          "Name": "Text",
+          "Key": "text",
+          "Invertable": false,
+          "FilterType": "text"
         },
         {
-          "name": "Status",
-          "key": "status",
-          "invertable": true,
-          "filterType": "state"
+          "Name": "State",
+          "Key": "status",
+          "Invertable": true,
+          "FilterType": "state"
         }
       ]
     },
     {
-      "title": "Aktionen",
-      "key": "actions",
-      "mainTab": false,
-      "showBadgeNumber": false,
-      "icon": "action",
-      "sortEntries": [
+      "Title": "Actions",
+      "Key": "actions",
+      "MainTab": false,
+      "ShowBadgeNumber": false,
+      "Icon": "action",
+      "SortEntries": [
         {
-          "name": "Name",
-          "key": "name"
+          "Name": "Name",
+          "Key": "name"
         }
       ],
-      "filterEntries": []
+      "FilterEntries": []
     }
   ]
 }
