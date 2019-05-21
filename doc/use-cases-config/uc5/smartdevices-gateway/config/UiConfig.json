@@ -1,0 +1,563 @@
+﻿{
+  "AppId": "Sample",
+  "AppTitle": "SmartDevicesApp",
+  "AppSubtitle": "Sample Application",
+  "AppTitleResource": null,
+  "AppTheme": null,
+
+  "Uis": [
+    {
+      "Id": "ChatSendMessage",
+      "Title": "Nachricht senden",
+      "Type": "JobView",
+      "OnBackPressed": "RemoveJob",
+      "Elements": [
+        {
+          "Type": "Spinner",
+          "Id": "subject",
+          "Name": "Senden an"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "text",
+          "Name": "Message"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Senden",
+          "TextSecondary": "Abbrechen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "RemoveJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "ChatConfirmMessage",
+      "Title": "Nachricht bestätigen",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Absender"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Message"
+        },
+        {
+          "Type": "Button",
+          "Id": "submit",
+          "Name": "Bestätigen",
+          "OnClick": "SendJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "TodoListStart",
+      "Title": "TODO-Liste Starten",
+      "Type": "JobView",
+      "OnBackPressed": "RemoveJob",
+      "Elements": [
+        {
+          "Type": "Spinner",
+          "Id": "subject",
+          "Name": "Liste"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "number",
+          "Name": "Auftragsnummer"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "notes",
+          "Name": "Weitere Informationen"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Senden",
+          "TextSecondary": "Abbrechen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "RemoveJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "TodoListBarcodeStart",
+      "Title": "Todo-Liste: Auftrag scannen",
+      "Type": "JobView",
+      "OnBackPressed": "RemoveJob",
+      "Elements": [
+        {
+          "Type": "BarcodeInput",
+          "Id": "subject",
+          "Name": "Barcode"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "number",
+          "Name": "Auftragsnummer"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "notes",
+          "Name": "Weitere Informationen"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Senden",
+          "TextSecondary": "Abbrechen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "RemoveJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "TodoListPickup",
+      "Title": "TODO-Liste weiter bearbeiten",
+      "Type": "JobView",
+      "OnBackPressed": "RemoveJob",
+      "Elements": [
+        {
+          "Type": "Spinner",
+          "Id": "subject",
+          "Name": "Liste"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Bearbeiten",
+          "TextSecondary": "Abbrechen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "RemoveJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "FailureReport",
+      "Title": "Fehler an Maschine",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Maschine"
+        },
+        {
+          "Type": "DateView",
+          "Id": "datetimebegin",
+          "Name": "Startzeitpunkt"
+        },
+        {
+          "Type": "DateView",
+          "Id": "datetimeend",
+          "Name": "Endzeitpunkt"
+        },
+        {
+          "Type": "Spacer",
+          "Id": "spacer1",
+          "Name": "Antwort"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "message",
+          "Name": "Nachricht",
+          "InputType": "multiline"
+        },
+        {
+          "Type": "Spinner",
+          "Id": "answer",
+          "Name": "Nächste Aktion / Antwort"
+        },
+        {
+          "Type": "Button",
+          "Id": "submit",
+          "Name": "Senden",
+          "OnClick": "SendJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "SchwellwertVerletzung",
+      "Title": "Schwellwertverletzung",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Maschine"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Text"
+        },
+        {
+          "Type": "DateView",
+          "Id": "time",
+          "Name": "Zeit"
+        },
+        {
+          "Type": "TextView",
+          "Id": "actual_value",
+          "Name": "Ist-Wert"
+        },
+        {
+          "Type": "TextView",
+          "Id": "set_point",
+          "Name": "Soll-Wert"
+        },
+        {
+          "Type": "Button",
+          "Id": "submit",
+          "Name": "Bestätigen",
+          "OnClick": "SendJob",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "Pattern1",
+      "Title": "Vorwarnung Füllstand",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Maschine"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Text"
+        },
+        {
+          "Type": "DateView",
+          "Id": "time",
+          "Name": "Zeit"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Bearbeitet",
+          "Value": "Accept",
+          "TextSecondary": "Ablehnen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "SendJob",
+          "ValueSecondary": "Decline",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "Pattern2",
+      "Title": "Warnung: Leermeldung",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Maschine"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Text"
+        },
+        {
+          "Type": "DateView",
+          "Id": "time",
+          "Name": "Zeit"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Bearbeitet",
+          "Value": "Accept",
+          "TextSecondary": "Ablehnen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "SendJob",
+          "ValueSecondary": "Decline",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "Pattern3",
+      "Title": "Eskalation: Leermeldung",
+      "Type": "JobView",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Maschine"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Text"
+        },
+        {
+          "Type": "TextView",
+          "Id": "assignee",
+          "Name": "Bearbeiter"
+        },
+        {
+          "Type": "DateView",
+          "Id": "time",
+          "Name": "Zeit"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Bearbeitet",
+          "Value": "Accept",
+          "TextSecondary": "Ablehnen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "SendJob",
+          "ValueSecondary": "Decline",
+          "Primary": true
+        }
+      ]
+    },
+    {
+      "Id": "GenericTodoList",
+      "Title": "TODO-Liste",
+      "Type": "TodoList",
+      "CanDelete": true,
+      "CanForward": false
+    }
+  ],
+  "ValueDefinitions": [
+    {
+      "Name": "S1Temperature1",
+      "DataSource": {
+        "QueueName": "PLCData",
+        "Namespace": "s1",
+        "Name": "Temperature"
+      }
+    },
+    {
+      "Name": "S1Pressure1",
+      "DataSource": {
+        "QueueName": "PLCData",
+        "Namespace": "s1",
+        "Name": "Pressure"
+      }
+    },
+    {
+      "Name": "S1Poti",
+      "DataSource": {
+        "QueueName": "PLCData",
+        "Namespace": "s1",
+        "Name": "Poti"
+      }
+    },
+    {
+      "Name": "S1Knopf1",
+      "DataSource": {
+        "QueueName": "PLCData",
+        "Namespace": "s1",
+        "Name": "Knopf"
+      }
+    },
+    {
+      "Name": "Massedruck",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Namespace": "m00001744",
+        "Name": "Massedruck"
+      }
+    },
+    {
+      "Name": "Massetemperatur",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Namespace": "m00001744",
+        "Name": "Massetemperatur"
+      }
+    },
+    {
+      "Name": "Drehzahl",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Namespace": "m00001744",
+        "Name": "Drehzahl"
+      }
+    },
+    {
+      "Name": "Aussendurchmesser",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Namespace": "m00001744",
+        "Name": "Aussendurchmesser"
+      }
+    }
+  ],
+  "ActionDefinitions": [
+    {
+      "Id": "ChatAction",
+      "Type": "GenericAction",
+      "Name": "Chat",
+      "JobKey": "ChatSendMessage",
+      "Image": "notification",
+      "Tab": "actions"
+    },
+    {
+      "Id": "ChatActionWatch",
+      "Type": "GenericAction",
+      "Name": "Chat",
+      "JobKey": "ChatSendMessage",
+      "Image": "notification",
+      "Tab": "dashboard"
+    },
+    {
+      "Id": "TodoListStartAction",
+      "Type": "GenericAction",
+      "Name": "Neue TODO-Liste starten",
+      "JobKey": "TodoListStart",
+      "Image": "list_add",
+      "Tab": "actions"
+    },
+    {
+      "Id": "TodoListBarcodeAction",
+      "Type": "GenericAction",
+      "Name": "TODO-Liste: Auftrag scannen",
+      "JobKey": "TodoListBarcodeStart",
+      "Image": "barcode",
+      "Tab": "actions"
+    },
+    {
+      "Id": "TodoListPickupAction",
+      "Type": "GenericAction",
+      "Name": "TODO-Liste weiter bearbeiten",
+      "JobKey": "TodoListPickup",
+      "Image": "list_play",
+      "Tab": "actions"
+    },
+    {
+      "Id": "ValueDisplay01",
+      "Type": "ValueMonitor",
+      "Name": "m00001744:Massedruck",
+      "Tab": "livedata"
+    },
+    {
+      "Id": "ValueDisplay02",
+      "Type": "ValueMonitor",
+      "Name": "m00001744:Massetemperatur",
+      "Tab": "livedata"
+    },
+    {
+      "Id": "ValueDisplay03",
+      "Type": "ValueMonitor",
+      "Name": "m00001744:Drehzahl",
+      "Tab": "livedata"
+    },
+    {
+      "Id": "ValueDisplay04",
+      "Type": "ValueMonitor",
+      "Name": "m00001744:Aussendurchmesser",
+      "Tab": "livedata"
+    },
+    {
+      "Id": "GraphDisplay01",
+      "Type": "GraphDisplay",
+      "Name": "m00001744:Aussendurchmesser",
+      "Tab": "livedata"
+    }
+  ],
+  "TabDefinitions": [
+    {
+      "title": "Live-Daten",
+      "key": "livedata",
+      "mainTab": false,
+      "showBadgeNumber": false,
+      "icon": "livefeed",
+      "sortEntries": [
+        {
+          "name": "Name",
+          "key": "name"
+        },
+        {
+          "name": "Id",
+          "key": "id"
+        }
+      ],
+      "filterEntries": []
+    },
+    {
+      "title": "Aufträge",
+      "key": "dashboard",
+      "mainTab": true,
+      "showBadgeNumber": true,
+      "icon": "job",
+      "sortEntries": [
+        {
+          "name": "Titel",
+          "key": "title"
+        },
+        {
+          "name": "Text",
+          "key": "text"
+        },
+        {
+          "name": "Erstelldatum",
+          "key": "createdate"
+        },
+        {
+          "name": "Typ",
+          "key": "type"
+        },
+        {
+          "name": "Status",
+          "key": "state"
+        }
+      ],
+      "filterEntries": [
+        {
+          "name": "Title",
+          "key": "title",
+          "invertable": true,
+          "filterType": "text"
+        },
+        {
+          "name": "Text",
+          "key": "text",
+          "invertable": true,
+          "filterType": "text"
+        },
+        {
+          "name": "Status",
+          "key": "status",
+          "invertable": true,
+          "filterType": "state"
+        }
+      ]
+    },
+    {
+      "title": "Aktionen",
+      "key": "actions",
+      "mainTab": false,
+      "showBadgeNumber": false,
+      "icon": "action",
+      "sortEntries": [
+        {
+          "name": "Name",
+          "key": "name"
+        }
+      ],
+      "filterEntries": []
+    }
+  ]
+}
