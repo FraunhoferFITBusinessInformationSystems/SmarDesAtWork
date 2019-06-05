@@ -14,13 +14,12 @@ Public research project funded by the Bavarian Research Foundation
     * [smartdevices-app](smartdevices-app/README.md)
   * [Interaction](doc/documentation.md#Interaction)
 * Sample Configuration
-  * [Sample Use-Cases Description](doc/use-cases/use-cases.md)
-  * [UC1 MachineSetUp (TODO)](doc/use-cases-config/uc1/install_uc1.md)
-  * [UC2 ToolBreakage (TODO)](doc/use-cases-config/uc2/install_uc2.md)
-  * [UC3 MaintenanceManual (TODO)](doc/use-cases-config/uc3/install_uc3.md)
-  * [UC4 ErrorRecording (TODO)](doc/use-cases-config/uc4/install_uc4.md)
-  * [UC5 LiveData](doc/use-cases-config/uc5/install_uc5.md)
-  * [UC6 ValueMonitoring (with notification) (TODO)](doc/use-cases-config/uc6/install_uc6.md)  
+  * UC1 MachineSetUp (TODO)
+  * UC2 ToolBreakage (TODO)
+  * [UC3 MaintenanceManual (TODO)](/doc/use-cases-config/uc3/install_uc3.md)
+  * UC4 ErrorRecording (TODO)
+  * [UC5 LiveData](/doc/use-cases-config/uc5/install_uc5.md)
+  * [UC6 ValueMonitoring (with notification) (TODO)](/doc/use-cases-config/uc6/install_uc6.md) 
 * [Contributing](CONTRIBUTING.md)
 
 ## Description
