@@ -1,13 +1,14 @@
 # List of Sample-Use-Cases
 
-* UC1 MachineSetUp
-* UC2 ToolBreakage
-* UC3 MaintenanceManual
-* UC4 ErrorRecording
-* UC5 LiveData
-* UC6 ValueMonitoring (with notification)
+  * UC1 MachineSetUp (TODO)
+  * UC2 ToolBreakage (TODO)
+  * [UC3 MaintenanceManual (TODO)](/doc/use-cases-config/uc3/install_uc3.md)
+  * UC4 ErrorRecording (TODO)
+  * [UC5 LiveData](/doc/use-cases-config/uc5/install_uc5.md)
+  * [UC6 ValueMonitoring (with notification) (TODO)](/doc/use-cases-config/uc6/install_uc6.md)  
 
-//TODO: Translate to English
+__Note: This page is not finished yet__
+__TODO: Translate to English__
 
 ## Sample Use-Case 1 - Machine Set-Up
 [(sequencediagram.org - UC1 MachineSetUp)](https://sequencediagram.org/index.html#initialData=C4S2BsFMAIGUEMC2AHK0CqBnSBaAwvNtAIzQ7QCy8AxgBYgB2MskwO6yAUJ8vAE6hqIXg2DQARBQCiscdELQpAJQAKnGsAD2fCQBlNAcxCZBIeAzkLYAEWLrqWneIDyySH3iPLmONYBMPPymImKSIAAm4VAA7vyQ3pQA6tzKKjgAfBSJAFxwwEHQiDT0TNDYbACuyNAAFNFgtNCo5kzhTXya4RUOIJoMZfkCAJT2oABunjBZ3FkZNsS5KnyQvMuFxYww5ThVADoMNeGQ4CBj7tBamuDyDG1FwO5m4CMap5O+dpxZADw4OPOLZarRgGaAAM0YxlokHCnCOrwmDw+M0Sc38uVggzERTomzKrB2XAR7xsAVJf0yOXBkMw0La2z2BxxJRgxmgfAqDAYIJG8J6iOY-jhkGJSKyQA)
