@@ -21,5 +21,5 @@ __TODO: This Page is not finished yet!__
 * __TODO__
 
 # Start coding
-* First take a look at the [documentation](documentation-app.md). 
+* First take a look at the [documentation](documentation-gateway.md). 
 * __TODO__
