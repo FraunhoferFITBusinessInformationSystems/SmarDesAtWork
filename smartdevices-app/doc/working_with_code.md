@@ -25,7 +25,7 @@
 --TODO
 
 # Start coding
-* First take a look at the [documentation](documentation.md). 
+* First take a look at the [documentation](documentation-app.md). 
 * The API documentation today is in the source code. We will create a wiki page for that soon.
 
 --TODO
