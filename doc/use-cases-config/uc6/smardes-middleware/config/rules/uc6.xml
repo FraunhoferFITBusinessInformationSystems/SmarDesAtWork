@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rules xmlns="http://www.camline.com/projects/smardes/rules"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.camline.com/projects/smardes/rules rules.xsd">
+
+	<globalVariables>
+		<property name="global.UC6ViolationState" expression="el:newStructure()" />
+		<property name="global.UC6Conversations" expression="el:set('UC6LimitViolation')" />
+	</globalVariables>
+
+	<patchMessageBodyPrototypes>
+		<!-- TODO: replace with ConversationDoneStatusUpdate -->
+		<patchMessageBodyPrototype name="ClosedConfirmation" variable="noti">
+			<property name="noti.ReferenceId" value="null" />
+			<property name="noti.Name" value="StatusUpdate" />
+			<property name="noti.Type" value="Notification" />
+			<property name="noti.Status" value="Done" />
+			<property name="noti.Resource" value="null" />
+		</patchMessageBodyPrototype>
+	</patchMessageBodyPrototypes>
+
+	<ruleGroup name="Rule Engine Requests">
+		<selector address="RuleEngine" jsonBody="true"/>
+
+		<ruleSet name="Rules for DB Monitoring">
+			<!-- Note: we use DB monitoring from UC5 -->
+			<condition>
+				msg.body.Type == 'DBMonEvent' and msg.body.Source == 'uc5'
+			</condition>
+
+			<rule name="Setup local variables">
+				<actions>
+					<setLocalVariables>
+						<property name="local.equipment" expression="msg.body.Content.equipment"/>
+						<property name="local.responsibles" expression="dq:entries('maindata.uc6responsibles', local.equipment)" />
+						<!-- Needed if database times are in UTC -->
+						<property name="local.localtimestamp" expression="datetime:switchZone(datetime:setZone(datetime:parseISO8601(msg.body.Content.modtime), 'UTC'), null)" />
+					</setLocalVariables>
+				</actions>
+			</rule>
+
+			<ruleSet name="Rules for Temperature Monitoring">
+				<condition>not empty local.responsibles and el:exists(msg.body.Content, 'temperature_act')</condition>
+
+				<rule name="Setup current violation state">
+					<actions>
+						<!--
+							Rule Violation mapped to integer:
+							-2: LL Violation
+							-1: L Violation
+							 0: No Violation (or no value yet)
+							 1: H Violation
+							 2: HH Violation
+						-->
+						<setLocalVariables>
+							<property name="local.lastViolationState">
+								el:get(global.UC6ViolationState, msg.body.Content.equipment, 0)
+							</property>
+							<property name="local.currentViolationState">
+								msg.body.Content.temperature_act le msg.body.Content.temperature_LL ? -2 :
+								msg.body.Content.temperature_act le msg.body.Content.temperature_L  ? -1 :
+								msg.body.Content.temperature_act ge msg.body.Content.temperature_HH ? 2 :
+								msg.body.Content.temperature_act ge msg.body.Content.temperature_H  ? 1 : 0
+							</property>
+						</setLocalVariables>
+						<setGlobalVariables>
+							<property name="global.UC6ViolationState" key="msg.body.Content.equipment" expression="local.currentViolationState"/>
+						</setGlobalVariables>
+					</actions>
+				</rule>
+
+				<rule name="Actual value exceeds limit">
+					<condition name="LL_Violation">
+						local.currentViolationState eq -2 and local.lastViolationState gt -2
+					</condition>
+					<condition name="L_Violation">
+						local.currentViolationState eq -1 and local.lastViolationState gt -1
+					</condition>
+					<condition name="H_Violation">
+						local.currentViolationState eq 1 and local.lastViolationState lt 1
+					</condition>
+					<condition name="HH_Violation">
+						local.currentViolationState eq 2 and local.lastViolationState lt 2
+					</condition>
+					<actions>
+						<startConversation name="UC6LimitViolation" expiry="0.02" variable="ccc">
+							<pushMessage iterateOver="dq:entries('maindata.uc6responsibles', msg.body.Content.equipment)" iteratorVar="device" address="global.sdgwAddress" subject="Job">
+								<baseMessage expression="msg">
+									<patchMessageBody variable="job">
+										<property name="job.Id" expression="ccc.id" />
+										<property name="job.Type" value="Job" />
+										<property name="job.Name" value="UC6LimitViolation" />
+										<property name="job.Source" value="DBMON" />
+
+										<!-- Copy full SELECT result to "Resource" group -->
+										<property name="job.Resource" expression="job.Content" />
+
+										<!-- Create some aliases for existing DB fields -->
+										<property name="job.Resource.subject" expression="job.Content.equipment" />
+										<property name="job.Resource.actual_value" expression="job.Content.temperature_act" />
+										<property name="job.Resource.set_point" expression="job.Content.temperature_setp" />
+
+										<!-- time is converted to local time zone -->
+										<property name="job.Resource.time" expression="local.localtimestamp" />
+
+										<!-- texts depending on violation -->
+										<property name="job.Resource.list_title" value="Temperature_LL" condition="LL_Violation" />
+										<property name="job.Resource.list_title" value="Temperature_L" condition="L_Violation" />
+										<property name="job.Resource.list_title" value="Temperature_H" condition="H_Violation" />
+										<property name="job.Resource.list_title" value="Temperature_HH" condition="HH_Violation" />
+										<property name="job.Resource.list_text" value="fell below Temperature_LL" condition="LL_Violation" />
+										<property name="job.Resource.list_text" value="fell below Temperature_L" condition="L_Violation" />
+										<property name="job.Resource.list_text" value="exceeded Temperature_H" condition="H_Violation" />
+										<property name="job.Resource.list_text" value="exceeded Temperature_HH" condition="HH_Violation" />
+										<property name="job.Resource.Text" value="Warning: fell below Temperature_LL" condition="LL_Violation" />
+										<property name="job.Resource.Text" value="Warning: fell below Temperature_L" condition="L_Violation" />
+										<property name="job.Resource.Text" value="Warning: exceeded Temperature_H" condition="H_Violation" />
+										<property name="job.Resource.Text" value="Warning: exceeded Temperature_HH" condition="HH_Violation" />
+
+										<!-- Delete Content group -->
+										<property name="job.Content" expression="null" />
+
+										<!-- <property name="job.Resource.exturl" value="http://wikipedia.de" /> -->
+
+										<property name="job.ReferenceId" expression="job.Id" />
+										<property name="job.Immediate" expression="true" />
+										<property name="job.Priority" value="High" />
+										<property name="job.CreatedAt" expression="datetime:now()" />
+										<property name="job.AssignedAt" expression="datetime:now()" />
+										<property name="job.AssignedTo" expression="device" />
+									</patchMessageBody>
+								</baseMessage>
+							</pushMessage>
+							<conversationMessage closed="true" subject="Notification" address="global.sdgwAddress">
+								<baseMessage expression="msg">
+									<patchMessageBodyRef name="ClosedConfirmation"/>
+									<patchMessageBody variable="noti">
+										<property name="noti.Id" expression="ccc.id" />
+										<property name="noti.Resolution" value="Close Request" />
+									</patchMessageBody>
+								</baseMessage>
+							</conversationMessage>
+							<conversationMessage expired="true" subject="Notification" address="global.sdgwAddress">
+								<baseMessage expression="msg">
+									<patchMessageBodyRef name="ClosedConfirmation"/>
+									<patchMessageBody variable="noti">
+										<property name="noti.Id" expression="ccc.id" />
+										<property name="noti.Resolution" value="Expiration" />
+									</patchMessageBody>
+								</baseMessage>
+							</conversationMessage>
+						</startConversation>
+					</actions>
+				</rule>
+			</ruleSet>
+		</ruleSet>
+
+		<ruleSet name="Conversation confirmed or declined">
+			<condition>
+				msg.body.Type == 'Job' and el:contains(global.UC6Conversations, msg.body.Name)
+			</condition>
+			<ruleSet name="Conversation declined">
+				<condition>
+					el:exists(cc, msg.body.ReferenceId) and el:get(msg.body.Resource, 'submit', 'N/A') eq 'Decline'
+				</condition>
+				<rule name="UC6Decline">
+					<actions>
+						<setLocalVariables>
+							<property name="local.equipment" expression="cc[msg.body.ReferenceId].ctx.equipment"/>
+						</setLocalVariables>
+						<closeConversation id="msg.body.ReferenceId"/>
+					</actions>
+				</rule>
+			</ruleSet>
+
+			<ruleSet name="Conversation confirmed">
+				<condition>
+					el:get(msg.body.Resource, 'submit', 'N/A') ne 'Decline'
+				</condition>
+				<rule name="UC6LimitViolation confirmed with conversation">
+					<condition>
+						el:exists(cc, msg.body.ReferenceId)
+					</condition>
+					<actions>
+						<closeConversation id="msg.body.ReferenceId" />
+					</actions>
+				</rule>
+
+				<rule name="UC6LimitViolation confirmed without conversation">
+					<condition>
+						not el:exists(cc, msg.body.ReferenceId)
+					</condition>
+					<actions>
+						<pushMessage subject="Notification" address="global.sdgwAddress">
+							<baseMessage expression="msg">
+								<patchMessageBodyRef name="ClosedConfirmation"/>
+								<patchMessageBody variable="noti">
+									<property name="noti.Id" expression="msg.body.ReferenceId" />
+									<property name="noti.Resolution" value="Close Request without valid conversation" />
+								</patchMessageBody>
+							</baseMessage>
+						</pushMessage>
+					</actions>
+				</rule>
+			</ruleSet>
+		</ruleSet>
+	</ruleGroup>
+</rules>

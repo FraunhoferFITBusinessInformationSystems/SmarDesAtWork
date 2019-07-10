@@ -1,0 +1,4 @@
+For UC6 the UC5 schema can be used.
+Use uc5/schema.sql to create the required database tables.
+Use uc5/create_initial_testdata.sql to create initial test data rows.
+Use uc5/update_temp_*.sql to play with temperature values.

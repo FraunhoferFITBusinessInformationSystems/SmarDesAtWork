@@ -1,0 +1,1 @@
+Use external database from uc5 (externaldb/hibernate_uc5.cfg.xml)

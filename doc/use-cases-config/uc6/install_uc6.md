@@ -1,4 +1,4 @@
-# Installation Notes for Use Case 5
+# Installation Notes for Use Case 6
 Follow these steps to start the SmartDevices-Gatweway for the Use Case 5 Sample:
 
 __Note: This page is not finished yet__
@@ -8,6 +8,19 @@ __Note: This page is not finished yet__
  * Setup the services as described in [Installation](../../installation.md)
 
 # 2. smardes-middleware
+
+## 2.1 Install UC5 configuration
+
+UC6 makes use of the database schema, the db monitoring and the queries from UC5.
+Therefore perform all installation steps described in UC5 for the `smardes-middleware` component.
+
+## 2.2 Disable UC5 Rules
+
+To disable the UC5 live data rules delete rules/uc5.xml or move it to another place.
+
+## 2.3 Install UC6 configuration
+
+* Copy the whole content of `uc6/smardes-middleware/` into `smardes-middleware-x.y.z\smardes-backend-services-x.y.z`
 
 # 3. smartdevices-gateway
 
