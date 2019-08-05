@@ -1,0 +1,52 @@
+{
+  "DeviceGroups": [
+    {
+      "GroupName": "Chat",
+      "LiveFeed": null,
+      "Dashboard": {
+        "Actions": [
+          "ChatAction"
+        ]
+      },
+      "VisibleTabs": [
+        "actions",
+        "dashboard"
+      ]
+    },
+    {
+      "GroupName": "LiveData",
+      "LiveFeed": {
+        "DataUpdateInterval": 500,
+        "Values": [
+          "mEQ1:NumRevolutions",
+          "mEQ1:Pressure",
+          "mEQ1:Temperature",
+          "mEQ2:NumRevolutions",
+          "mEQ2:Pressure",
+          "mEQ2:Temperature"
+        ]
+      },
+      "Dashboard": {
+        "Actions": [
+          "ValueDisplay1a",
+          "ValueDisplay1b",
+          "ValueDisplay1c",
+          "ValueDisplay2a",
+          "ValueDisplay2b",
+          "ValueDisplay2c"
+        ]
+      },
+      "VisibleTabs": [
+        "livedata"
+      ]
+    },
+    {
+      "GroupName": "ValueMonitor",
+      "LiveFeed": null,
+      "Dashboard": null,
+      "VisibleTabs": [
+        "dashboard"
+      ]
+    }
+  ]
+}

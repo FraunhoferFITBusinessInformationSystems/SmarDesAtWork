@@ -53,6 +53,7 @@ namespace ConfigGenerator
 //            config = config.MergeWith(new Uc1ToolBreakage().GenerateConfig());
 //            config = config.MergeWith(new Uc2MachineSetUp().GenerateConfig());
             config = config.MergeWith(new Uc5LiveData().GenerateConfig());
+            config = config.MergeWith(new Uc6ValueMonitoring().GenerateConfig());
             
             Logger.Info($"Config generated.");
             Logger.Info($"Writing config files...");

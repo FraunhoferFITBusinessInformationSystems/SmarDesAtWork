@@ -112,10 +112,10 @@
 										<property name="job.Resource.list_text" value="fell below Temperature_L" condition="L_Violation" />
 										<property name="job.Resource.list_text" value="exceeded Temperature_H" condition="H_Violation" />
 										<property name="job.Resource.list_text" value="exceeded Temperature_HH" condition="HH_Violation" />
-										<property name="job.Resource.Text" value="Warning: fell below Temperature_LL" condition="LL_Violation" />
-										<property name="job.Resource.Text" value="Warning: fell below Temperature_L" condition="L_Violation" />
-										<property name="job.Resource.Text" value="Warning: exceeded Temperature_H" condition="H_Violation" />
-										<property name="job.Resource.Text" value="Warning: exceeded Temperature_HH" condition="HH_Violation" />
+										<property name="job.Resource.text" value="Warning: fell below Temperature_LL" condition="LL_Violation" />
+										<property name="job.Resource.text" value="Warning: fell below Temperature_L" condition="L_Violation" />
+										<property name="job.Resource.text" value="Warning: exceeded Temperature_H" condition="H_Violation" />
+										<property name="job.Resource.text" value="Warning: exceeded Temperature_HH" condition="HH_Violation" />
 
 										<!-- Delete Content group -->
 										<property name="job.Content" expression="null" />
