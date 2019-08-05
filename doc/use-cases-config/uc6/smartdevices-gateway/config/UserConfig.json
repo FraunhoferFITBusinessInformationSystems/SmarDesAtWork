@@ -1,0 +1,246 @@
+{
+  "Users": [
+    {
+      "Username": "chat0",
+      "Pw": null,
+      "FullName": "Chat-User 0",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "chat1",
+      "Pw": null,
+      "FullName": "Chat-User 1",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "chat2",
+      "Pw": null,
+      "FullName": "Chat-User 2",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "chat3",
+      "Pw": null,
+      "FullName": "Chat-User 3",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "Chat"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "operator1",
+      "Pw": null,
+      "FullName": "Operator 1",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "LiveData"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "operator2",
+      "Pw": null,
+      "FullName": "Operator 2",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "LiveData"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "operator3",
+      "Pw": null,
+      "FullName": "Operator 3",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "LiveData"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "operator4",
+      "Pw": null,
+      "FullName": "Operator 4",
+      "Groups": [
+        "Chat"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "LiveData"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "user1",
+      "Pw": null,
+      "FullName": "User 1",
+      "Groups": [
+        "Chat",
+        "ValueMonitor"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "LiveData"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    },
+    {
+      "Username": "user2",
+      "Pw": null,
+      "FullName": "User 2",
+      "Groups": [
+        "Chat",
+        "ValueMonitor"
+      ],
+      "Devices": [
+        {
+          "DeviceName": "A",
+          "DeviceFamily": "Phone",
+          "DeviceType": "Android",
+          "DeviceGroups": [
+            "LiveData"
+          ]
+        },
+        {
+          "DeviceName": "B",
+          "DeviceFamily": "Watch",
+          "DeviceType": "Android",
+          "DeviceGroups": null
+        }
+      ]
+    }
+  ]
+}

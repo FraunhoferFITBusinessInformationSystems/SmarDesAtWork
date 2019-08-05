@@ -1,0 +1,332 @@
+{
+  "Info": {
+    "Id": "Sample",
+    "Title": "SmartDevices",
+    "Subtitle": "Sample App",
+    "TitleResource": null,
+    "Theme": null
+  },
+  "Uis": [
+    {
+      "Title": "Nachricht senden",
+      "Elements": [
+        {
+          "Type": "Spinner",
+          "Id": "subject",
+          "Name": "Senden an",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextInput",
+          "Id": "text",
+          "Name": "Message",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Bearbeiten",
+          "Tab": "dashboard",
+          "TextSecondary": "Abbrechen",
+          "OnClickPrimary": "SendJob",
+          "OnClickSecondary": "RemoveJob",
+          "Primary": true
+        }
+      ],
+      "Type": "JobView",
+      "Id": "ChatSendMessage",
+      "Name": null,
+      "Tab": "dashboard",
+      "OnBackPressed": "RemoveJob"
+    },
+    {
+      "Title": "Nachricht bestätigen",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "subject",
+          "Name": "Absender",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Message",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "Button",
+          "Id": "submit",
+          "Name": "Bestätigen",
+          "Tab": "dashboard",
+          "OnClick": "SendJob",
+          "Primary": true
+        }
+      ],
+      "Type": "JobView",
+      "Id": "ChatConfirmMessage",
+      "Name": null,
+      "Tab": "dashboard"
+    },
+    {
+      "Title": "Limit Violation",
+      "Elements": [
+        {
+          "Type": "TextView",
+          "Id": "equipment",
+          "Name": "Equipment",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "text",
+          "Name": "Text",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "DateView",
+          "Id": "time",
+          "Name": "Time",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "actual_value",
+          "Name": "Actual Value",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "temperature_HH",
+          "Name": "Upper Error Value",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "temperature_H",
+          "Name": "Upper Warn Value",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "temperature_setp",
+          "Name": "Set Point Value",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "temperature_L",
+          "Name": "Lower Warn Value",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "TextView",
+          "Id": "temperature_LL",
+          "Name": "Lower Error Value",
+          "Tab": "dashboard"
+        },
+        {
+          "Type": "DoubleButton",
+          "Id": "submit",
+          "Name": "Accept",
+          "Tab": "dashboard",
+          "Value": "Accept",
+          "OnClickPrimary": "SendJob",
+          "TextSecondary": "Decline",
+          "ValueSecondary": "Decline",
+          "OnClickSecondary": "SendJob",
+          "Primary": true
+        }
+      ],
+      "Type": "JobView",
+      "Id": "UC6LimitViolation",
+      "Name": null,
+      "Tab": "dashboard"
+    }
+  ],
+  "ValueDefinitions": [
+    {
+      "Name": "mEQ1:NumRevolutions",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "NumRevolutions",
+        "Namespace": "mEQ1"
+      }
+    },
+    {
+      "Name": "mEQ1:Pressure",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "Pressure",
+        "Namespace": "mEQ1"
+      }
+    },
+    {
+      "Name": "mEQ1:Temperature",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "Temperature",
+        "Namespace": "mEQ1"
+      }
+    },
+    {
+      "Name": "mEQ2:NumRevolutions",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "NumRevolutions",
+        "Namespace": "mEQ2"
+      }
+    },
+    {
+      "Name": "mEQ2:Pressure",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "Pressure",
+        "Namespace": "mEQ2"
+      }
+    },
+    {
+      "Name": "mEQ2:Temperature",
+      "DataSource": {
+        "QueueName": "sdgw",
+        "Name": "Temperature",
+        "Namespace": "mEQ2"
+      }
+    }
+  ],
+  "ActionDefinitions": [
+    {
+      "JobKey": "ChatSendMessage",
+      "Type": "GenericAction",
+      "Id": "ChatAction",
+      "Name": "Chat",
+      "Tab": "actions",
+      "Image": "notification"
+    },
+    {
+      "JobKey": null,
+      "Type": "ValueMonitor",
+      "Id": "ValueDisplay1a",
+      "Name": "mEQ1:NumRevolutions",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "ValueMonitor",
+      "Id": "ValueDisplay1b",
+      "Name": "mEQ1:Pressure",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "GraphDisplay",
+      "Id": "ValueDisplay1c",
+      "Name": "mEQ1:Temperature",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "ValueMonitor",
+      "Id": "ValueDisplay2a",
+      "Name": "mEQ2:NumRevolutions",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "ValueMonitor",
+      "Id": "ValueDisplay2b",
+      "Name": "mEQ2:Pressure",
+      "Tab": "livedata"
+    },
+    {
+      "JobKey": null,
+      "Type": "GraphDisplay",
+      "Id": "ValueDisplay2c",
+      "Name": "mEQ2:Temperature",
+      "Tab": "livedata"
+    }
+  ],
+  "TabDefinitions": [
+    {
+      "Title": "Live-Data",
+      "Key": "livedata",
+      "MainTab": false,
+      "ShowBadgeNumber": false,
+      "Icon": "livefeed",
+      "SortEntries": [
+        {
+          "Name": "Name",
+          "Key": "name"
+        },
+        {
+          "Name": "Id",
+          "Key": "id"
+        }
+      ],
+      "FilterEntries": []
+    },
+    {
+      "Title": "Jobs",
+      "Key": "dashboard",
+      "MainTab": true,
+      "ShowBadgeNumber": true,
+      "Icon": "job",
+      "SortEntries": [
+        {
+          "Name": "Titel",
+          "Key": "title"
+        },
+        {
+          "Name": "Text",
+          "Key": "text"
+        },
+        {
+          "Name": "Create Date",
+          "Key": "createdate"
+        },
+        {
+          "Name": "Type",
+          "Key": "type"
+        },
+        {
+          "Name": "State",
+          "Key": "state"
+        }
+      ],
+      "FilterEntries": [
+        {
+          "Name": "Titel",
+          "Key": "title",
+          "Invertable": false,
+          "FilterType": "text"
+        },
+        {
+          "Name": "Text",
+          "Key": "text",
+          "Invertable": false,
+          "FilterType": "text"
+        },
+        {
+          "Name": "State",
+          "Key": "status",
+          "Invertable": true,
+          "FilterType": "state"
+        }
+      ]
+    },
+    {
+      "Title": "Actions",
+      "Key": "actions",
+      "MainTab": false,
+      "ShowBadgeNumber": false,
+      "Icon": "action",
+      "SortEntries": [
+        {
+          "Name": "Name",
+          "Key": "name"
+        }
+      ],
+      "FilterEntries": []
+    }
+  ]
+}

@@ -19,7 +19,7 @@ Public research project funded by the Bavarian Research Foundation
   * [UC3 MaintenanceManual (TODO)](/doc/use-cases-config/uc3/install_uc3.md)
   * UC4 ErrorRecording (TODO)
   * [UC5 LiveData](/doc/use-cases-config/uc5/install_uc5.md)
-  * [UC6 ValueMonitoring (with notification) (TODO)](/doc/use-cases-config/uc6/install_uc6.md) 
+  * [UC6 ValueMonitoring (with notification)](/doc/use-cases-config/uc6/install_uc6.md) 
 * [Contributing](CONTRIBUTING.md)
 
 ## Description
