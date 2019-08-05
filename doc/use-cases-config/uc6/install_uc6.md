@@ -1,8 +1,6 @@
 # Installation Notes for Use Case 6
 Follow these steps to start the SmartDevices-Gatweway for the Use Case 5 Sample:
 
-__Note: This page is not finished yet__
-
 # 1. General
 
  * Setup the services as described in [Installation](../../installation.md)
@@ -38,10 +36,8 @@ To disable the UC5 live data rules delete rules/uc5.xml or move it to another pl
       * Pick a Username from the Configuration File `smartdevices-gateway/config/UserConfig.json`
       * In this Example one of
          ```
-            operator1
-            operator2
-            operator3
-            operator4
+            user1
+            user2
          ```
     * `Device Id` - A valid Device-Id
       * Convention: For all phones and tablets "A", for all watches "B".
